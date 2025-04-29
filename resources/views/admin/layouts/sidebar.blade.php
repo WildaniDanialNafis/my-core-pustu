@@ -1,13 +1,12 @@
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                href="http://localhost:8000/coba-dashboard">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/coba-dashboard">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">PUSTU Lada <sup>2</sup></div>
             </a>
 
             <!-- Divider -->
@@ -15,216 +14,211 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/coba-dashboard">
+                <a class="nav-link" href="/coba-dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/ibu">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Ibu</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/keluarga">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Keluarga</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/wali">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Wali</span></a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Kesehatan
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseIbu"
+                    aria-expanded="true" aria-controls="collapseIbu">
+                    <i class="fas fa-user fa-fw"></i>
+                    <span>Ibu</span>
+                </a>
+                <div id="collapseIbu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/ibu">Ibu</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/keluarga">Keluarga</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kesehatan1">Kesehatan
+                            1</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kesehatan2">Kesehatan
+                            2</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/kesehatan-bersalin">Kesehatan Bersalin</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kesehatan-nifas">Kesehatan
+                            Nifas</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kontrol-ttd">Kontrol
+                            TTD</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/minum-ttd">Minum TTD</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/menyambut-persalinan">Menyambut Persalinan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/amanat-penolong-persalinan">Amanat Penolong Persalinan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/amanat-kendaraan">Amanat
+                            Kendaraan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/amanat-darah">Amanat
+                            Darah</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/evaluasi-kesehatan-bumil">Evaluasi Kesehatan Bumil</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/kondisi-kesehatan-bumil">Kondisi Kesehatan Bumil</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/imunisasi-t">Imunisasi
+                            T</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/riwayat-kesehatan-bumil">Riwayat Kesehatan Bumil</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/riwayat-perilaku-berisiko">Riwayat Perilaku Berisiko</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/riwayat-kehamilan">Riwayat
+                            Kehamilan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/riwayat-penyakit-keluarga">Riwayat Penyakit Keluarga</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemeriksaan-khusus">Pemeriksaan Khusus</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemeriksaan-trimester1">Pemeriksaan Trimester 1</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemeriksaan-fisik-tri1">Pemeriksaan Fisik Trimester 1</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/usg-tri1">USG Trimester
+                            1</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemeriksaan-laboratorium-tri1">Pemeriksaan Laboratorium Trimester 1</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/evaluasi-kehamilan">Evaluasi Kehamilan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/berat-badan-bumil">Berat
+                            Badan Bumil</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/skrining-preeklampsia">Skrining Preeklampsia</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/preeklampsia-anamnesis">Preeklampsia Anamnesis</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/preeklampsia-fisik">Preeklampsia Fisik</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemeriksaan-trimester3">Pemeriksaan Trimester 3</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemeriksaan-fisik-tri3">Pemeriksaan Fisik Trimester 3</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/usg-tri3">USG Trimester
+                            3</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemeriksaan-laboratorium-tri3">Pemeriksaan Laboratorium Trimester 3</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/ringkasan-kesehatan">Ringkasan Kesehatan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/ibu-bersalin">Ibu
+                            Bersalin</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/bayi-lahir">Bayi Lahir</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/ringkasan-nifas">Ringkasan Nifas</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/ringkasan-kesimpulan-nifas">Ringkasan Kesimpulan Nifas</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/rujukan">Rujukan</a>
+                    </div>
+                </div>
             </li>
 
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/anak">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Anak</span></a>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAnak"
+                    aria-expanded="true" aria-controls="collapseAnak">
+                    <i class="fas fa-baby fa-fw"></i>
+                    <span>Anak</span>
+                </a>
+                <div id="collapseAnak" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/anak">Anak</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/wali">Wali</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/bayi-baru-lahir">Bayi
+                            Baru Lahir</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/bayi">Bayi</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/anak-balita">Anak
+                            Balita</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/keterangan-lahir">Keterangan Lahir</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/riwayat-kelahiran">Riwayat Kelahiran</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pelayanan-kesehatan-neonatus">Pelayanan Kesehatan Neonatus</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kn0">Kesehatan
+                            Neonatus 0</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kn1">Kesehatan
+                            Neonatus 1</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kn2">Kesehatan
+                            Neonatus 2</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kn3">Kesehatan
+                            Neonatus 3</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/imunisasi">Imunisasi</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pemantauan-kia">Pemantauan KIA</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/pelayanan-sdidtk">Pelayanan SDIDTK</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/penyimpangan-pertumbuhan">Penyimpangan Pertumbuhan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/penyimpangan-perkembangan">Penyimpangan Perkembangan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/penyimpangan-emosional">Penyimpangan Emosional</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/nasihat-anak">Nasihat
+                            Anak</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kapsul-anak">Kapsul
+                            Anak</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kms-perempuan">KMS Anak
+                            Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/data-kms-perempuan">Data
+                            KMS Anak Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/bb-u-perempuan">Berat
+                            Badan Per Umur Anak Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/tb-u-perempuan">Tinggi
+                            Badan Per Umur Anak Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/bb-tb-perempuan">Berat
+                            Badan Per Tinggi Badan Anak Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/lingkar-kepala-perempuan">Lingkar Kepala Per Umur Anak Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kms-laki">KMS Anak
+                            Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/data-kms-laki">Data KMS
+                            Anak Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/bb-u-laki">Berat Badan
+                            Per Umur Anak Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/tb-u-laki">Tinggi Badan
+                            Per Umur Anak Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/bb-tb-laki">Berat Badan
+                            Per Tinggi Badan Anak Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/lingkar-kepala-laki">Lingkar Kepala Per Umur Anak Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/imt-perempuan">IMT
+                            Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/imt-laki">IMT Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/kesehatan-gigi">Kesehatan Gigi</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/data-kesehatan-gigi">Data Kesehatan Gigi</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/ringkasan-mtbs">Ringkasan MTBS</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2"
+                            href="/ringkasan-pelayanan-dokter">Ringkasan Pelayanan Dokter</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/rujukan-anak">Rujukan
+                            Anak</a>
+                    </div>
+                </div>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/kesehatan1">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Kesehatan 1</span></a>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGrafik"
+                    aria-expanded="true" aria-controls="collapseGrafik">
+                    <i class="fas fa-chart-line fa-fw"></i>
+                    <span>Grafik</span>
+                </a>
+                <div id="collapseGrafik" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-berat-badan-umur-laki">Grafik Berat Badan Per Umur Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/wali">Wali</a>
+                    </div>
+                </div>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/kesehatan2">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Kesehatan 2</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/kesehatan-bersalin">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Kesehatan Bersalin</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/kesehatan-nifas">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Kesehatan Nifas</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/kontrol-ttd">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Kontrol TTD</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/minum-ttd">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Minum TTD</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/menyambut-persalinan">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Menyambut Perasalinan</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/amanat-penolong-persalinan">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Amanat Penolong Persalinan</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/amanat-kendaraan">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Amanat Kendaraan</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/amanat-darah">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Amanat Darah</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/evaluasi-kesehatan-bumil">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Evaluasi Kesehatan Bumil</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/kondisi-kesehatan-bumil">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Kondisi Kesehatan Bumil</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/imunisasi-t">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Imunisasi T</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/riwayat-kesehatan-bumil">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Riwayat Kesehatan Bumil</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/riwayat-perilaku-berisiko">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Riwayat Perilaku Berisiko</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/riwayat-kehamilan">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Riwayat Kehamilan</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/riwayat-penyakit-keluarga">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Riwayat Penyakit Keluarga</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/pemeriksaan-khusus">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pemeriksaan Khusus</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/pemeriksaan-trimester1">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pemeriksaan Trimester 1</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/pemeriksaan-fisik-tri1">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pemeriksaan Fisik Trimester 1</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/usg-tri1">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>USG Trimester 1</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/pemeriksaan-laboratorium-tri1">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pemeriksaan Laboratorium Trimester 1</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/evaluasi-kehamilan">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Evaluasi Kehamilan</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/berat-badan-bumil">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Berat Badan Bumil</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/skrining-preeklampsia">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Skrining Preeklampsia</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/preeklampsia-anamnesis">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Preeklampsia Anamnesis</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/preeklampsia-fisik">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Preeklampsia Fisik</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/pemeriksaan-trimester3">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pemeriksaan Trimester 3</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/pemeriksaan-fisik-tri3">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pemeriksaan Fisik Trimester 3</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/usg-tri3">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>USG Trimester 3</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/pemeriksaan-laboratorium-tri3">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Pemeriksaan Laboratorium Tri 3</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/ringkasan-kesehatan">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Ringkasan Kesehatan</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/ibu-bersalin">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Ibu Bersalin</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/bayi-lahir">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Bayi Lahir</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/ringkasan-nifas">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Ringkasan Nifas</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/ringkasan-kesimpulan-nifas">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Ringkasan Kesimpulan Nifas</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/rujukan">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Rujukan</span></a>
-            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -244,8 +238,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="http://localhost:8000/coba-buttons">Buttons</a>
-                        <a class="collapse-item" href="http://localhost:8000/coba-cards">Cards</a>
+                        <a class="collapse-item" href="/coba-buttons">Buttons</a>
+                        <a class="collapse-item" href="/coba-cards">Cards</a>
                     </div>
                 </div>
             </li>
@@ -261,10 +255,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="http://localhost:8000/coba-colors">Colors</a>
-                        <a class="collapse-item" href="http://localhost:8000/coba-borders">Borders</a>
-                        <a class="collapse-item" href="http://localhost:8000/coba-animations">Animations</a>
-                        <a class="collapse-item" href="http://localhost:8000/coba-other">Other</a>
+                        <a class="collapse-item" href="/coba-colors">Colors</a>
+                        <a class="collapse-item" href="/coba-borders">Borders</a>
+                        <a class="collapse-item" href="/coba-animations">Animations</a>
+                        <a class="collapse-item" href="/coba-other">Other</a>
                     </div>
                 </div>
             </li>
@@ -284,30 +278,31 @@
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="http://localhost:8000/coba-login">Login</a>
-                        <a class="collapse-item" href="http://localhost:8000/coba-register">Register</a>
-                        <a class="collapse-item" href="http://localhost:8000/coba-forgot-password">Forgot Password</a>
+                        <a class="collapse-item" href="/coba-login">Login</a>
+                        <a class="collapse-item" href="/coba-register">Register</a>
+                        <a class="collapse-item" href="/coba-forgot-password">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="http://localhost:8000/coba-404">404 Page</a>
-                        <a class="collapse-item" href="http://localhost:8000/coba-blank">Blank Page</a>
+                        <a class="collapse-item" href="/coba-404">404 Page</a>
+                        <a class="collapse-item" href="/coba-blank">Blank Page</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8000/coba-charts">
+                <a class="nav-link" href="/coba-charts">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8000/coba-tables">
+                <a class="nav-link" href="/coba-tables">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
             </li>
@@ -332,3 +327,31 @@
 
         </ul>
         <!-- End of Sidebar -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var currentPath = window.location.pathname;
+
+                var menuItems = document.querySelectorAll('.collapse-item');
+
+                menuItems.forEach(function(item) {
+                    if (item.getAttribute('href') === currentPath) {
+                        item.classList.add('bg-dark');
+                        item.classList.add('active');
+
+                        // Ambil 2 parent di atas <a class="collapse-item"> — yaitu collapse-inner → .collapse
+                        var collapseDiv = item.parentElement.parentElement;
+
+                        // Tambahkan class "show" ke elemen collapse (agar menu terbuka)
+                        if (collapseDiv.classList.contains('collapse')) {
+                            collapseDiv.classList.add('show');
+                        }
+
+                        // (Opsional) Tandai parent menu-nya aktif juga, kalau ada
+                        var parentToggle = document.querySelector('[data-target="#' + collapseDiv.id + '"]');
+                        if (parentToggle) {
+                            parentToggle.classList.remove('collapsed'); // biar ikon panah tidak tertutup
+                        }
+                    }
+                });
+            });
+        </script>
