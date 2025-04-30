@@ -214,7 +214,15 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-berat-badan-umur-laki">Grafik Berat Badan Per Umur Laki</a>
-                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/wali">Wali</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-tinggi-badan-umur-laki">Grafik Tinggi Badan Per Umur Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-bb-tb-laki">Grafik Berat Badan Per Tinggi Badan Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-lingkar-laki">Grafik Lingkar Kepala Per Umur Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-bb-u-pr">Grafik Berat Badan Per Umur Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-tb-u-pr">Grafik Tinggi Badan Per Umur Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-bb-tb-pr">Grafik Berat Badan Per Tinggi Badan Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-lingkar-pr">Grafik Lingkar Kepala Per Umur Perempuan</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-imt-laki">Grafik IMT Per Umur Laki</a>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/grafik-imt-pr">Grafik IMT Per Umur Perempuan</a>
                     </div>
                 </div>
             </li>

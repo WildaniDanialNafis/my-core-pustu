@@ -186,6 +186,16 @@ class DatabaseSeeder extends Seeder
         RingkasanMtbs::factory()->count(10)->create();
         RingkasanPelayananDokter::factory()->count(10)->create();
         RujukanAnak::factory()->count(10)->create();
+        $this->call(BbULakiSeeder::class);
+        $this->call(TbULakiSeeder::class);
+        $this->call(BbTbLakiSeeder::class);
+        $this->call(LingkarKepalaLakiSeeder::class);
+        $this->call(BbUPerempuanSeeder::class);
+        $this->call(TbUPerempuanSeeder::class);
+        $this->call(BbTbPerempuanSeeder::class);
+        $this->call(LingkarKepalaPerempuanSeeder::class);
+        $this->call(ImtLakiSeeder::class);
+        $this->call(ImtPerempuanSeeder::class);
 
         User::factory()->create([
             'name' => 'Admin',

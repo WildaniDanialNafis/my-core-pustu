@@ -82,7 +82,16 @@ use App\Http\Controllers\TbUPerempuanController;
 use App\Http\Controllers\UsgTri1Controller;
 use App\Http\Controllers\UsgTri3Controller;
 use App\Http\Controllers\WaliController;
+use App\Models\BbTbLaki;
+use App\Models\BbTbPerempuan;
 use App\Models\BbULaki;
+use App\Models\BbUPerempuan;
+use App\Models\ImtLaki;
+use App\Models\ImtPerempuan;
+use App\Models\LingkarKepalaLaki;
+use App\Models\LingkarKepalaPerempuan;
+use App\Models\TbULaki;
+use App\Models\TbUPerempuan;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
@@ -713,30 +722,340 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('/grafik-berat-badan-umur-laki', function () {
-    $usersPerMonth = BbULaki::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
-        ->whereYear('created_at', Carbon::now()->year) // Ambil data hanya untuk tahun ini
-        ->groupBy('month')
-        ->orderBy('month')
-        ->pluck('count', 'month')
-        ->toArray();
+    $data = BbULaki::select('bulan', 'tahun', 'bb')
+        ->where('id_anak', 1)
+        ->orderBy('tahun')
+        ->orderBy('bulan')
+        ->get();
 
-    $users = 0;
+    $labels = [];
+    $bbData = [];
 
-    // Format ulang data agar sesuai dengan array bulan
-    $earnings = [
-        "labels" => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        "data" => []
-    ];
+    $startYear = null;
 
-    // Isi `data` sesuai jumlah pengguna per bulan
-    for ($i = 1; $i <= 12; $i++) {
-        $earnings['data'][] = $usersPerMonth[$i] ?? 0; // Jika tidak ada user di bulan tersebut, isi dengan 0
-        $users += $usersPerMonth[$i] ?? 0;
+    foreach ($data as $item) {
+        if ($startYear === null) {
+            $startYear = $item->tahun;
+        }
+
+        $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+        if ($usiaBulan == 12) {
+            $labels[] = "1 tahun";
+        } elseif ($usiaBulan == 24) {
+            $labels[] = "2 tahun";
+        } else {
+            $labels[] = $usiaBulan . " bln";
+        }
+
+        $bbData[] = $item->bb;
     }
 
+    $earnings = [
+        "labels" => $labels,
+        "data" => $bbData
+    ];
+
     return view('admin.pages.template-graph', [
-        'earnings' => $earnings,
-        'users' => $users
+        'earnings' => $earnings
+    ]);
+});
+
+Route::get('/grafik-tinggi-badan-umur-laki', function () {
+    $data = TbULaki::select('bulan', 'tahun', 'tb')
+        ->where('id_anak', 1)
+        ->orderBy('tahun')
+        ->orderBy('bulan')
+        ->get();
+
+    $labels = [];
+    $tbData = [];
+
+    $startYear = null;
+
+    foreach ($data as $item) {
+        if ($startYear === null) {
+            $startYear = $item->tahun;
+        }
+
+        $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+        if ($usiaBulan == 12) {
+            $labels[] = "1 tahun";
+        } elseif ($usiaBulan == 24) {
+            $labels[] = "2 tahun";
+        } else {
+            $labels[] = $usiaBulan . " bln";
+        }
+
+        $tbData[] = $item->tb;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $tbData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
+    ]);
+});
+
+Route::get('/grafik-bb-tb-laki', function () {
+    $data = BbTbLaki::select('bb', 'tb')
+        ->where('id_anak', 1)
+        ->orderBy('tb')
+        ->get();
+
+    $labels = [];
+    $bbData = [];
+
+    foreach ($data as $item) {
+        $labels[] = $item->tb . ' cm';
+        $bbData[] = $item->bb;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $bbData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
+    ]);
+});
+
+Route::get('/grafik-lingkar-laki', function () {
+    $data = LingkarKepalaLaki::select('bulan', 'tahun', 'lingkar_kepala')
+        ->where('id_anak', 1)
+        ->orderBy('tahun')
+        ->orderBy('bulan')
+        ->get();
+
+    $labels = [];
+    $lkData = [];
+
+    $startYear = null;
+
+    foreach ($data as $item) {
+        if ($startYear === null) {
+            $startYear = $item->tahun;
+        }
+
+        $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+        // Menambahkan label umur dalam bulan dan tahun
+        if ($usiaBulan == 12) {
+            $labels[] = "1 tahun";
+        } elseif ($usiaBulan == 24) {
+            $labels[] = "2 tahun";
+        } else {
+            $labels[] = $usiaBulan . " bln";
+        }
+
+        $lkData[] = $item->lingkar_kepala;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $lkData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
+    ]);
+});
+
+Route::get('/grafik-bb-u-pr', function () {
+    $data = BbUPerempuan::select('bulan', 'tahun', 'bb')
+        ->where('id_anak', 1)
+        ->orderBy('tahun')
+        ->orderBy('bulan')
+        ->get();
+
+    $labels = [];
+    $bbData = [];
+
+    $startYear = null;
+
+    foreach ($data as $item) {
+        if ($startYear === null) {
+            $startYear = $item->tahun;
+        }
+
+        $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+        if ($usiaBulan == 12) {
+            $labels[] = "1 tahun";
+        } elseif ($usiaBulan == 24) {
+            $labels[] = "2 tahun";
+        } else {
+            $labels[] = $usiaBulan . " bln";
+        }
+
+        $bbData[] = $item->bb;
+    }
+
+    $earnings = [
+        "labels" => $labels,
+        "data" => $bbData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $earnings
+    ]);
+});
+
+Route::get('/grafik-tb-u-pr', function () {
+    $data = TbUPerempuan::select('bulan', 'tahun', 'tb')
+        ->where('id_anak', 1)
+        ->orderBy('tahun')
+        ->orderBy('bulan')
+        ->get();
+
+    $labels = [];
+    $tbData = [];
+
+    $startYear = null;
+
+    foreach ($data as $item) {
+        if ($startYear === null) {
+            $startYear = $item->tahun;
+        }
+
+        $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+        if ($usiaBulan == 12) {
+            $labels[] = "1 tahun";
+        } elseif ($usiaBulan == 24) {
+            $labels[] = "2 tahun";
+        } else {
+            $labels[] = $usiaBulan . " bln";
+        }
+
+        $tbData[] = $item->tb;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $tbData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
+    ]);
+});
+
+Route::get('/grafik-bb-tb-pr', function () {
+    $data = BbTbPerempuan::select('bb', 'tb')
+        ->where('id_anak', 1)
+        ->orderBy('tb')
+        ->get();
+
+    $labels = [];
+    $bbData = [];
+
+    foreach ($data as $item) {
+        $labels[] = $item->tb . ' cm';
+        $bbData[] = $item->bb;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $bbData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
+    ]);
+});
+
+Route::get('/grafik-lingkar-pr', function () {
+    $data = LingkarKepalaPerempuan::select('bulan', 'tahun', 'lingkar_kepala')
+        ->where('id_anak', 1)
+        ->orderBy('tahun')
+        ->orderBy('bulan')
+        ->get();
+
+    $labels = [];
+    $lkData = [];
+
+    $startYear = null;
+
+    foreach ($data as $item) {
+        if ($startYear === null) {
+            $startYear = $item->tahun;
+        }
+
+        $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+        // Menambahkan label umur dalam bulan dan tahun
+        if ($usiaBulan == 12) {
+            $labels[] = "1 tahun";
+        } elseif ($usiaBulan == 24) {
+            $labels[] = "2 tahun";
+        } else {
+            $labels[] = $usiaBulan . " bln";
+        }
+
+        $lkData[] = $item->lingkar_kepala;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $lkData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
+    ]);
+});
+
+Route::get('/grafik-imt-laki', function () {
+    $data = ImtLaki::select('imt', 'bulan')
+        ->where('id_anak', 1)
+        ->orderBy('bulan')
+        ->get();
+
+    $labels = [];
+    $imtData = [];
+
+    foreach ($data as $item) {
+        $labels[] = $item->bulan . ' bln';
+        $imtData[] = $item->imt;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $imtData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
+    ]);
+});
+
+Route::get('/grafik-imt-pr', function () {
+    $data = ImtPerempuan::select('imt', 'bulan')
+        ->where('id_anak', 1)
+        ->orderBy('bulan')
+        ->get();
+
+    $labels = [];
+    $imtData = [];
+
+    foreach ($data as $item) {
+        $labels[] = $item->bulan . ' bln';
+        $imtData[] = $item->imt;
+    }
+
+    $graph = [
+        "labels" => $labels,
+        "data" => $imtData
+    ];
+
+    return view('admin.pages.template-graph', [
+        'earnings' => $graph
     ]);
 });
 
