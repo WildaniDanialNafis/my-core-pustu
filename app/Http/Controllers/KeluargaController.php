@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
-use Yajra\DataTables\Facades\DataTables;
 
 class KeluargaController extends Controller
 {
@@ -34,7 +33,7 @@ class KeluargaController extends Controller
 
         $foreignDatas = Ibu::all($columnDiambil);
 
-        return view('admin.pages.keluarga', [
+        return view('admin.layouts2.template-table', [
             'table' => $table,
             'columns' => $columns,
             'columnTypes' => $columnTypes,
@@ -47,15 +46,47 @@ class KeluargaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+
         $columns = Schema::getColumnListing('keluarga');
+    
+        if ($request->has('columns') && $request->input('columns') === 'columns') {
+            return response()->json([
+                'columns' => $columns
+            ]);
+        }
+    
+        $query = Keluarga::query();
+    
+        // Server-side search dari input 'search.value' (standar DataTables)
+        $searchValue = $request->input('search.value');
+    
+        if (!empty($searchValue)) {
+            $query->where(function ($q) use ($searchValue, $columns) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'like', '%' . $searchValue . '%');
+                }
+            });
+        }
+    
+        // Hitung total dan hasil filter
+        $totalRecords = Keluarga::count();
+        $filteredRecords = $query->count();
+    
+        // Ambil data paginasi
+        $data = $query->orderBy('id_keluarga', 'desc')
+                      ->skip($request->input('start', 0))
+                      ->take($request->input('length', 10))
+                      ->get();
 
-        $data = DataTables::of(Keluarga::query()->orderBy('id_keluarga', 'desc'))->make(true);
-
+        // dd($data);
+    
         return response()->json([
-            'columns' => $columns,
-            'data' => $data->getData()
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $data,
         ]);
     }
 

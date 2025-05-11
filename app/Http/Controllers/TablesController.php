@@ -29,7 +29,16 @@ class TablesController extends Controller
 
     public function getUsers(Request $request)
     {
-        return DataTables::of(User::query()->orderBy('id', 'desc'))->toJson();
+        $query = User::query()->orderBy('id_user', 'desc');
+
+
+        if ($request->has('name') && $request->name !== null) {
+            $query->where('name', 'like', '%' . $request->name . '%')
+                ->orWhere('email', 'like', '%' . $request->name . '%')
+                ->orWhere('id_user', 'like', '%' . $request->name . '%');
+        }
+
+        return DataTables::of($query)->toJson();
     }
 
     /**

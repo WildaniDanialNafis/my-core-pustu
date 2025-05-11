@@ -113,6 +113,9 @@
                     </div>
                 </div>
 
+                <label for="na" class="d-block mt-2">Pencarian</label>
+                <input type="text" name="na" id="na" class="form-control mt-2" placeholder="Cari...">
+                
                 <div class="table table-striped">
                     <table class="table-responsive" id="usersTable" width="100%" cellspacing="0">
                         <thead>
@@ -123,6 +126,14 @@
                                 <th>Diverifikasi pada</th>
                                 <th>ID Role</th>
                                 <th>Aksi</th>
+                            </tr>
+                            <tr>
+                                <th><input type="text" class="form-control"></th>
+                                <th><input type="text" class="form-control"></th>
+                                <th><input type="text" class="form-control"></th>
+                                <th><input type="text" class="form-control"></th>
+                                <th><input type="text" class="form-control"></th>
+                                <th><input type="text" class="form-control"></th>
                             </tr>
                         </thead>
 

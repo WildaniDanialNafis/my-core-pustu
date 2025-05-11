@@ -34,7 +34,9 @@ class IbuController extends Controller
 
         $foreignDatas = User::all($columnDiambil);
 
-        return view('admin.pages.keluarga', [
+        // dd($columns);
+
+        return view('admin.layouts2.template-table', [
             'table' => $table,
             'columns' => $columns,
             'columnTypes' => $columnTypes,
@@ -47,17 +49,48 @@ class IbuController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $columns = Schema::getColumnListing('ibu');
-
-        $data = DataTables::of(Ibu::query()->orderBy('id_ibu', 'desc'))->make(true);
-
+    
+        if ($request->has('columns') && $request->input('columns') === 'columns') {
+            return response()->json([
+                'columns' => $columns
+            ]);
+        }
+    
+        $query = Ibu::query();
+    
+        // Server-side search dari input 'search.value' (standar DataTables)
+        $searchValue = $request->input('search.value');
+    
+        if (!empty($searchValue)) {
+            $query->where(function ($q) use ($searchValue, $columns) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'like', '%' . $searchValue . '%');
+                }
+            });
+        }
+    
+        // Hitung total dan hasil filter
+        $totalRecords = Ibu::count();
+        $filteredRecords = $query->count();
+    
+        // Ambil data paginasi
+        $data = $query->orderBy('id_ibu', 'desc')
+                      ->skip($request->input('start', 0))
+                      ->take($request->input('length', 10))
+                      ->get();
+    
         return response()->json([
-            'columns' => $columns,
-            'data' => $data->getData()
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $data,
         ]);
     }
+    
+
 
     /**
      * Store a newly created resource in storage.
@@ -66,7 +99,7 @@ class IbuController extends Controller
     {
         // Validasi data
         $validated = $request->validate([
-            'id_user' => 'required|exists:users,id', // Pastikan id_user ada di tabel users
+            'id_user' => 'required|exists:users,id_user', // Pastikan id_user ada di tabel users
             'nama' => 'nullable|string|max:255',
             'pembiayaan' => 'nullable|string|max:255',
             'no_jkn' => 'nullable|string|max:50',
@@ -120,7 +153,7 @@ class IbuController extends Controller
     {
         // Validasi data
         $validated = $request->validate([
-            'id_user' => 'required|exists:users,id', // Pastikan id_user ada di tabel users
+            'id_user' => 'required|exists:users,id_user', // Pastikan id_user ada di tabel users
             'nama' => 'nullable|string|max:255',
             'pembiayaan' => 'nullable|string|max:255',
             'no_jkn' => 'nullable|string|max:50',

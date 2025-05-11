@@ -203,5 +203,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'id_role' => 1
         ]);
+
+        User::factory()->create([
+            'name' => 'Ibu',
+            'email' => 'ibu@example.com',
+            'password' => Hash::make('password'),
+            'id_role' => 2
+        ]);
+
+        $this->call(CobaDataSeeder::class);
     }
 }

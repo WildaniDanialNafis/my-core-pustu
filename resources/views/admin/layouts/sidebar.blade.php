@@ -37,6 +37,7 @@
                 <div id="collapseIbu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/coba-tables">Coba Tables</a>
                         <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/ibu">Ibu</a>
                         <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/keluarga">Keluarga</a>
                         <a class="collapse-item text-wrap text-break bg-gray-200 mb-2" href="/kesehatan1">Kesehatan

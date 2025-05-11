@@ -47,12 +47,22 @@ class Kesehatan1Controller extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $columns = Schema::getColumnListing('kesehatan1');
-
-        $data = DataTables::of(Kesehatan1::query()->orderBy('id_kesehatan1', 'desc'))->make(true);
-
+    
+        $query = Kesehatan1::query()->orderBy('id_kesehatan1', 'desc');
+    
+        if ($request->filled('pencarian')) {
+            $query->where(function ($q) use ($request, $columns) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'like', '%' . $request->pencarian . '%');
+                }
+            });
+        }
+    
+        $data = DataTables::of($query)->make(true);
+    
         return response()->json([
             'columns' => $columns,
             'data' => $data->getData()

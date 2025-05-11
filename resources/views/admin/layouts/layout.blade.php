@@ -117,25 +117,30 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
-    <script>
-        $(document).ready(function() {
-            console.log("jQuery Loaded:", typeof jQuery);
-
-            // Inisialisasi DataTables
+    {{-- <script>
+        function myFunc(name = '') {
             $('#usersTable').DataTable({
                 processing: true,
                 serverSide: true,
+                destroy: true,
+                initComplete: function() {
+                    $('.dt-search').hide();
+                },
                 ajax: {
                     url: "{{ route('users.data') }}",
-                    type: "GET",
+                    type: "POST",
+                    data: function(d) {
+                        d._token = '{{ csrf_token() }}';
+                        d.name = name; // Mengirim data name
+                    },
                     dataSrc: function(json) {
                         console.log("DataTables Response:", json); // Debugging
-                        return json.data; // Pastikan 'data' sesuai dengan response dari server
+                        return json.data; // Menyaring data yang diterima
                     }
                 },
                 columns: [{
-                        data: 'id',
-                        name: 'id'
+                        data: 'id_user',
+                        name: 'id_user'
                     },
                     {
                         data: 'name',
@@ -157,16 +162,29 @@
                         data: null,
                         name: 'actions',
                         render: function(data, type, row) {
-                            return '<button class="btn btn-warning btn-sm edit-btn" data-id="' + row
-                                .id + '">Edit</button>' +
-                                '<button class="ms-1 btn btn-danger btn-sm delete-btn" data-id="' +
-                                row.id + '">Delete</button>';
+                            return '<button class="btn btn-warning btn-sm edit-btn" data-id="' + row.id +
+                                '">Edit</button>' +
+                                '<button class="ms-1 btn btn-danger btn-sm delete-btn" data-id="' + row.id +
+                                '">Delete</button>';
                         }
                     }
                 ]
             });
-        });
+        }
+
+        myFunc();
+
+        // let typingTimer;
+        // let doneTypingInterval = 500;
+
+        // $('#na').keyup(function() {
+        //     clearTimeout(typingTimer);
+        //     typingTimer = setTimeout(function() {
+        //         myFunc($('#na').val());
+        //     }, doneTypingInterval);
+        // });
     </script>
+
     <script>
         $(document).ready(function() {
             // Event listener untuk tombol Edit
@@ -332,65 +350,95 @@
         });
     </script> --}}
     <script>
-        $(document).ready(function() {
+        function myFunc2(pencarian = '') {
             let table = '';
             @if (isset($table))
                 table = @json($table)
             @endif
-            // Fungsi untuk membuat kolom berdasarkan serverColumns
+    
             function buatColumns(serverColumns) {
-                var columns = serverColumns.map(function(column) {
+                const columns = serverColumns.map(function(column) {
                     return {
                         data: column,
                         name: column
                     };
                 });
-
-                // Menambahkan kolom aksi untuk Edit dan Delete
-                columns.push(createActionColumn());
-
-                return columns;
-            }
-
-            // Fungsi untuk membuat kolom aksi
-            function createActionColumn() {
-                return {
+    
+                columns.push({
                     data: null,
                     name: 'actions',
                     render: function(data, type, row) {
-                        return '<button class="btn btn-warning btn-sm edit-btn-' + table + '" data-id="' + row[
-                                'id_' + table] +
-                            '">Edit</button>' +
+                        return '<button class="btn btn-warning btn-sm edit-btn-' + table + '" data-id="' +
+                            row['id_' + table] + '">Edit</button>' +
                             '<button class="ms-1 btn btn-danger btn-sm delete-btn-' + table + '" data-id="' +
-                            row['id_' + table] +
-                            '">Delete</button>';
+                            row['id_' + table] + '">Delete</button>';
                     }
-                };
+                });
+    
+                return columns;
             }
-
-            // Inisialisasi DataTables
-            $('#' + table + 'Table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "/" + table.replace(/_/g, '-') + "/create",
-                    type: "GET",
-                    dataSrc: function(json) {
-                        // Debugging response untuk memastikan data yang diterima
-                        console.log(json.data);
-                        return json.data.data;
-                    }
+    
+            function renderTableHeaders(columns) {
+                const theadHtml = columns.map(column => {
+                    const label = column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    return `<th>${label}</th>`;
+                }).join('');
+    
+                const fullThead = `${theadHtml}<th>Actions</th>`;
+                $('#' + table + 'Table thead tr').html(fullThead);
+            }
+    
+            $.ajax({
+                url: "/" + table.replace(/_/g, '-') + "/create",
+                type: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    pencarian: pencarian,
+                    columns: 'columns'
                 },
-                columns: @if (isset($columns))
-                    buatColumns(
-                            @json($columns)
-                        ),
-                @else
-                    buatColumns([]),
-                @endif
+                success: function(json) {
+                    renderTableHeaders(json.columns);
+                    $('#' + table + 'Table').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        destroy: true,
+                        initComplete: function() {
+                            $('.dt-search').hide();
+                        },
+                        ajax: {
+                            url: "/" + table.replace(/_/g, '-') + "/create",
+                            type: "POST",
+                            data: function(d) {
+                                d._token = '{{ csrf_token() }}';
+                                d.pencarian = pencarian;
+                                d.start = d.start || 0;
+                                d.length = d.length || 10;
+                            },
+                            dataSrc: function(json) {
+                                return json.data;
+                            }
+                        },
+                        columns: buatColumns(json.columns),
+                        pageLength: 10
+                    });
+                }
             });
+        }
+    
+        myFunc2();
+    
+        let typingTimer;
+        let doneTypingInterval = 500;
+    
+        $('#pencarian').keyup(function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function() {
+                myFunc2($('#pencarian').val());
+            }, doneTypingInterval);
         });
     </script>
+    
+    
     <script>
         $(document).ready(function() {
             let table = '';
