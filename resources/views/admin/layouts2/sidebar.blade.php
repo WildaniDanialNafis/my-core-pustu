@@ -103,7 +103,7 @@
         <li class="menu-title" style="--delay: 1">Main</li>
 
         <li class="menu-item" style="--delay: 2">
-            <a href="/dashboard2" class="active" onclick="loadContent(event, this)">
+            <a href="/dashboard" class="active" onclick="loadContent(event, this)">
                 <span class="menu-icon"><i class="fas fa-home"></i></span>
                 <span class="menu-text">Dashboard</span>
             </a>
@@ -133,12 +133,15 @@
                 <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
             </a>
 
-            <ul class="submenu">
-                <li style="--delay: 1"><a href="/ibu" onclick="loadContent(event, this, 'ibu')">Ibu</a></li>
-                <li style="--delay: 2"><a href="/keluarga" onclick="loadContent(event, this,'keluarga')">Keluarga</a></li>
-                <li style="--delay: 3"><a href="/roles" onclick="loadContent(event, this)">Roles</a></li>
-                <li style="--delay: 4"><a href="/permissions" onclick="loadContent(event, this)">Permissions</a></li>
+            <ul class="submenu list-unstyled">
+                <li class="mb-2" style="--delay: 1"><a href="/ibu" onclick="loadContent(event, this)">Ibu</a></li>
+                <li class="mb-2" style="--delay: 2"><a href="/keluarga" onclick="loadContent(event, this)">Keluarga</a></li>
+                <li class="mb-2" style="--delay: 3"><a href="/roles" onclick="loadContent(event, this)">Roles</a>
+                </li>
+                <li class="mb-2" style="--delay: 4"><a href="/permissions"
+                        onclick="loadContent(event, this)">Permissions</a></li>
             </ul>
+
         </li>
 
         <!-- Other menu items with similar onclick handlers -->

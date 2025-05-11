@@ -87,6 +87,7 @@ use App\Models\BbTbLaki;
 use App\Models\BbTbPerempuan;
 use App\Models\BbULaki;
 use App\Models\BbUPerempuan;
+use App\Models\Ibu;
 use App\Models\ImtLaki;
 use App\Models\ImtPerempuan;
 use App\Models\LingkarKepalaLaki;
@@ -98,7 +99,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard2', function() {
+Route::get('/dashboard2', function () {
     return view('admin.layouts2.main');
 });
 
@@ -107,8 +108,42 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.layouts2.template-table');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/ajax-dashboard', function () {
+    return view('admin.layouts2.main');
+});
+
+Route::get('/ajax-table', function () {
+    $table = 'ibu';
+
+    $columns = Schema::getColumnListing($table);
+
+    $columnTypes = [];
+    foreach ($columns as $column) {
+        $columnTypes[$column] = Schema::getColumnType($table, $column);
+    }
+
+    $ibu = new Ibu();
+
+    $foreignColumn = $ibu->user()->getForeignKeyName();
+
+    $columnDiambil = [$foreignColumn, 'name'];
+
+    $foreignDatas = User::all($columnDiambil);
+
+    // dd($columns);
+
+    return view('admin.layouts2.ajax', [
+        'table' => $table,
+        'columns' => $columns,
+        'columnTypes' => $columnTypes,
+        'foreignDatas' => $foreignDatas,
+        'foreignColumn' => $foreignColumn,
+        'columnDiambil' => $columnDiambil
+    ]);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -172,7 +207,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/coba-tables/delete/{id}', [TablesController::class, 'destroy'])->name('tables.delete');
     Route::post('/users/data', [TablesController::class, 'getUsers'])->name('users.data');
 
-    Route::post('/ajax', function(Request $request) {
+    Route::post('/ajax', function (Request $request) {
         return view('admin.layouts2.ajax', [
             'table' => $request->input('table'),
         ]);

@@ -2,6 +2,6 @@
 
 @section('content')
     <main class="main-content">
-
+        {{-- <button onclick="loadDashboardContent()">Ajax Dashboard</button> --}}
     </main>
 @endsection

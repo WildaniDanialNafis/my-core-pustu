@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Neon Dashboard - Premium Admin Template" />
     <meta name="author" content="" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Neon Dashboard - Premium Admin Template</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
@@ -25,7 +26,7 @@
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttDataTabons.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
 
     <style>
         /* Fix pagination style conflict */
@@ -1056,431 +1057,266 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Custom Script -->
-    {{-- <script>
-        @if (isset($table))
-            const table = "{{ $table }}";
-        @endif
-    </script> --}}
+
+    {{-- @if (Request::is('dashboard'))
+        @include('partials.script-dashboard')
+    @else --}}
+    {{-- @include('partials.script-dinamis') --}}
+    {{-- @endif --}}
+
     <script>
-        // Initialize AOS (Animate On Scroll)
-        AOS.init({
-            once: true
-        });
-
-        // Sidebar Submenu Toggle
-        $(document).ready(function() {
-            $('.menu-item.has-submenu > a').click(function(e) {
-                e.preventDefault();
-                $(this).parent().toggleClass('open');
-                $(this).find('.menu-arrow').toggleClass('rotate-180');
-            });
-
-            // function buatColumns(serverColumns) {
-            //     const columns = serverColumns.map(function(column) {
-            //         return {
-            //             data: column,
-            //             name: column
-            //         };
-            //     });
-
-            //     columns.unshift({
-            //         data: null,
-            //         name: 'actions',
-            //         render: function(data, type, row) {
-            //             return `
-        //                 <div class="d-inline-flex gap-1">
-        //                     <button 
-        //                         class="btn btn-outline-warning btn-sm edit-btn-${table}" 
-        //                         data-id="${row['id_' + table]}" 
-        //                         data-bs-toggle="modal" 
-        //                         data-bs-target="#editModal">
-        //                         Edit
-        //                     </button>
-        //                     <button 
-        //                         class="btn btn-outline-danger btn-sm delete-btn-${table}" 
-        //                         data-id="${row['id_' + table]}" 
-        //                         data-bs-toggle="modal" 
-        //                         data-bs-target="#deleteModal">
-        //                         Delete
-        //                     </button>
-        //                 </div>
-        //             `;
-            //         }
-            //     });
-
-            //     return columns;
-            // }
-
-            // function renderTableHeaders(columns) {
-            //     const theadHtml = columns.map(column => {
-            //         const label = column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            //         return `<th>${label}</th>`;
-            //     }).join('');
-
-            //     const fullThead = `<th>Actions</th>${theadHtml}`;
-            //     $('#' + table + 'Table thead tr').html(fullThead);
-            // }
-
-            // let pencarian = "";
-
-            // $.ajax({
-            //     url: "/" + table.replace(/_/g, '-') + "/create",
-            //     type: "POST",
-            //     data: {
-            //         _token: '{{ csrf_token() }}',
-            //         pencarian: pencarian,
-            //         columns: 'columns'
-            //     },
-            //     success: function(json) {
-            //         renderTableHeaders(json.columns);
-            //         // console.log(json.columns);
-            //         $('#' + table + 'Table').DataTable({
-            //             processing: true,
-            //             serverSide: true,
-            //             destroy: true,
-            //             scrollX: true,
-            //             initComplete: function() {
-            //                 $('.dt-search').hide();
-            //             },
-            //             ajax: {
-            //                 url: "/" + table.replace(/_/g, '-') + "/create",
-            //                 type: "POST",
-            //                 data: function(d) {
-            //                     d._token = '{{ csrf_token() }}';
-            //                     d.pencarian = pencarian;
-            //                     d.start = d.start || 0;
-            //                     d.length = d.length || 10;
-            //                 },
-            //                 dataSrc: function(json) {
-            //                     return json.data;
-            //                 }
-            //             },
-            //             columns: buatColumns(json.columns),
-            //             pageLength: 10
-            //         });
-            //     }
-            // });
-
-            // // Initialize DataTable
-            // $('#ordersTable').DataTable({
-            //     responsive: true,
-            //     dom: '<"top"f>rt<"bottom"lip><"clear">',
-            //     pageLength: 5,
-            //     lengthMenu: [5, 10, 25, 50],
-            //     language: {
-            //         search: "_INPUT_",
-            //         searchPlaceholder: "Search orders...",
-            //     }
-            // });
-
-            // // Revenue Chart
-            // const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-            // const revenueChart = new Chart(revenueCtx, {
-            //     type: 'line',
-            //     data: {
-            //         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-            //         datasets: [{
-            //             label: 'Revenue',
-            //             data: [12000, 19000, 15000, 22000, 24560, 18000, 21000],
-            //             backgroundColor: 'rgba(99, 102, 241, 0.1)',
-            //             borderColor: 'rgba(99, 102, 241, 1)',
-            //             borderWidth: 2,
-            //             tension: 0.4,
-            //             fill: true,
-            //             pointBackgroundColor: '#fff',
-            //             pointBorderWidth: 2,
-            //             pointRadius: 4,
-            //             pointHoverRadius: 6
-            //         }]
-            //     },
-            //     options: {
-            //         responsive: true,
-            //         maintainAspectRatio: false,
-            //         plugins: {
-            //             legend: {
-            //                 display: false
-            //             },
-            //             tooltip: {
-            //                 mode: 'index',
-            //                 intersect: false
-            //             }
-            //         },
-            //         scales: {
-            //             y: {
-            //                 beginAtZero: true,
-            //                 grid: {
-            //                     drawBorder: false,
-            //                     color: 'rgba(0, 0, 0, 0.05)'
-            //                 },
-            //                 ticks: {
-            //                     callback: function(value) {
-            //                         return '$' + value.toLocaleString();
-            //                     }
-            //                 }
-            //             },
-            //             x: {
-            //                 grid: {
-            //                     display: false
-            //                 }
-            //             }
-            //         },
-            //         interaction: {
-            //             mode: 'nearest',
-            //             axis: 'x',
-            //             intersect: false
-            //         }
-            //     }
-            // });
-
-            // // Traffic Chart
-            // const trafficCtx = document.getElementById('trafficChart').getContext('2d');
-            // const trafficChart = new Chart(trafficCtx, {
-            //     type: 'doughnut',
-            //     data: {
-            //         labels: ['Direct', 'Organic', 'Referral', 'Social'],
-            //         datasets: [{
-            //             data: [45, 30, 15, 10],
-            //             backgroundColor: [
-            //                 'rgba(99, 102, 241, 0.8)',
-            //                 'rgba(16, 185, 129, 0.8)',
-            //                 'rgba(245, 158, 11, 0.8)',
-            //                 'rgba(239, 68, 68, 0.8)'
-            //             ],
-            //             borderWidth: 0,
-            //             hoverOffset: 10
-            //         }]
-            //     },
-            //     options: {
-            //         responsive: true,
-            //         maintainAspectRatio: false,
-            //         cutout: '70%',
-            //         plugins: {
-            //             legend: {
-            //                 display: false
-            //             }
-            //         }
-            //     }
-            // });
-
-            // // Chart hover info
-            // const chartHoverInfo = document.getElementById('chartHoverInfo');
-            // document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
-            //     const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
-            //         intersect: false
-            //     }, true);
-            //     if (points.length) {
-            //         const point = points[0];
-            //         const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
-            //         const label = revenueChart.data.labels[point.index];
-
-            //         chartHoverInfo.classList.add('visible');
-            //         chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
-            //         chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
-            //         chartHoverInfo.style.top = `${evt.offsetY}px`;
-            //     } else {
-            //         chartHoverInfo.classList.remove('visible');
-            //     }
-            // });
-
-            // document.getElementById('revenueChart').addEventListener('mouseout', function() {
-            //     chartHoverInfo.classList.remove('visible');
-            // });
-
-            // Header scroll effect
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 10) {
-                    $('.header').addClass('scrolled');
-                } else {
-                    $('.header').removeClass('scrolled');
-                }
-            });
-
-            // Search functionality
-            $('#searchInput').on('input', function() {
-                const searchTerm = $(this).val().toLowerCase();
-                if (searchTerm.length > 2) {
-                    // Implement search logic here
-                    console.log('Searching for:', searchTerm);
-                }
-            });
-
-            // Notification dropdown
-            $('#notificationBtn').click(function() {
-                // Implement notification dropdown
-                alert('Notifications would appear here');
-            });
-
-            // User profile dropdown
-            $('#userBtn').click(function() {
-                // Implement user dropdown
-                alert('User menu would appear here');
-            });
-
+        document.addEventListener('DOMContentLoaded', function() {
+            setActiveSidebarItemFromURL();
+            if (window.location.pathname === '/dashboard') {
+                loadDashboardContent();
+            } else {
+                loadTableContent('ibu');
+            }
         });
     </script>
 
-    {{-- <script>
-        $(document).ready(function() {
-            const createFormSelector = '#ibuAddForm';
-            const createModalSelector = '#ibuAddModal';
+    <script>
+        function loadDashboardContent() {
+            const mainContent = document.querySelector('.main-content');
 
-            $('#add-btn-ibu').on('click', function() {
-                $(createFormSelector).attr('action', '/ibu/store');
-                $(createModalSelector).modal('show');
-            });
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
 
-            $(createFormSelector).submit(function(e) {
-                e.preventDefault();
-                const url = $(this).attr('action');
-                const formData = $(this).serialize();
+            mainContent.innerHTML = '<div class="loading">Loading...</div>';
 
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
+            fetch('/ajax-dashboard', {
+                    method: 'GET',
                     headers: {
-                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                    },
-                    success: function(response) {
-                        $(createModalSelector).modal('hide');
-                        $('#ibuTable').DataTable().ajax.reload(null, false);
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: response.message || 'Data berhasil ditambahkan!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseJSON);
-                        alert('Terjadi kesalahan saat menambah data.');
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
                     }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                })
+                .then(() => {
+                    AOS.init({
+                        once: true
+                    });
+
+                    // Sidebar Submenu Toggle
+                    $(document).ready(function() {
+                        $('.menu-item.has-submenu > a').click(function(e) {
+                            e.preventDefault();
+                            $(this).parent().toggleClass('open');
+                            $(this).find('.menu-arrow').toggleClass('rotate-180');
+                        });
+
+                        // Initialize DataTable
+                        $('#ordersTable').DataTable({
+                            responsive: true,
+                            dom: '<"top"f>rt<"bottom"lip><"clear">',
+                            pageLength: 5,
+                            lengthMenu: [5, 10, 25, 50],
+                            language: {
+                                search: "_INPUT_",
+                                searchPlaceholder: "Search orders...",
+                            }
+                        });
+
+                        // Revenue Chart
+                        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+                        const revenueChart = new Chart(revenueCtx, {
+                            type: 'line',
+                            data: {
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                                datasets: [{
+                                    label: 'Revenue',
+                                    data: [12000, 19000, 15000, 22000, 24560, 18000, 21000],
+                                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                                    borderColor: 'rgba(99, 102, 241, 1)',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    fill: true,
+                                    pointBackgroundColor: '#fff',
+                                    pointBorderWidth: 2,
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltip: {
+                                        mode: 'index',
+                                        intersect: false
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        grid: {
+                                            drawBorder: false,
+                                            color: 'rgba(0, 0, 0, 0.05)'
+                                        },
+                                        ticks: {
+                                            callback: function(value) {
+                                                return '$' + value.toLocaleString();
+                                            }
+                                        }
+                                    },
+                                    x: {
+                                        grid: {
+                                            display: false
+                                        }
+                                    }
+                                },
+                                interaction: {
+                                    mode: 'nearest',
+                                    axis: 'x',
+                                    intersect: false
+                                }
+                            }
+                        });
+
+                        // Traffic Chart
+                        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+                        const trafficChart = new Chart(trafficCtx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Direct', 'Organic', 'Referral', 'Social'],
+                                datasets: [{
+                                    data: [45, 30, 15, 10],
+                                    backgroundColor: [
+                                        'rgba(99, 102, 241, 0.8)',
+                                        'rgba(16, 185, 129, 0.8)',
+                                        'rgba(245, 158, 11, 0.8)',
+                                        'rgba(239, 68, 68, 0.8)'
+                                    ],
+                                    borderWidth: 0,
+                                    hoverOffset: 10
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '70%',
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        });
+
+                        // Chart hover info
+                        const chartHoverInfo = document.getElementById('chartHoverInfo');
+                        document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                            const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                                intersect: false
+                            }, true);
+                            if (points.length) {
+                                const point = points[0];
+                                const value = revenueChart.data.datasets[point.datasetIndex].data[point
+                                    .index];
+                                const label = revenueChart.data.labels[point.index];
+
+                                chartHoverInfo.classList.add('visible');
+                                chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                                chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                                chartHoverInfo.style.top = `${evt.offsetY}px`;
+                            } else {
+                                chartHoverInfo.classList.remove('visible');
+                            }
+                        });
+
+                        document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                            chartHoverInfo.classList.remove('visible');
+                        });
+
+                        // Header scroll effect
+                        $(window).scroll(function() {
+                            if ($(this).scrollTop() > 10) {
+                                $('.header').addClass('scrolled');
+                            } else {
+                                $('.header').removeClass('scrolled');
+                            }
+                        });
+
+                        // Search functionality
+                        $('#searchInput').on('input', function() {
+                            const searchTerm = $(this).val().toLowerCase();
+                            if (searchTerm.length > 2) {
+                                // Implement search logic here
+                                console.log('Searching for:', searchTerm);
+                            }
+                        });
+
+                        // Notification dropdown
+                        $('#notificationBtn').click(function() {
+                            // Implement notification dropdown
+                            alert('Notifications would appear here');
+                        });
+
+                        // User profile dropdown
+                        $('#userBtn').click(function() {
+                            // Implement user dropdown
+                            alert('User menu would appear here');
+                        });
+                    });
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
                 });
-            });
-        });
+        }
     </script>
 
     <script>
-        $(document).ready(function() {
-            const formSelector = '#ibuEditForm';
-            const modalSelector = '#ibuEditModal';
+        function setActiveSidebarItemFromURL() {
+            const path = window.location.pathname;
+            const cleanPath = path.split('/')[1];
 
-            $(document).on('click', '.edit-btn-ibu', function() {
-                const id = $(this).data('id');
+            $('.sidebar-menu a').removeClass('active');
 
-                $.get(`/ibu/edit/${id}`, function(data) {
-                    const ibu = data.data;
+            $(`.sidebar-menu a[href^="/${cleanPath}"]`).addClass('active');
 
-                    @foreach ($columns as $index => $column)
-                        @if (!($index === 0 || in_array($column, ['created_at', 'updated_at'])))
-                            $(`${formSelector} [name='{{ $column }}']`).val(ibu[
-                                "{{ $column }}"]);
-                        @endif
-                    @endforeach
-
-                    $(formSelector).attr('action', `/ibu/update/${id}`);
-                    $(modalSelector).modal('show');
-                });
-            });
-
-            $(formSelector).submit(function(e) {
-                e.preventDefault();
-                const url = $(this).attr('action');
-                const formData = $(this).serialize();
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                    },
-                    success: function(response) {
-                        $(modalSelector).modal('hide');
-                        $('#ibuTable').DataTable().ajax.reload(null, false);
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: response.message || 'Data berhasil diperbarui!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseJSON);
-                        alert('Terjadi kesalahan saat memperbarui data.');
-                    }
-                });
-            });
-        });
+            $(`.sidebar-menu a[href^="/${cleanPath}"]`).closest('.has-submenu').addClass('open');
+        }
     </script>
 
     <script>
-        $(document).ready(function() {
+        function loadTableContent(table) {
+            // console.log("Parameter table yang diterima:", table);
+            const mainContent = document.querySelector('.main-content');
 
-            var selectedRow;
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
 
-            $(document).on('click', '.delete-btn-' + table, function() {
-                var userId = $(this).data('id');
-                selectedRow = $(this).closest('tr'); // simpan baris terkait
+            mainContent.innerHTML = '<div class="loading">Loading...</div>';
 
-                var formAction = '/' + table.replace(/_/g, '-') + '/delete/' + userId;
+            function renderTableHeaders(columns) {
+                if (!Array.isArray(columns)) return;
 
-                $('#' + table + 'DeleteForm').attr('action', formAction);
-                $('#' + table + 'DeleteModal').modal('show');
-            });
+                const theadHtml = columns.map(column => {
+                    return `<th>${column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</th>`;
+                }).join('');
 
-            // Submit form dengan AJAX
-            $('#' + table + 'DeleteForm').on('submit', function(e) {
-                e.preventDefault();
+                // Update header tabel langsung
+                $('#ibuTable thead tr').html(`<th>Actions</th>${theadHtml}`);
+            }
 
-                var form = $(this);
-                var actionUrl = form.attr('action');
+            function createColumns(serverColumns) {
+                if (!Array.isArray(serverColumns)) return [];
 
-                $.ajax({
-                    url: actionUrl,
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function(response) {
-                        $('#' + table + 'Table').DataTable().row(selectedRow).remove().draw();
-                        $('#' + table + 'DeleteModal').modal('hide');
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: response.success || 'Data berhasil dihapus!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script> --}}
-
-    <script>
-        function initializeApp(table) {
-            // Initialize AOS (Animate On Scroll)
-            AOS.init({
-                once: true
-            });
-
-            // Sidebar Submenu Toggle
-            $('.menu-item.has-submenu > a').click(function(e) {
-                e.preventDefault();
-                $(this).parent().toggleClass('open');
-                $(this).find('.menu-arrow').toggleClass('rotate-180');
-            });
-
-            // Table Columns Configuration
-            function buatColumns(serverColumns) {
                 const columns = serverColumns.map(function(column) {
                     return {
                         data: column,
@@ -1492,23 +1328,24 @@
                     data: null,
                     name: 'actions',
                     render: function(data, type, row) {
+                        const id = row['id_' + table] || '';
                         return `
-                        <div class="d-inline-flex gap-1">
-                            <button 
-                                class="btn btn-outline-warning btn-sm edit-btn-${table}" 
-                                data-id="${row['id_' + table]}" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#editModal">
-                                Edit
-                            </button>
-                            <button 
-                                class="btn btn-outline-danger btn-sm delete-btn-${table}" 
-                                data-id="${row['id_' + table]}" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#deleteModal">
-                                Delete
-                            </button>
-                        </div>
+                    <div class="d-inline-flex gap-1">
+                        <button 
+                            class="btn btn-outline-warning btn-sm edit-btn-${table}" 
+                            data-id="${id}" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#editModal">
+                            Edit
+                        </button>
+                        <button 
+                            class="btn btn-outline-danger btn-sm delete-btn-${table}" 
+                            data-id="${id}" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteModal">
+                            Delete
+                        </button>
+                    </div>
                     `;
                     }
                 });
@@ -1516,283 +1353,338 @@
                 return columns;
             }
 
-            function renderTableHeaders(columns) {
-                const theadHtml = columns.map(column => {
-                    const label = column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    return `<th>${label}</th>`;
-                }).join('');
 
-                const fullThead = `<th>Actions</th>${theadHtml}`;
-                // console.log(fullThead);
-                // console.log(table);
-                $('#' + table + 'Table thead tr').html(fullThead);
-            }
-
-            // DataTable Initialization
             let pencarian = "";
-            $.ajax({
-                url: "/" + table.replace(/_/g, '-') + "/create",
-                type: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    pencarian: pencarian,
-                    columns: 'columns'
-                },
-                success: function(json) {
-                    renderTableHeaders(json.columns);
-                    $('#' + table + 'Table').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        destroy: true,
-                        scrollX: true,
-                        initComplete: function() {
-                            $('.dt-search').hide();
-                        },
-                        ajax: {
-                            url: "/" + table.replace(/_/g, '-') + "/create",
-                            type: "POST",
-                            data: function(d) {
-                                d._token = '{{ csrf_token() }}';
-                                d.pencarian = pencarian;
-                                d.start = d.start || 0;
-                                d.length = d.length || 10;
-                            },
-                            dataSrc: function(json) {
-                                return json.data;
-                            }
-                        },
-                        columns: buatColumns(json.columns),
-                        pageLength: 10
-                    });
-                }
-            });
 
-            // Modal handling for Add, Edit, Delete
-            // Add New Record
-            $('#add-btn-' + table).on('click', function() {
-                const createFormSelector = '#' + table + 'AddForm';
-                const createModalSelector = '#' + table + 'AddModal';
-                $(createFormSelector).attr('action', '/' + table + '/store');
-                $(createModalSelector).modal('show');
-            });
-
-            $('#' + table + 'AddForm').submit(function(e) {
-                e.preventDefault();
-                const url = $(this).attr('action');
-                const formData = $(this).serialize();
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
+            fetch('/ajax-table', {
+                    method: 'GET',
                     headers: {
-                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                        'Content-Type': 'application/json'
                     },
-                    success: function(response) {
-                        $('#' + table + 'AddModal').modal('hide');
-                        $('#' + table + 'Table').DataTable().ajax.reload(null, false);
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: response.message || 'Data berhasil ditambahkan!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseJSON);
-                        alert('Terjadi kesalahan saat menambah data.');
-                    }
-                });
-            });
-
-            // Edit Record
-            $(document).on('click', '.edit-btn-' + table, function() {
-                const id = $(this).data('id');
-                const formSelector = '#' + table + 'EditForm';
-                const modalSelector = '#' + table + 'EditModal';
-
-                $.get('/' + table + '/edit/' + id, function(data) {
-                    const record = data.data;
-                    @foreach ($columns as $index => $column)
-                        @if (!($index === 0 || in_array($column, ['created_at', 'updated_at'])))
-                            $(`${formSelector} [name='{{ $column }}']`).val(record[
-                                "{{ $column }}"]);
-                        @endif
-                    @endforeach
-
-                    $(formSelector).attr('action', '/' + table + '/update/' + id);
-                    $(modalSelector).modal('show');
-                });
-            });
-
-            $('#' + table + 'EditForm').submit(function(e) {
-                e.preventDefault();
-                const url = $(this).attr('action');
-                const formData = $(this).serialize();
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                    },
-                    success: function(response) {
-                        $('#' + table + 'EditModal').modal('hide');
-                        $('#' + table + 'Table').DataTable().ajax.reload(null, false);
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: response.message || 'Data berhasil diperbarui!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseJSON);
-                        alert('Terjadi kesalahan saat memperbarui data.');
-                    }
-                });
-            });
-
-            // Delete Record
-            var selectedRow;
-            $(document).on('click', '.delete-btn-' + table, function() {
-                var userId = $(this).data('id');
-                selectedRow = $(this).closest('tr');
-                var formAction = '/' + table.replace(/_/g, '-') + '/delete/' + userId;
-                $('#' + table + 'DeleteForm').attr('action', formAction);
-                $('#' + table + 'DeleteModal').modal('show');
-            });
-
-            $('#' + table + 'DeleteForm').on('submit', function(e) {
-                e.preventDefault();
-                var form = $(this);
-                var actionUrl = form.attr('action');
-
-                $.ajax({
-                    url: actionUrl,
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function(response) {
-                        $('#' + table + 'Table').DataTable().row(selectedRow).remove().draw();
-                        $('#' + table + 'DeleteModal').modal('hide');
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: response.success || 'Data berhasil dihapus!',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
-
-            // Header scroll effect
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 10) {
-                    $('.header').addClass('scrolled');
-                } else {
-                    $('.header').removeClass('scrolled');
-                }
-            });
-
-            // Search functionality
-            $('#searchInput').on('input', function() {
-                const searchTerm = $(this).val().toLowerCase();
-                if (searchTerm.length > 2) {
-                    console.log('Searching for:', searchTerm);
-                }
-            });
-
-            // Notification dropdown
-            $('#notificationBtn').click(function() {
-                alert('Notifications would appear here');
-            });
-
-            // User profile dropdown
-            $('#userBtn').click(function() {
-                alert('User menu would appear here');
-            });
-        }
-
-        $(document).ready(function() {
-            @if (isset($table))
-                initializeApp("{{ $table }}");
-            @endif
-        });
-    </script>
-
-    <script>
-        function loadContent(event, element, tabel) {
-            event.preventDefault();
-            const url = '/ajax';
-
-            document.querySelectorAll('.sidebar-menu a').forEach(link => {
-                link.classList.remove('active');
-            });
-            element.classList.add('active');
-
-            const mainContent = document.querySelector('.main-content');
-            if (!mainContent) {
-                console.error('Elemen .main-content tidak ditemukan.');
-                return;
-            }
-
-            mainContent.innerHTML = '<div class="loading">Loading...</div>';
-
-            fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        table: tabel
-                    })
                 })
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
                 .then(html => {
                     mainContent.innerHTML = html;
-                    history.pushState({}, '', '/' + tabel);
-                    initPageScripts();
                 })
                 .then(() => {
-                    initializeApp(tabel);
+                    AOS.init({
+                        once: true
+                    });
+                })
+                .then(() => {
+                    $.ajax({
+                        url: "/" + table.replace(/_/g, '-') + "/create",
+                        type: "POST",
+                        data: {
+                            _token: document.querySelector('meta[name="csrf-token"]')?.content || '',
+                            pencarian: pencarian,
+                            columns: 'columns'
+                        },
+                        success: function(json) {
+                            console.log(json.columns);
+                            renderTableHeaders(json.columns);
+                            const dataTable = $(`#${table}Table`);
+                            if (dataTable.length) {
+                                dataTable.DataTable({
+                                    processing: true,
+                                    serverSide: true,
+                                    destroy: true,
+                                    scrollX: true,
+                                    initComplete: function() {
+                                        $('.dt-search').hide();
+                                    },
+                                    ajax: {
+                                        url: "/" + table.replace(/_/g, '-') + "/create",
+                                        type: "POST",
+                                        data: function(d) {
+                                            d._token = document.querySelector(
+                                                    'meta[name="csrf-token"]')?.content || '',
+                                                d.pencarian = pencarian;
+                                            d.start = d.start || 0;
+                                            d.length = d.length || 10;
+                                        },
+                                        dataSrc: function(json) {
+                                            return json.data || [];
+                                        }
+                                    },
+                                    columns: createColumns(json.columns),
+                                    pageLength: 10
+                                });
+                            }
+                        }
+                    });
+                })
+                .then(() => {
+                    // Add New Record
+                    $(`#add-btn-${table}`).off('click').on('click', function() {
+                        const createFormSelector = `#${table}AddForm`;
+                        const createModalSelector = `#${table}AddModal`;
+
+                        if ($(createFormSelector).length && $(createModalSelector).length) {
+                            $(createFormSelector).attr('action', `/${table}/store`);
+                            $(createModalSelector).modal('show');
+                        }
+                    });
+
+                    $(`#${table}AddForm`).off('submit').on('submit', function(e) {
+                        e.preventDefault();
+                        const url = $(this).attr('action');
+                        const formData = $(this).serialize();
+
+                        if (!url) return;
+
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                            },
+                            success: function(response) {
+                                $(`#${table}AddModal`).modal('hide');
+                                $(`#${table}Table`).DataTable().ajax.reload(null, false);
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: response?.message || 'Data berhasil ditambahkan!',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            },
+                            error: function(xhr) {
+                                console.error('Error:', xhr?.responseJSON || xhr.responseText);
+                                alert('Terjadi kesalahan saat menambah data.');
+                            }
+                        });
+                    });
+
+                    // Edit Record
+                    $(document).off('click', `.edit-btn-${table}`).on('click', `.edit-btn-${table}`, function() {
+                        const id = $(this).data('id');
+                        const formSelector = `#${table}EditForm`;
+                        const modalSelector = `#${table}EditModal`;
+
+                        if (!id || !$(formSelector).length || !$(modalSelector).length) return;
+
+                        $.get(`/${table}/edit/${id}`, function(data) {
+                            if (data?.data) {
+                                const record = data.data;
+                                @foreach ($columns ?? [] as $index => $column)
+                                    @if (!($index === 0 || in_array($column, ['created_at', 'updated_at'])))
+                                        $(`${formSelector} [name='{{ $column }}']`).val(record[
+                                            "{{ $column }}"]);
+                                    @endif
+                                @endforeach
+
+                                $(formSelector).attr('action', `/${table}/update/${id}`);
+                                $(modalSelector).modal('show');
+                            }
+                        }).fail(function(xhr) {
+                            console.error('Error loading edit data:', xhr.responseText);
+                        });
+                    });
+
+                    $(`#${table}EditForm`).off('submit').on('submit', function(e) {
+                        e.preventDefault();
+                        const url = $(this).attr('action');
+                        const formData = $(this).serialize();
+
+                        if (!url) return;
+
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                            },
+                            success: function(response) {
+                                $(`#${table}EditModal`).modal('hide');
+                                $(`#${table}Table`).DataTable().ajax.reload(null, false);
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: response?.message || 'Data berhasil diperbarui!',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            },
+                            error: function(xhr) {
+                                console.error('Error:', xhr?.responseJSON || xhr.responseText);
+                                alert('Terjadi kesalahan saat memperbarui data.');
+                            }
+                        });
+                    });
+
+                    // Delete Record
+                    let selectedRow;
+                    $(document).off('click', `.delete-btn-${table}`).on('click', `.delete-btn-${table}`, function() {
+                        const userId = $(this).data('id');
+                        const deleteForm = $(`#${table}DeleteForm`);
+                        const deleteModal = $(`#${table}DeleteModal`);
+
+                        if (!userId || !deleteForm.length || !deleteModal.length) return;
+
+                        selectedRow = $(this).closest('tr');
+                        deleteForm.attr('action', `/${table.replace(/_/g, '-')}/delete/${userId}`);
+                        deleteModal.modal('show');
+                    });
+
+                    $(`#${table}DeleteForm`).off('submit').on('submit', function(e) {
+                        e.preventDefault();
+                        const url = $(this).attr('action');
+                        const formData = $(this).serialize();
+
+                        if (!url || !selectedRow) return;
+
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                            },
+                            success: function(response) {
+                                const dataTable = $(`#${table}Table`).DataTable();
+                                if (dataTable) {
+                                    dataTable.row(selectedRow).remove().draw();
+                                }
+                                $(`#${table}DeleteModal`).modal('hide');
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: response?.success || 'Data berhasil dihapus!',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            },
+                            error: function(xhr) {
+                                console.error('Error:', xhr.responseText);
+                            }
+                        });
+                    });
+
                 })
                 .catch(error => {
-                    mainContent.innerHTML = `<div class="error">Error loading content: ${error.message}</div>`;
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
                 });
+
         }
-
-        window.addEventListener('popstate', function() {
-            loadContent({
-                preventDefault: () => {}
-            }, {
-                getAttribute: () => location.pathname,
-                classList: document.querySelector(`.sidebar-menu a[href="${location.pathname}"]`)?.classList
-            });
-        });
-
-        function initPageScripts() {
-            console.log('Initializing scripts for new content');
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const initialLink = document.querySelector('.sidebar-menu a.active') ||
-                document.querySelector('.sidebar-menu a');
-            if (initialLink) {
-                loadContent({
-                    preventDefault: () => {}
-                }, initialLink);
-            }
-        });
     </script>
 
+    {{-- @if (isset($table))
+        <script>
+            function initializeDataTableWithActions(table) {
+                if (!table) return;
+
+                let pencarian = "";
+
+                // AJAX call to fetch table columns and data
+                $.ajax({
+                    url: "/" + table.replace(/_/g, '-') + "/create",
+                    type: "POST",
+                    data: {
+                        _token: getSafeValue($('meta[name="csrf-token"]').attr('content'), ''),
+                        pencarian: pencarian,
+                        columns: 'columns'
+                    },
+                    success: function(json) {
+                        if (json && json.columns) {
+                            // Render table headers
+                            const theadHtml = json.columns.map(column => {
+                                const label = typeof column === 'string' ?
+                                    column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) :
+                                    '';
+                                return `<th>${label}</th>`;
+                            }).join('');
+                            const fullThead = `<th>Actions</th>${theadHtml}`;
+                            const tableHeader = $(`#${table}Table thead tr`);
+                            if (tableHeader.length) {
+                                tableHeader.html(fullThead);
+                            }
+
+                            // Initialize DataTable
+                            const dataTable = $(`#${table}Table`);
+                            if (dataTable.length) {
+                                dataTable.DataTable({
+                                    processing: true,
+                                    serverSide: true,
+                                    destroy: true,
+                                    scrollX: true,
+                                    initComplete: function() {
+                                        $('.dt-search').hide();
+                                    },
+                                    ajax: {
+                                        url: "/" + table.replace(/_/g, '-') + "/create",
+                                        type: "POST",
+                                        data: function(d) {
+                                            d._token = getSafeValue($('meta[name="csrf-token"]').attr(
+                                                'content'), '');
+                                            d.pencarian = pencarian;
+                                            d.start = d.start || 0;
+                                            d.length = d.length || 10;
+                                        },
+                                        dataSrc: function(json) {
+                                            return json.data || [];
+                                        }
+                                    },
+                                    columns: [{
+                                            data: null,
+                                            name: 'actions',
+                                            render: function(data, type, row) {
+                                                const id = row['id_' + table] || '';
+                                                return `
+                                                <div class="d-inline-flex gap-1">
+                                                    <button 
+                                                        class="btn btn-outline-warning btn-sm edit-btn-${table}" 
+                                                        data-id="${id}" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#editModal">
+                                                        Edit
+                                                    </button>
+                                                    <button 
+                                                        class="btn btn-outline-danger btn-sm delete-btn-${table}" 
+                                                        data-id="${id}" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#deleteModal">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            `;
+                                            }
+                                        },
+                                        ...json.columns.map(function(column) {
+                                            return {
+                                                data: column,
+                                                name: column
+                                            };
+                                        })
+                                    ],
+                                    pageLength: 10
+                                });
+                            }
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading table data:', xhr.responseText);
+                    }
+                });
+            }
+
+            // Call the function with the table name as input
+            const table = 'ibu'; // Set your table name here
+            initializeDataTableWithActions(table);
+        </script>
+    @endif --}}
 </body>
 
 </html>
