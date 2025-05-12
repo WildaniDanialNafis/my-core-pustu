@@ -1102,22 +1102,16 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Custom Sidebar Ibu -->
+    <script src="{{ asset('sidebar/sidebar-ibu.js') }}"></script>
+
+    <!-- Custom Sidebar Anak -->
+    <script src="{{ asset('sidebar/sidebar-anak.js') }}"></script>
 
     <script>
         @if (isset($table))
             let table = "{{ $table }}";
         @endif
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setActiveSidebarItemFromURL();
-            if (window.location.pathname === '/dashboard') {
-                loadDashboardContent();
-            } else {
-                loadTableContent(table);
-            }
-        });
     </script>
 
     <script>
@@ -1323,12 +1317,10 @@
 
     <script>
         function setActiveSidebarItemFromURL(pathname = window.location.pathname) {
-            const cleanPath = pathname.split('/')[1];
-
             $('.sidebar-menu a').removeClass('active');
             $('.has-submenu').removeClass('open');
 
-            const activeLink = $(`.sidebar-menu a[href^="/${cleanPath}"]`);
+            const activeLink = $(`.sidebar-menu a[href="${pathname}"]`);
             if (activeLink.length) {
                 activeLink.addClass('active');
 
@@ -1347,7 +1339,10 @@
             if (url === '/dashboard') {
                 loadDashboardContent();
             } else {
-                const match = url.match(/^\/([a-zA-Z0-9\-]+)$/);
+                try {
+                    match = url.match(/^\/([a-zA-Z0-9\-]+)$/);
+                } catch (_) {
+                }
                 if (match) {
                     const tableSlug = match[1];
                     const table = tableSlug.replace(/-/g, '_');
@@ -1357,7 +1352,6 @@
 
             setActiveSidebarItemFromURL(url);
         }
-
 
         $(document).ready(function() {
             setActiveSidebarItemFromURL();
@@ -1657,117 +1651,6 @@
             }
         }
     </script>
-
-    {{-- @if (isset($table))
-        <script>
-            function initializeDataTableWithActions(table) {
-                if (!table) return;
-
-                let pencarian = "";
-
-                // AJAX call to fetch table columns and data
-                $.ajax({
-                    url: "/" + table.replace(/_/g, '-') + "/create",
-                    type: "POST",
-                    data: {
-                        _token: getSafeValue($('meta[name="csrf-token"]').attr('content'), ''),
-                        pencarian: pencarian,
-                        columns: 'columns'
-                    },
-                    success: function(json) {
-                        if (json && json.columns) {
-                            // Render table headers
-                            const theadHtml = json.columns.map(column => {
-                                const label = typeof column === 'string' ?
-                                    column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) :
-                                    '';
-                                return `<th>${label}</th>`;
-                            }).join('');
-                            const fullThead = `<th>Actions</th>${theadHtml}`;
-                            const tableHeader = $(`#${table}Table thead tr`);
-                            if (tableHeader.length) {
-                                tableHeader.html(fullThead);
-                            }
-
-                            // Initialize DataTable
-                            const dataTable = $(`#${table}Table`);
-                            if (dataTable.length) {
-                                dataTable.DataTable({
-                                    processing: true,
-                                    serverSide: true,
-                                    destroy: true,
-                                    scrollX: true,
-                                    initComplete: function() {
-                                        $('.dt-search').hide();
-                                    },
-                                    ajax: {
-                                        url: "/" + table.replace(/_/g, '-') + "/create",
-                                        type: "POST",
-                                        data: function(d) {
-                                            d._token = getSafeValue($('meta[name="csrf-token"]').attr(
-                                                'content'), '');
-                                            d.pencarian = pencarian;
-                                            d.start = d.start || 0;
-                                            d.length = d.length || 10;
-                                        },
-                                        dataSrc: function(json) {
-                                            return json.data || [];
-                                        }
-                                    },
-                                    columns: [{
-                                            data: null,
-                                            name: 'actions',
-                                            render: function(data, type, row) {
-                                                const id = row['id_' + table] || '';
-                                                return `
-                                                <div class="d-inline-flex gap-1">
-                                                    <button 
-                                                        class="btn btn-outline-warning btn-sm edit-btn-${table}" 
-                                                        data-id="${id}" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#editModal">
-                                                        Edit
-                                                    </button>
-                                                    <button 
-                                                        class="btn btn-outline-danger btn-sm delete-btn-${table}" 
-                                                        data-id="${id}" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#deleteModal">
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            `;
-                                            }
-                                        },
-                                        ...json.columns.map(function(column) {
-                                            return {
-                                                data: column,
-                                                name: column
-                                            };
-                                        })
-                                    ],
-                                    pageLength: 10
-                                });
-                            }
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error('Error loading table data:', xhr.responseText);
-                    }
-                });
-            }
-
-            // Call the function with the table name as input
-            const table = 'ibu'; // Set your table name here
-            initializeDataTableWithActions(table);
-        </script>
-    @endif --}}
-
-    {{-- @if (Request::is('dashboard'))
-        @include('partials.script-dashboard')
-    @else --}}
-    {{-- @include('partials.script-dinamis') --}}
-    {{-- @endif --}}
 </body>
 
 </html>
