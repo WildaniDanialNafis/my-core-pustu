@@ -228,7 +228,7 @@
                 <div class="top-products-list">
                     <div class="product-item d-flex mb-3">
                         <div class="product-img me-3">
-                            <img src="https://via.placeholder.com/60" class="rounded" width="60" height="60">
+                            <img src="" class="rounded" width="60" height="60">
                         </div>
                         <div class="product-info">
                             <h6 class="mb-0">Wireless Headphones</h6>
@@ -242,7 +242,7 @@
 
                     <div class="product-item d-flex mb-3">
                         <div class="product-img me-3">
-                            <img src="https://via.placeholder.com/60" class="rounded" width="60" height="60">
+                            <img src="" class="rounded" width="60" height="60">
                         </div>
                         <div class="product-info">
                             <h6 class="mb-0">Smart Watch</h6>
@@ -256,7 +256,7 @@
 
                     <div class="product-item d-flex mb-3">
                         <div class="product-img me-3">
-                            <img src="https://via.placeholder.com/60" class="rounded" width="60" height="60">
+                            <img src="" class="rounded" width="60" height="60">
                         </div>
                         <div class="product-info">
                             <h6 class="mb-0">Bluetooth Speaker</h6>
@@ -270,7 +270,7 @@
 
                     <div class="product-item d-flex">
                         <div class="product-img me-3">
-                            <img src="https://via.placeholder.com/60" class="rounded" width="60" height="60">
+                            <img src="" class="rounded" width="60" height="60">
                         </div>
                         <div class="product-info">
                             <h6 class="mb-0">Fitness Tracker</h6>

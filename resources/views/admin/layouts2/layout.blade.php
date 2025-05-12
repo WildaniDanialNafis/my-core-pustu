@@ -1339,10 +1339,7 @@
             if (url === '/dashboard') {
                 loadDashboardContent();
             } else {
-                try {
-                    match = url.match(/^\/([a-zA-Z0-9\-]+)$/);
-                } catch (_) {
-                }
+                match = url.match(/^\/([a-zA-Z0-9\-]+)$/);
                 if (match) {
                     const tableSlug = match[1];
                     const table = tableSlug.replace(/-/g, '_');
@@ -1364,14 +1361,15 @@
             $('.submenu a, .sidebar-menu a').on('click', function(event) {
                 event.preventDefault();
                 const url = $(this).attr('href');
-                loadPage(url, true);
+                if (url) {
+                    loadPage(url, true);
+                }
             });
 
             window.onpopstate = function() {
                 loadPage(window.location.pathname, false);
             };
 
-            // Inisialisasi tabel saat pertama kali load
             loadPage(window.location.pathname, false);
         });
     </script>
