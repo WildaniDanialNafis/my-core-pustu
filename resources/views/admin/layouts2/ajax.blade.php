@@ -45,6 +45,6 @@
             </div>
         </div>
 
-        {{-- @include('admin.layouts2.create-modal') --}}
+        @include('admin.layouts2.create-modal')
         @include('admin.layouts2.edit-modal')
         @include('admin.layouts2.delete-modal')

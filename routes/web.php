@@ -7,6 +7,7 @@ use App\Http\Controllers\AnakBalitaController;
 use App\Http\Controllers\AnakController;
 use App\Http\Controllers\BayiBaruLahirController;
 use App\Http\Controllers\BayiController;
+use App\Http\Controllers\BayiLahirController;
 use App\Http\Controllers\BbTbLakiController;
 use App\Http\Controllers\BbTbPerempuanController;
 use App\Http\Controllers\BbULakiController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\DataKmsPerempuanController;
 use App\Http\Controllers\EvaluasiKehamilanController;
 use App\Http\Controllers\EvaluasiKesehatanBumilController;
 use App\Http\Controllers\Ibu2Controller;
+use App\Http\Controllers\IbuBersalinController;
 use App\Http\Controllers\IbuController;
 use App\Http\Controllers\IdentitasAnakController;
 use App\Http\Controllers\ImtLakiController;
@@ -90,6 +92,7 @@ use App\Models\BbUPerempuan;
 use App\Models\Ibu;
 use App\Models\ImtLaki;
 use App\Models\ImtPerempuan;
+use App\Models\Keluarga;
 use App\Models\LingkarKepalaLaki;
 use App\Models\LingkarKepalaPerempuan;
 use App\Models\TbULaki;
@@ -98,6 +101,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 Route::get('/dashboard2', function () {
     return view('admin.layouts2.main');
@@ -111,39 +115,6 @@ Route::get('/dashboard', function () {
     return view('admin.layouts2.template-table');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/ajax-dashboard', function () {
-    return view('admin.layouts2.main');
-});
-
-Route::get('/ajax-table', function () {
-    $table = 'ibu';
-
-    $columns = Schema::getColumnListing($table);
-
-    $columnTypes = [];
-    foreach ($columns as $column) {
-        $columnTypes[$column] = Schema::getColumnType($table, $column);
-    }
-
-    $ibu = new Ibu();
-
-    $foreignColumn = $ibu->user()->getForeignKeyName();
-
-    $columnDiambil = [$foreignColumn, 'name'];
-
-    $foreignDatas = User::all($columnDiambil);
-
-    // dd($columns);
-
-    return view('admin.layouts2.ajax', [
-        'table' => $table,
-        'columns' => $columns,
-        'columnTypes' => $columnTypes,
-        'foreignDatas' => $foreignDatas,
-        'foreignColumn' => $foreignColumn,
-        'columnDiambil' => $columnDiambil
-    ]);
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -211,6 +182,141 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('admin.layouts2.ajax', [
             'table' => $request->input('table'),
         ]);
+    });
+
+    // Route untuk semua endpoint AJAX
+    Route::group(['prefix' => 'ajax'], function () {
+        Route::get('/dashboard', function () {
+            return view('admin.layouts2.main');
+        })->name('dashboard.ajax');
+
+        // Ibu
+        Route::get('/ibu', [IbuController::class, 'ajax'])->name('ibu.ajax');
+
+        // Keluarga
+        Route::get('/keluarga', [KeluargaController::class, 'ajax'])->name('keluarga.ajax');
+
+        // Kesehatan
+        Route::get('/kesehatan1', [Kesehatan1Controller::class, 'ajax'])->name('kesehatan1.ajax');
+        Route::get('/kesehatan2', [Kesehatan2Controller::class, 'ajax'])->name('kesehatan2.ajax');
+        Route::get('/kesehatan-bersalin', [KesehatanBersalinController::class, 'ajax'])->name('kesehatan-bersalin.ajax');
+        Route::get('/kesehatan-nifas', [KesehatanNifasController::class, 'ajax'])->name('kesehatan-nifas.ajax');
+
+        // Kontrol dan TTD
+        Route::get('/kontrol-ttd', [KontrolTtdController::class, 'ajax'])->name('kontrol-ttd.ajax');
+        Route::get('/minum-ttd', [MinumTtdController::class, 'ajax'])->name('minum-ttd.ajax');
+
+        // Persalinan
+        Route::get('/menyambut-persalinan', [MenyambutPersalinanController::class, 'ajax'])->name('menyambut-persalinan.ajax');
+        Route::get('/amanat-penolong-persalinan', [AmanatPenolongPersalinanController::class, 'ajax'])->name('amanat-penolong-persalinan.ajax');
+        Route::get('/amanat-kendaraan', [AmanatKendaraanController::class, 'ajax'])->name('amanat-kendaraan.ajax');
+        Route::get('/amanat-darah', [AmanatDarahController::class, 'ajax'])->name('amanat-darah.ajax');
+
+        // Evaluasi dan Kondisi
+        Route::get('/evaluasi-kesehatan-bumil', [EvaluasiKesehatanBumilController::class, 'ajax'])->name('evaluasi-kesehatan-bumil.ajax');
+        Route::get('/kondisi-kesehatan-bumil', [KondisiKesehatanBumilController::class, 'ajax'])->name('kondisi-kesehatan-bumil.ajax');
+
+        // Imunisasi
+        Route::get('/imunisasi-t', [ImunisasiTController::class, 'ajax'])->name('imunisasi-t.ajax');
+
+        // Riwayat
+        Route::get('/riwayat-kesehatan-bumil', [RiwayatKesehatanBumilController::class, 'ajax'])->name('riwayat-kesehatan-bumil.ajax');
+        Route::get('/riwayat-perilaku-berisiko', [RiwayatPerilakuBerisikoController::class, 'ajax'])->name('riwayat-perilaku-berisiko.ajax');
+        Route::get('/riwayat-kehamilan', [RiwayatKehamilanController::class, 'ajax'])->name('riwayat-kehamilan.ajax');
+        Route::get('/riwayat-penyakit-keluarga', [RiwayatPenyakitKeluargaController::class, 'ajax'])->name('riwayat-penyakit-keluarga.ajax');
+
+        // Pemeriksaan
+        Route::get('/pemeriksaan-khusus', [PemeriksaanKhususController::class, 'ajax'])->name('pemeriksaan-khusus.ajax');
+        Route::get('/pemeriksaan-trimester1', [PemeriksaanTrimester1Controller::class, 'ajax'])->name('pemeriksaan-trimester1.ajax');
+        Route::get('/pemeriksaan-fisik-tri1', [PemeriksaanFisikTri1Controller::class, 'ajax'])->name('pemeriksaan-fisik-tri1.ajax');
+        Route::get('/usg-tri1', [UsgTri1Controller::class, 'ajax'])->name('usg-tri1.ajax');
+        Route::get('/pemeriksaan-laboratorium-tri1', [PemeriksaanLaboratoriumTri1Controller::class, 'ajax'])->name('pemeriksaan-laboratorium-tri1.ajax');
+
+        // Evaluasi Kehamilan
+        Route::get('/evaluasi-kehamilan', [EvaluasiKehamilanController::class, 'ajax'])->name('evaluasi-kehamilan.ajax');
+        Route::get('/berat-badan-bumil', [BeratBadanBumilController::class, 'ajax'])->name('berat-badan-bumil.ajax');
+
+        // Preeklampsia
+        Route::get('/skrining-preeklampsia', [SkriningPreeklampsiaController::class, 'ajax'])->name('skrining-preeklampsia.ajax');
+        Route::get('/preeklampsia-anamnesis', [PreeklampsiaAnamnesisController::class, 'ajax'])->name('preeklampsia-anamnesis.ajax');
+        Route::get('/preeklampsia-fisik', [PreeklampsiaFisikController::class, 'ajax'])->name('preeklampsia-fisik.ajax');
+
+        // Trimester 3
+        Route::get('/pemeriksaan-trimester3', [PemeriksaanTrimester3Controller::class, 'ajax'])->name('pemeriksaan-trimester3.ajax');
+        Route::get('/pemeriksaan-fisik-tri3', [PemeriksaanFisikTri3Controller::class, 'ajax'])->name('pemeriksaan-fisik-tri3.ajax');
+        Route::get('/usg-tri3', [UsgTri3Controller::class, 'ajax'])->name('usg-tri3.ajax');
+        Route::get('/pemeriksaan-laboratorium-tri3', [PemeriksaanLaboratoriumTri3Controller::class, 'ajax'])->name('pemeriksaan-laboratorium-tri3.ajax');
+
+        // Ringkasan
+        Route::get('/ringkasan-kesehatan', [RingkasanKesehatanController::class, 'ajax'])->name('ringkasan-kesehatan.ajax');
+        Route::get('/ibu-bersalin', [IbuBersalinController::class, 'ajax'])->name('ibu-bersalin.ajax');
+        Route::get('/bayi-lahir', [BayiLahirController::class, 'ajax'])->name('bayi-lahir.ajax');
+        Route::get('/ringkasan-nifas', [RingkasanNifasController::class, 'ajax'])->name('ringkasan-nifas.ajax');
+        Route::get('/ringkasan-kesimpulan-nifas', [RingkasanKesimpulanNifasController::class, 'ajax'])->name('ringkasan-kesimpulan-nifas.ajax');
+
+        // Rujukan
+        Route::get('/rujukan', [RujukanController::class, 'ajax'])->name('rujukan.ajax');
+
+        // Anak
+        Route::get('/anak', [AnakController::class, 'ajax'])->name('anak.ajax');
+        Route::get('/wali', [WaliController::class, 'ajax'])->name('wali.ajax');
+        Route::get('/identitas-anak', [IdentitasAnakController::class, 'ajax'])->name('identitas.anak.ajax');
+        Route::get('/bayi-baru-lahir', [BayiBaruLahirController::class, 'ajax'])->name('bayi-baru-lahir.ajax');
+        Route::get('/bayi', [BayiController::class, 'ajax'])->name('bayi.ajax');
+        Route::get('/anak-balita', [AnakBalitaController::class, 'ajax'])->name('anak-balita.ajax');
+
+        // Kelahiran
+        Route::get('/keterangan-lahir', [KeteranganLahirController::class, 'ajax'])->name('keterangan-lahir.ajax');
+        Route::get('/riwayat-kelahiran', [RiwayatKelahiranController::class, 'ajax'])->name('riwayat-kelahiran.ajax');
+
+        // Pelayanan Kesehatan
+        Route::get('/pelayanan-kesehatan-neonatus', [PelayananKesehatanNeonatusController::class, 'ajax'])->name('pelayanan-kesehatan-neonatus.ajax');
+        Route::get('/kn0', [KN0Controller::class, 'ajax'])->name('kn0.ajax');
+        Route::get('/kn1', [KN1Controller::class, 'ajax'])->name('kn1.ajax');
+        Route::get('/kn2', [KN2Controller::class, 'ajax'])->name('kn2.ajax');
+        Route::get('/kn3', [KN3Controller::class, 'ajax'])->name('kn3.ajax');
+        Route::get('/imunisasi', [ImunisasiController::class, 'ajax'])->name('imunisasi.ajax');
+        Route::get('/pemantauan-kia', [PemantauanKiaController::class, 'ajax'])->name('pemantauan-kia.ajax');
+        Route::get('/pelayanan-sdidtk', [PelayananSdidtkController::class, 'ajax'])->name('pelayanan-sdidtk.ajax');
+
+        // Penyimpangan
+        Route::get('/penyimpangan-pertumbuhan', [PenyimpanganPertumbuhanController::class, 'ajax'])->name('penyimpangan-pertumbuhan.ajax');
+        Route::get('/penyimpangan-perkembangan', [PenyimpanganPerkembanganController::class, 'ajax'])->name('penyimpangan-perkembangan.ajax');
+        Route::get('/penyimpangan-emosional', [PenyimpanganEmosionalController::class, 'ajax'])->name('penyimpangan-emosional.ajax');
+
+        // Lainnya
+        Route::get('/nasihat-anak', [NasihatAnakController::class, 'ajax'])->name('nasihat-anak.ajax');
+        Route::get('/kapsul-anak', [KapsulAnakController::class, 'ajax'])->name('kapsul-anak.ajax');
+
+        // KMS
+        Route::get('/kms-perempuan', [KmsPerempuanController::class, 'ajax'])->name('kms-perempuan.ajax');
+        Route::get('/data-kms-perempuan', [DataKmsPerempuanController::class, 'ajax'])->name('data-kms-perempuan.ajax');
+        Route::get('/bb-u-perempuan', [BbUPerempuanController::class, 'ajax'])->name('bb-u-perempuan.ajax');
+        Route::get('/tb-u-perempuan', [TbUPerempuanController::class, 'ajax'])->name('tb-u-perempuan.ajax');
+        Route::get('/bb-tb-perempuan', [BbTbPerempuanController::class, 'ajax'])->name('bb-tb-perempuan.ajax');
+        Route::get('/lingkar-kepala-perempuan', [LingkarKepalaPerempuanController::class, 'ajax'])->name('lingkar-kepala-perempuan.ajax');
+
+        Route::get('/kms-laki', [KmsLakiController::class, 'ajax'])->name('kms-laki.ajax');
+        Route::get('/data-kms-laki', [DataKmsLakiController::class, 'ajax'])->name('data-kms-laki.ajax');
+        Route::get('/bb-u-laki', [BbULakiController::class, 'ajax'])->name('bb-u-laki.ajax');
+        Route::get('/tb-u-laki', [TbULakiController::class, 'ajax'])->name('tb-u-laki.ajax');
+        Route::get('/bb-tb-laki', [BbTbLakiController::class, 'ajax'])->name('bb-tb-laki.ajax');
+        Route::get('/lingkar-kepala-laki', [LingkarKepalaLakiController::class, 'ajax'])->name('lingkar-kepala-laki.ajax');
+
+        // IMT
+        Route::get('/imt-perempuan', [ImtPerempuanController::class, 'ajax'])->name('imt-perempuan.ajax');
+        Route::get('/imt-laki', [ImtLakiController::class, 'ajax'])->name('imt-laki.ajax');
+
+        // Kesehatan Gigi
+        Route::get('/kesehatan-gigi', [KesehatanGigiController::class, 'ajax'])->name('kesehatan-gigi.ajax');
+        Route::get('/data-kesehatan-gigi', [DataKesehatanGigiController::class, 'ajax'])->name('data-kesehatan-gigi.ajax');
+
+        // Ringkasan
+        Route::get('/ringkasan-mtbs', [RingkasanMtbsController::class, 'ajax'])->name('ringkasan-mtbs.ajax');
+        Route::get('/ringkasan-pelayanan-dokter', [RingkasanPelayananDokterController::class, 'ajax'])->name('ringkasan-pelayanan-dokter.ajax');
+
+        // Rujukan Anak
+        Route::get('/rujukan-anak', [RujukanAnakController::class, 'ajax'])->name('rujukan-anak.ajax');
     });
 
     Route::get('/ibu', [IbuController::class, 'index'])->name('ibu.index');

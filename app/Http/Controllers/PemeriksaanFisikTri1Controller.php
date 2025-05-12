@@ -4,159 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\PemeriksaanFisikTri1;
 use App\Models\PemeriksaanTrimester1;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Schema;
-use Yajra\DataTables\Facades\DataTables;
 
-class PemeriksaanFisikTri1Controller extends Controller
+class PemeriksaanFisikTri1Controller extends BaseCrudController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $table = 'pemeriksaan_fisik_tri1';
-
-        $columns = Schema::getColumnListing($table);
-
-        $columnTypes = [];
-        foreach ($columns as $column) {
-            $columnTypes[$column] = Schema::getColumnType($table, $column);
-        }
-
-        $kesehatan = new PemeriksaanFisikTri1();
-
-        $foreignColumn = $kesehatan->pemeriksaanTrimester1()->getForeignKeyName();
-
-        $columnDiambil = [$foreignColumn, 'id_pemeriksaan_trimester1'];
-
-        $foreignDatas = PemeriksaanTrimester1::all($columnDiambil);
-
-        // $table = str_replace('_', '-', $table);
-
-        return view('admin.pages.template-table', [
-            'table' => $table,
-            'columns' => $columns,
-            'columnTypes' => $columnTypes,
-            'foreignDatas' => $foreignDatas,
-            'foreignColumn' => $foreignColumn,
-            'columnDiambil' => $columnDiambil
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $columns = Schema::getColumnListing('pemeriksaan_fisik_tri1');
-
-        $data = DataTables::of(PemeriksaanFisikTri1::query()->orderBy('id_pemeriksaan_fisik_tri1', 'desc'))->make(true);
-
-        return response()->json([
-            'columns' => $columns,
-            'data' => $data->getData()
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'id_pemeriksaan_trimester1' => 'required|exists:pemeriksaan_trimester1,id_pemeriksaan_trimester1',
-            'keadaan_umum' => 'nullable|string|max:255',
-            'konjuctiva' => 'nullable|in:Normal,Tidak Normal',
-            'sklera' => 'nullable|in:Normal,Tidak Normal',
-            'kulit' => 'nullable|in:Normal,Tidak Normal',
-            'leher' => 'nullable|in:Normal,Tidak Normal',
-            'gigi_mulut' => 'nullable|in:Normal,Tidak Normal',
-            'tht' => 'nullable|in:Normal,Tidak Normal',
-            'jantung' => 'nullable|in:Normal,Tidak Normal',
-            'paru' => 'nullable|in:Normal,Tidak Normal',
-            'perut' => 'nullable|in:Normal,Tidak Normal',
-            'tungkai' => 'nullable|in:Normal,Tidak Normal',
- 
-        ]);
-
-        PemeriksaanFisikTri1::create($validated);
-
-        return redirect()->route('pemeriksaan-fisik-tri1.index')->with('success', 'Data ibu berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $data = PemeriksaanFisikTri1::findOrFail($id);
-        $columns = Schema::getColumnListing('pemeriksaan_fisik_tri1');
-        return response()->json([
-            'data' => $data,
-            'columns' => $columns
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validated = $request->validate([
-            'id_pemeriksaan_trimester1' => 'required|exists:pemeriksaan_trimester1,id_pemeriksaan_trimester1',
-            'keadaan_umum' => 'nullable|string|max:255',
-            'konjuctiva' => 'nullable|in:Normal,Tidak Normal',
-            'sklera' => 'nullable|in:Normal,Tidak Normal',
-            'kulit' => 'nullable|in:Normal,Tidak Normal',
-            'leher' => 'nullable|in:Normal,Tidak Normal',
-            'gigi_mulut' => 'nullable|in:Normal,Tidak Normal',
-            'tht' => 'nullable|in:Normal,Tidak Normal',
-            'jantung' => 'nullable|in:Normal,Tidak Normal',
-            'paru' => 'nullable|in:Normal,Tidak Normal',
-            'perut' => 'nullable|in:Normal,Tidak Normal',
-            'tungkai' => 'nullable|in:Normal,Tidak Normal',
-
-        ]);
-
-        $newData = PemeriksaanFisikTri1::findOrFail($id);
-
-        $newData->update($validated);
-
-        return redirect()->route('pemeriksaan-fisik-tri1.index')->with('success', 'Data ibu berhasil ditambahkan!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        try {
-            $data = PemeriksaanFisikTri1::findOrFail($id);
-
-            $data->delete();
-
-            return response()->json(['success' => 'Keluarga berhasil dihapus!']);
-        } catch (Exception $e) {
-            Log::error('Error saat menghapus Keluarga:', [
-                'error' => $e->getMessage(),
-                'id' => $id
-            ]);
-
-            return response()->json([
-                'error' => 'Terjadi kesalahan saat menghapus data Keluarga.',
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
+    protected $model = PemeriksaanFisikTri1::class;
+    protected $tableName = 'pemeriksaan_fisik_tri1';
+    protected $foreignModel = PemeriksaanTrimester1::class;
+    protected $foreignRelation = 'pemeriksaanTrimester1';
+    protected $foreignColumns = ['id_pemeriksaan_trimester1', 'id_pemeriksaan_trimester1'];
+    protected $validationRules = [
+        'id_pemeriksaan_trimester1' => 'required|exists:pemeriksaan_trimester1,id_pemeriksaan_trimester1',
+        'keadaan_umum' => 'nullable|string|max:255',
+        'konjuctiva' => 'nullable|in:Normal,Tidak Normal',
+        'sklera' => 'nullable|in:Normal,Tidak Normal',
+        'kulit' => 'nullable|in:Normal,Tidak Normal',
+        'leher' => 'nullable|in:Normal,Tidak Normal',
+        'gigi_mulut' => 'nullable|in:Normal,Tidak Normal',
+        'tht' => 'nullable|in:Normal,Tidak Normal',
+        'jantung' => 'nullable|in:Normal,Tidak Normal',
+        'paru' => 'nullable|in:Normal,Tidak Normal',
+        'perut' => 'nullable|in:Normal,Tidak Normal',
+        'tungkai' => 'nullable|in:Normal,Tidak Normal',
+    ];
 }

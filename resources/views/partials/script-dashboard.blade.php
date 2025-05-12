@@ -169,3 +169,59 @@
             });
         });
     </script>
+
+<script>
+    function setActiveSidebarItemFromURL() {
+        const path = window.location.pathname;
+        const cleanPath = path.split('/')[1];
+
+        $('.sidebar-menu a').removeClass('active');
+        $('.has-submenu').removeClass('open');
+
+        if (path === '/dashboard') {
+            $('.sidebar-menu a[href="/dashboard"]').addClass('active');
+            return;
+        }
+
+        const activeLink = $(`.sidebar-menu a[href^="/${cleanPath}"]`);
+        if (activeLink.length) {
+            activeLink.addClass('active');
+
+            const submenu = activeLink.closest('.has-submenu');
+            if (submenu.length) {
+                submenu.addClass('open');
+            }
+        }
+    }
+
+    $(document).ready(function() {
+        setActiveSidebarItemFromURL();
+
+        $('.sidebar-menu > .has-submenu > a').on('click', function(event) {
+            if (window.location.pathname === '/dashboard') {
+                event.preventDefault();
+                return;
+            }
+
+            const submenu = $(this).closest('.has-submenu');
+            submenu.toggleClass('open');
+        });
+
+        $('.submenu a').on('click', function(event) {
+            if (typeof loadContent === 'function') {
+                loadContent(event, this);
+            }
+        });
+    });
+</script>
+
+<script>
+    function setActiveSidebarItemFromURL() {
+        const path = window.location.pathname;
+        const cleanPath = path.split('/')[1];
+
+        $('.sidebar-menu a').removeClass('active');
+        $(`.sidebar-menu a[href^="/${cleanPath}"]`).addClass('active');
+        $(`.sidebar-menu a[href^="/${cleanPath}"]`).closest('.has-submenu').addClass('open');
+    }
+</script>

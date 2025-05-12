@@ -2,43 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ibu;
-use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
-use Yajra\DataTables\Facades\DataTables;
 
-class IbuController extends Controller
+abstract class BaseCrudController extends Controller
 {
-    protected $model = Ibu::class;
-    protected $tableName = 'ibu';
-    protected $foreignModel = User::class;
-    protected $foreignColumns = ['id_user', 'name'];
-    protected $validationRules = [
-        'id_user' => 'required|exists:users,id_user',
-        'nama' => 'nullable|string|max:255',
-        'pembiayaan' => 'nullable|string|max:255',
-        'no_jkn' => 'nullable|string|max:50',
-        'faskes_tk_1' => 'nullable|string|max:255',
-        'faskes_rujukan' => 'nullable|string|max:255',
-        'gol_darah' => 'nullable|string|max:2',
-        'tmpt_lahir' => 'nullable|string|max:100',
-        'tgl_lahir' => 'nullable|date',
-        'pendidikan' => 'nullable|string|max:100',
-        'pekerjaan' => 'nullable|string|max:100',
-        'provinsi' => 'nullable|string|max:100',
-        'kabupaten' => 'nullable|string|max:100',
-        'alamat' => 'nullable|string',
-        'telepon' => 'nullable|string|max:20',
-        'puskesmas_domisili' => 'nullable|string|max:255',
-        'no_reg_kohort_ibu' => 'nullable|string|max:50',
-    ];
+    protected $model;
+    protected $tableName;
+    protected $foreignModel = null;
+    protected $foreignColumns = [];
+    protected $foreignRelation = null; // default null, akan gunakan relasi otomatis jika diisi
+    protected $validationRules = [];
 
-    /**
-     * Get table metadata (columns, types, foreign keys)
-     */
     protected function getTableMetadata()
     {
         $columns = Schema::getColumnListing($this->tableName);
@@ -48,9 +25,14 @@ class IbuController extends Controller
             $columnTypes[$column] = Schema::getColumnType($this->tableName, $column);
         }
 
-        $model = new $this->model();
-        $foreignColumn = $model->user()->getForeignKeyName();
-        $foreignDatas = $this->foreignModel::all($this->foreignColumns);
+        $foreignDatas = [];
+        $foreignColumn = null;
+
+        if ($this->foreignModel && $this->foreignRelation) {
+            $modelInstance = new $this->model();
+            $foreignColumn = $modelInstance->{$this->foreignRelation}()->getForeignKeyName();
+            $foreignDatas = $this->foreignModel::all($this->foreignColumns);
+        }
 
         return [
             'table' => $this->tableName,
@@ -62,17 +44,11 @@ class IbuController extends Controller
         ];
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('admin.layouts2.template-table', $this->getTableMetadata());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request)
     {
         $columns = Schema::getColumnListing($this->tableName);
@@ -82,8 +58,6 @@ class IbuController extends Controller
         }
     
         $query = $this->model::query();
-    
-        // Server-side search
         $searchValue = $request->input('search.value');
     
         if (!empty($searchValue)) {
@@ -94,12 +68,12 @@ class IbuController extends Controller
             });
         }
     
-        // Count records
+        $primaryKey = (new $this->model)->getKeyName();
+    
         $totalRecords = $this->model::count();
         $filteredRecords = $query->count();
     
-        // Get paginated data
-        $data = $query->orderBy('id_ibu', 'desc')
+        $data = $query->orderByDesc($primaryKey)
                       ->skip($request->input('start', 0))
                       ->take($request->input('length', 10))
                       ->get();
@@ -110,29 +84,15 @@ class IbuController extends Controller
             'recordsFiltered' => $filteredRecords,
             'data' => $data,
         ]);
-    }
+    }    
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate($this->validationRules);
         $this->model::create($validated);
-        return redirect()->route('ibu.index')->with('success', 'Data berhasil ditambahkan!');
+        return redirect()->route("{$this->tableName}.index")->with('success', 'Data berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $data = $this->model::findOrFail($id);
@@ -143,20 +103,14 @@ class IbuController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validated = $request->validate($this->validationRules);
         $data = $this->model::findOrFail($id);
         $data->update($validated);
-        return redirect()->route('ibu.index')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->route("{$this->tableName}.index")->with('success', 'Data berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
@@ -174,7 +128,7 @@ class IbuController extends Controller
             ], 500);
         }
     }
-    
+
     public function ajax()
     {
         return view('admin.layouts2.ajax', $this->getTableMetadata());

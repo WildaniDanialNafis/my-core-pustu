@@ -29,6 +29,49 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
 
     <style>
+        /* .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        .loading-text {
+            color: #333;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        } */
+
         /* Fix pagination style conflict */
         ul.pagination {
             display: flex;
@@ -375,6 +418,8 @@
 
         .menu-item.has-submenu.open .submenu {
             max-height: 500px;
+            overflow-y: auto;
+            /* Menambahkan scroll jika diperlukan */
         }
 
         .submenu li {
@@ -1058,11 +1103,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-    {{-- @if (Request::is('dashboard'))
-        @include('partials.script-dashboard')
-    @else --}}
-    {{-- @include('partials.script-dinamis') --}}
-    {{-- @endif --}}
+    <script>
+        @if (isset($table))
+            let table = "{{ $table }}";
+        @endif
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1070,7 +1115,7 @@
             if (window.location.pathname === '/dashboard') {
                 loadDashboardContent();
             } else {
-                loadTableContent('ibu');
+                loadTableContent(table);
             }
         });
     </script>
@@ -1084,9 +1129,7 @@
                 return;
             }
 
-            mainContent.innerHTML = '<div class="loading">Loading...</div>';
-
-            fetch('/ajax-dashboard', {
+            fetch('/ajax/dashboard', {
                     method: 'GET',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
@@ -1279,29 +1322,74 @@
     </script>
 
     <script>
-        function setActiveSidebarItemFromURL() {
-            const path = window.location.pathname;
-            const cleanPath = path.split('/')[1];
+        function setActiveSidebarItemFromURL(pathname = window.location.pathname) {
+            const cleanPath = pathname.split('/')[1];
 
             $('.sidebar-menu a').removeClass('active');
+            $('.has-submenu').removeClass('open');
 
-            $(`.sidebar-menu a[href^="/${cleanPath}"]`).addClass('active');
+            const activeLink = $(`.sidebar-menu a[href^="/${cleanPath}"]`);
+            if (activeLink.length) {
+                activeLink.addClass('active');
 
-            $(`.sidebar-menu a[href^="/${cleanPath}"]`).closest('.has-submenu').addClass('open');
+                const submenu = activeLink.closest('.has-submenu');
+                if (submenu.length) {
+                    submenu.addClass('open');
+                }
+            }
         }
+
+        function loadPage(url, pushState = false) {
+            if (pushState) {
+                window.history.pushState({}, '', url);
+            }
+
+            if (url === '/dashboard') {
+                loadDashboardContent();
+            } else {
+                const match = url.match(/^\/([a-zA-Z0-9\-]+)$/);
+                if (match) {
+                    const tableSlug = match[1];
+                    const table = tableSlug.replace(/-/g, '_');
+                    loadTableContent(table);
+                }
+            }
+
+            setActiveSidebarItemFromURL(url);
+        }
+
+
+        $(document).ready(function() {
+            setActiveSidebarItemFromURL();
+
+            $('.sidebar-menu > .has-submenu > a').on('click', function(event) {
+                event.preventDefault();
+                $(this).closest('.has-submenu').toggleClass('open');
+            });
+
+            $('.submenu a, .sidebar-menu a').on('click', function(event) {
+                event.preventDefault();
+                const url = $(this).attr('href');
+                loadPage(url, true);
+            });
+
+            window.onpopstate = function() {
+                loadPage(window.location.pathname, false);
+            };
+
+            // Inisialisasi tabel saat pertama kali load
+            loadPage(window.location.pathname, false);
+        });
     </script>
 
     <script>
         function loadTableContent(table) {
-            // console.log("Parameter table yang diterima:", table);
             const mainContent = document.querySelector('.main-content');
 
             if (!mainContent) {
                 console.error('Element .main-content tidak ditemukan.');
                 return;
             }
-
-            mainContent.innerHTML = '<div class="loading">Loading...</div>';
 
             function renderTableHeaders(columns) {
                 if (!Array.isArray(columns)) return;
@@ -1310,42 +1398,38 @@
                     return `<th>${column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</th>`;
                 }).join('');
 
-                // Update header tabel langsung
-                $('#ibuTable thead tr').html(`<th>Actions</th>${theadHtml}`);
+                $(`#${table}Table thead tr`).html(`<th>Actions</th>${theadHtml}`);
             }
 
             function createColumns(serverColumns) {
                 if (!Array.isArray(serverColumns)) return [];
 
-                const columns = serverColumns.map(function(column) {
-                    return {
-                        data: column,
-                        name: column
-                    };
-                });
+                const columns = serverColumns.map(column => ({
+                    data: column,
+                    name: column
+                }));
 
+                // Add action column
                 columns.unshift({
                     data: null,
                     name: 'actions',
                     render: function(data, type, row) {
                         const id = row['id_' + table] || '';
                         return `
-                    <div class="d-inline-flex gap-1">
-                        <button 
-                            class="btn btn-outline-warning btn-sm edit-btn-${table}" 
-                            data-id="${id}" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editModal">
-                            Edit
-                        </button>
-                        <button 
-                            class="btn btn-outline-danger btn-sm delete-btn-${table}" 
-                            data-id="${id}" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal">
-                            Delete
-                        </button>
-                    </div>
+                        <div class="d-inline-flex gap-1">
+                            <button class="btn btn-outline-warning btn-sm edit-btn-${table}" 
+                                data-id="${id}" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editModal">
+                                Edit
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm delete-btn-${table}" 
+                                data-id="${id}" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal">
+                                Delete
+                            </button>
+                        </div>
                     `;
                     }
                 });
@@ -1353,10 +1437,10 @@
                 return columns;
             }
 
-
             let pencarian = "";
 
-            fetch('/ajax-table', {
+            // Load initial HTML
+            fetch('/ajax/' + table.replace(/_/g, '-'), {
                     method: 'GET',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
@@ -1370,54 +1454,53 @@
                 })
                 .then(html => {
                     mainContent.innerHTML = html;
-                })
-                .then(() => {
-                    AOS.init({
+                    return AOS.init({
                         once: true
                     });
                 })
                 .then(() => {
-                    $.ajax({
+                    // Initialize DataTable
+                    return $.ajax({
                         url: "/" + table.replace(/_/g, '-') + "/create",
                         type: "POST",
                         data: {
                             _token: document.querySelector('meta[name="csrf-token"]')?.content || '',
                             pencarian: pencarian,
                             columns: 'columns'
-                        },
-                        success: function(json) {
-                            console.log(json.columns);
-                            renderTableHeaders(json.columns);
-                            const dataTable = $(`#${table}Table`);
-                            if (dataTable.length) {
-                                dataTable.DataTable({
-                                    processing: true,
-                                    serverSide: true,
-                                    destroy: true,
-                                    scrollX: true,
-                                    initComplete: function() {
-                                        $('.dt-search').hide();
-                                    },
-                                    ajax: {
-                                        url: "/" + table.replace(/_/g, '-') + "/create",
-                                        type: "POST",
-                                        data: function(d) {
-                                            d._token = document.querySelector(
-                                                    'meta[name="csrf-token"]')?.content || '',
-                                                d.pencarian = pencarian;
-                                            d.start = d.start || 0;
-                                            d.length = d.length || 10;
-                                        },
-                                        dataSrc: function(json) {
-                                            return json.data || [];
-                                        }
-                                    },
-                                    columns: createColumns(json.columns),
-                                    pageLength: 10
-                                });
-                            }
                         }
                     });
+                })
+                .then(json => {
+                    renderTableHeaders(json.columns);
+                    const dataTable = $(`#${table}Table`);
+
+                    if (dataTable.length) {
+                        dataTable.DataTable({
+                            processing: true,
+                            serverSide: true,
+                            destroy: true,
+                            scrollX: true,
+                            initComplete: function() {
+                                $('.dt-search').hide();
+                            },
+                            ajax: {
+                                url: "/" + table.replace(/_/g, '-') + "/create",
+                                type: "POST",
+                                data: function(d) {
+                                    d._token = document.querySelector('meta[name="csrf-token"]')?.content ||
+                                        '';
+                                    d.pencarian = pencarian;
+                                    d.start = d.start || 0;
+                                    d.length = d.length || 10;
+                                },
+                                dataSrc: function(json) {
+                                    return json.data || [];
+                                }
+                            },
+                            columns: createColumns(json.columns),
+                            pageLength: 10
+                        });
+                    }
                 })
                 .then(() => {
                     // Add New Record
@@ -1433,8 +1516,9 @@
 
                     $(`#${table}AddForm`).off('submit').on('submit', function(e) {
                         e.preventDefault();
-                        const url = $(this).attr('action');
-                        const formData = $(this).serialize();
+                        const form = $(this);
+                        const url = form.attr('action');
+                        const formData = form.serialize();
 
                         if (!url) return;
 
@@ -1443,24 +1527,15 @@
                             type: 'POST',
                             data: formData,
                             headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    ?.content || '',
                             },
                             success: function(response) {
                                 $(`#${table}AddModal`).modal('hide');
                                 $(`#${table}Table`).DataTable().ajax.reload(null, false);
-
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil!',
-                                    text: response?.message || 'Data berhasil ditambahkan!',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                });
+                                showSuccessAlert(response?.message || 'Data berhasil ditambahkan!');
                             },
-                            error: function(xhr) {
-                                console.error('Error:', xhr?.responseJSON || xhr.responseText);
-                                alert('Terjadi kesalahan saat menambah data.');
-                            }
+                            error: handleAjaxError
                         });
                     });
 
@@ -1475,25 +1550,24 @@
                         $.get(`/${table}/edit/${id}`, function(data) {
                             if (data?.data) {
                                 const record = data.data;
-                                @foreach ($columns ?? [] as $index => $column)
-                                    @if (!($index === 0 || in_array($column, ['created_at', 'updated_at'])))
-                                        $(`${formSelector} [name='{{ $column }}']`).val(record[
-                                            "{{ $column }}"]);
-                                    @endif
-                                @endforeach
+                                // Update form fields with record data
+                                Object.keys(record).forEach(key => {
+                                    if (!['id', 'created_at', 'updated_at'].includes(key)) {
+                                        $(`${formSelector} [name='${key}']`).val(record[key]);
+                                    }
+                                });
 
                                 $(formSelector).attr('action', `/${table}/update/${id}`);
                                 $(modalSelector).modal('show');
                             }
-                        }).fail(function(xhr) {
-                            console.error('Error loading edit data:', xhr.responseText);
-                        });
+                        }).fail(handleAjaxError);
                     });
 
                     $(`#${table}EditForm`).off('submit').on('submit', function(e) {
                         e.preventDefault();
-                        const url = $(this).attr('action');
-                        const formData = $(this).serialize();
+                        const form = $(this);
+                        const url = form.attr('action');
+                        const formData = form.serialize();
 
                         if (!url) return;
 
@@ -1502,24 +1576,15 @@
                             type: 'POST',
                             data: formData,
                             headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    ?.content || '',
                             },
                             success: function(response) {
                                 $(`#${table}EditModal`).modal('hide');
                                 $(`#${table}Table`).DataTable().ajax.reload(null, false);
-
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil!',
-                                    text: response?.message || 'Data berhasil diperbarui!',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                });
+                                showSuccessAlert(response?.message || 'Data berhasil diperbarui!');
                             },
-                            error: function(xhr) {
-                                console.error('Error:', xhr?.responseJSON || xhr.responseText);
-                                alert('Terjadi kesalahan saat memperbarui data.');
-                            }
+                            error: handleAjaxError
                         });
                     });
 
@@ -1539,8 +1604,9 @@
 
                     $(`#${table}DeleteForm`).off('submit').on('submit', function(e) {
                         e.preventDefault();
-                        const url = $(this).attr('action');
-                        const formData = $(this).serialize();
+                        const form = $(this);
+                        const url = form.attr('action');
+                        const formData = form.serialize();
 
                         if (!url || !selectedRow) return;
 
@@ -1549,7 +1615,8 @@
                             type: 'POST',
                             data: formData,
                             headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    ?.content || '',
                             },
                             success: function(response) {
                                 const dataTable = $(`#${table}Table`).DataTable();
@@ -1557,18 +1624,9 @@
                                     dataTable.row(selectedRow).remove().draw();
                                 }
                                 $(`#${table}DeleteModal`).modal('hide');
-
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil!',
-                                    text: response?.success || 'Data berhasil dihapus!',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                });
+                                showSuccessAlert(response?.success || 'Data berhasil dihapus!');
                             },
-                            error: function(xhr) {
-                                console.error('Error:', xhr.responseText);
-                            }
+                            error: handleAjaxError
                         });
                     });
 
@@ -1578,6 +1636,25 @@
                     mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
                 });
 
+            // Helper functions
+            function showSuccessAlert(message) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: message,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+
+            function handleAjaxError(xhr) {
+                console.error('Error:', xhr?.responseJSON || xhr.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Terjadi kesalahan saat memproses permintaan.'
+                });
+            }
         }
     </script>
 
@@ -1685,6 +1762,12 @@
             initializeDataTableWithActions(table);
         </script>
     @endif --}}
+
+    {{-- @if (Request::is('dashboard'))
+        @include('partials.script-dashboard')
+    @else --}}
+    {{-- @include('partials.script-dinamis') --}}
+    {{-- @endif --}}
 </body>
 
 </html>
