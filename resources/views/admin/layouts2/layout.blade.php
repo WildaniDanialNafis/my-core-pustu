@@ -1136,199 +1136,197 @@
                 })
                 .then(html => {
                     mainContent.innerHTML = html;
-                })
-                .then(() => {
-                    AOS.init({
-                        once: true
-                    });
-
-                    // Sidebar Submenu Toggle
-                    $(document).ready(function() {
-                        $('.menu-item.has-submenu > a').click(function(e) {
-                            e.preventDefault();
-                            $(this).parent().toggleClass('open');
-                            $(this).find('.menu-arrow').toggleClass('rotate-180');
-                        });
-
-                        // Initialize DataTable
-                        $('#ordersTable').DataTable({
-                            responsive: true,
-                            dom: '<"top"f>rt<"bottom"lip><"clear">',
-                            pageLength: 5,
-                            lengthMenu: [5, 10, 25, 50],
-                            language: {
-                                search: "_INPUT_",
-                                searchPlaceholder: "Search orders...",
-                            }
-                        });
-
-                        // Revenue Chart
-                        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-                        const revenueChart = new Chart(revenueCtx, {
-                            type: 'line',
-                            data: {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                                datasets: [{
-                                    label: 'Revenue',
-                                    data: [12000, 19000, 15000, 22000, 24560, 18000, 21000],
-                                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                                    borderColor: 'rgba(99, 102, 241, 1)',
-                                    borderWidth: 2,
-                                    tension: 0.4,
-                                    fill: true,
-                                    pointBackgroundColor: '#fff',
-                                    pointBorderWidth: 2,
-                                    pointRadius: 4,
-                                    pointHoverRadius: 6
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: {
-                                    legend: {
-                                        display: false
-                                    },
-                                    tooltip: {
-                                        mode: 'index',
-                                        intersect: false
-                                    }
-                                },
-                                scales: {
-                                    y: {
-                                        beginAtZero: true,
-                                        grid: {
-                                            drawBorder: false,
-                                            color: 'rgba(0, 0, 0, 0.05)'
-                                        },
-                                        ticks: {
-                                            callback: function(value) {
-                                                return '$' + value.toLocaleString();
-                                            }
-                                        }
-                                    },
-                                    x: {
-                                        grid: {
-                                            display: false
-                                        }
-                                    }
-                                },
-                                interaction: {
-                                    mode: 'nearest',
-                                    axis: 'x',
-                                    intersect: false
-                                }
-                            }
-                        });
-
-                        // Traffic Chart
-                        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
-                        const trafficChart = new Chart(trafficCtx, {
-                            type: 'doughnut',
-                            data: {
-                                labels: ['Direct', 'Organic', 'Referral', 'Social'],
-                                datasets: [{
-                                    data: [45, 30, 15, 10],
-                                    backgroundColor: [
-                                        'rgba(99, 102, 241, 0.8)',
-                                        'rgba(16, 185, 129, 0.8)',
-                                        'rgba(245, 158, 11, 0.8)',
-                                        'rgba(239, 68, 68, 0.8)'
-                                    ],
-                                    borderWidth: 0,
-                                    hoverOffset: 10
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                cutout: '70%',
-                                plugins: {
-                                    legend: {
-                                        display: false
-                                    }
-                                }
-                            }
-                        });
-
-                        // Chart hover info
-                        const chartHoverInfo = document.getElementById('chartHoverInfo');
-                        document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
-                            const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
-                                intersect: false
-                            }, true);
-                            if (points.length) {
-                                const point = points[0];
-                                const value = revenueChart.data.datasets[point.datasetIndex].data[point
-                                    .index];
-                                const label = revenueChart.data.labels[point.index];
-
-                                chartHoverInfo.classList.add('visible');
-                                chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
-                                chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
-                                chartHoverInfo.style.top = `${evt.offsetY}px`;
-                            } else {
-                                chartHoverInfo.classList.remove('visible');
-                            }
-                        });
-
-                        document.getElementById('revenueChart').addEventListener('mouseout', function() {
-                            chartHoverInfo.classList.remove('visible');
-                        });
-
-                        // Header scroll effect
-                        $(window).scroll(function() {
-                            if ($(this).scrollTop() > 10) {
-                                $('.header').addClass('scrolled');
-                            } else {
-                                $('.header').removeClass('scrolled');
-                            }
-                        });
-
-                        // Search functionality
-                        $('#searchInput').on('input', function() {
-                            const searchTerm = $(this).val().toLowerCase();
-                            if (searchTerm.length > 2) {
-                                // Implement search logic here
-                                console.log('Searching for:', searchTerm);
-                            }
-                        });
-
-                        // Notification dropdown
-                        $('#notificationBtn').click(function() {
-                            // Implement notification dropdown
-                            alert('Notifications would appear here');
-                        });
-
-                        // User profile dropdown
-                        $('#userBtn').click(function() {
-                            // Implement user dropdown
-                            alert('User menu would appear here');
-                        });
-                    });
-
+                    initializeDashboardComponents();
                 })
                 .catch(error => {
                     console.error(error);
                     mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
                 });
         }
+
+        function initializeDashboardComponents() {
+            AOS.init({
+                once: true
+            });
+
+            // Initialize DataTable
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [12000, 19000, 15000, 22000, 24560, 18000, 21000],
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            // Traffic Chart
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Direct', 'Organic', 'Referral', 'Social'],
+                    datasets: [{
+                        data: [45, 30, 15, 10],
+                        backgroundColor: [
+                            'rgba(99, 102, 241, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(239, 68, 68, 0.8)'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Chart hover info
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point
+                        .index];
+                    const label = revenueChart.data.labels[point.index];
+
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+
+            // Header scroll effect
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 10) {
+                    $('.header').addClass('scrolled');
+                } else {
+                    $('.header').removeClass('scrolled');
+                }
+            });
+
+            // Search functionality
+            $('#searchInput').on('input', function() {
+                const searchTerm = $(this).val().toLowerCase();
+                if (searchTerm.length > 2) {
+                    // Implement search logic here
+                    console.log('Searching for:', searchTerm);
+                }
+            });
+
+            // Notification dropdown
+            $('#notificationBtn').click(function() {
+                // Implement notification dropdown
+                alert('Notifications would appear here');
+            });
+
+            // User profile dropdown
+            $('#userBtn').click(function() {
+                // Implement user dropdown
+                alert('User menu would appear here');
+            });
+        }
     </script>
 
     <script>
+        function normalizePath(path) {
+            return path.replace(/\/+$/, '').toLowerCase();
+        }
+
         function setActiveSidebarItemFromURL(pathname = window.location.pathname) {
+            const normalizedPath = normalizePath(pathname);
+
             $('.sidebar-menu a').removeClass('active');
             $('.has-submenu').removeClass('open');
 
-            const activeLink = $(`.sidebar-menu a[href="${pathname}"]`);
-            if (activeLink.length) {
-                activeLink.addClass('active');
+            $('.sidebar-menu a[href]').each(function() {
+                const href = $(this).attr('href');
+                if (!href || href === '#') return;
 
-                const submenu = activeLink.closest('.has-submenu');
-                if (submenu.length) {
-                    submenu.addClass('open');
+                const linkPath = normalizePath(href);
+                if (linkPath === normalizedPath) {
+                    $(this).addClass('active');
+                    $(this).closest('.has-submenu').addClass('open');
                 }
-            }
+            });
         }
 
         function loadPage(url, pushState = false) {
@@ -1336,10 +1334,12 @@
                 window.history.pushState({}, '', url);
             }
 
-            if (url === '/dashboard') {
+            const normalizedUrl = normalizePath(url);
+
+            if (normalizedUrl === '/dashboard') {
                 loadDashboardContent();
             } else {
-                match = url.match(/^\/([a-zA-Z0-9\-]+)$/);
+                const match = normalizedUrl.match(/^\/([a-zA-Z0-9\-]+)$/);
                 if (match) {
                     const tableSlug = match[1];
                     const table = tableSlug.replace(/-/g, '_');
@@ -1351,25 +1351,38 @@
         }
 
         $(document).ready(function() {
+            // Initialize active state
             setActiveSidebarItemFromURL();
 
-            $('.sidebar-menu > .has-submenu > a').on('click', function(event) {
-                event.preventDefault();
-                $(this).closest('.has-submenu').toggleClass('open');
-            });
-
-            $('.submenu a, .sidebar-menu a').on('click', function(event) {
-                event.preventDefault();
-                const url = $(this).attr('href');
-                if (url) {
-                    loadPage(url, true);
+            // Handle submenu toggles
+            $('.has-submenu > a').on('click', function(e) {
+                // Only handle if it's a submenu toggle (no href or href is '#')
+                if (!$(this).attr('href') || $(this).attr('href') === '#') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).parent().toggleClass('open');
+                    $(this).find('.menu-arrow').toggleClass('rotate-180');
                 }
             });
 
+            // Handle navigation clicks
+            $('.sidebar-menu a[href^="/"]').on('click', function(e) {
+                // Skip if it's a submenu toggle
+                if (!$(this).attr('href') || $(this).attr('href') === '#') {
+                    return;
+                }
+
+                e.preventDefault();
+                const url = $(this).attr('href');
+                loadPage(url, true);
+            });
+
+            // Handle browser back/forward
             window.onpopstate = function() {
                 loadPage(window.location.pathname, false);
             };
 
+            // Initial page load
             loadPage(window.location.pathname, false);
         });
     </script>
