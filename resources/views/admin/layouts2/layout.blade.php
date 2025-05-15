@@ -1117,12 +1117,10 @@
     <script>
         function loadDashboardContent() {
             const mainContent = document.querySelector('.main-content');
-
             if (!mainContent) {
                 console.error('Element .main-content tidak ditemukan.');
                 return;
             }
-
             fetch('/ajax/dashboard', {
                     method: 'GET',
                     headers: {
@@ -1148,8 +1146,6 @@
             AOS.init({
                 once: true
             });
-
-            // Initialize DataTable
             $('#ordersTable').DataTable({
                 responsive: true,
                 dom: '<"top"f>rt<"bottom"lip><"clear">',
@@ -1160,7 +1156,6 @@
                     searchPlaceholder: "Search orders...",
                 }
             });
-
             const revenueCtx = document.getElementById('revenueChart').getContext('2d');
             const revenueChart = new Chart(revenueCtx, {
                 type: 'line',
@@ -1218,8 +1213,6 @@
                     }
                 }
             });
-
-            // Traffic Chart
             const trafficCtx = document.getElementById('trafficChart').getContext('2d');
             const trafficChart = new Chart(trafficCtx, {
                 type: 'doughnut',
@@ -1248,8 +1241,6 @@
                     }
                 }
             });
-
-            // Chart hover info
             const chartHoverInfo = document.getElementById('chartHoverInfo');
             document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
                 const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
@@ -1257,10 +1248,8 @@
                 }, true);
                 if (points.length) {
                     const point = points[0];
-                    const value = revenueChart.data.datasets[point.datasetIndex].data[point
-                        .index];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
                     const label = revenueChart.data.labels[point.index];
-
                     chartHoverInfo.classList.add('visible');
                     chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
                     chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
@@ -1269,38 +1258,21 @@
                     chartHoverInfo.classList.remove('visible');
                 }
             });
-
             document.getElementById('revenueChart').addEventListener('mouseout', function() {
                 chartHoverInfo.classList.remove('visible');
             });
-
-            // Header scroll effect
             $(window).scroll(function() {
-                if ($(this).scrollTop() > 10) {
-                    $('.header').addClass('scrolled');
-                } else {
-                    $('.header').removeClass('scrolled');
-                }
+                if ($(this).scrollTop() > 10) $('.header').addClass('scrolled');
+                else $('.header').removeClass('scrolled');
             });
-
-            // Search functionality
             $('#searchInput').on('input', function() {
                 const searchTerm = $(this).val().toLowerCase();
-                if (searchTerm.length > 2) {
-                    // Implement search logic here
-                    console.log('Searching for:', searchTerm);
-                }
+                if (searchTerm.length > 2) console.log('Searching for:', searchTerm);
             });
-
-            // Notification dropdown
             $('#notificationBtn').click(function() {
-                // Implement notification dropdown
                 alert('Notifications would appear here');
             });
-
-            // User profile dropdown
             $('#userBtn').click(function() {
-                // Implement user dropdown
                 alert('User menu would appear here');
             });
         }
@@ -1313,14 +1285,11 @@
 
         function setActiveSidebarItemFromURL(pathname = window.location.pathname) {
             const normalizedPath = normalizePath(pathname);
-
             $('.sidebar-menu a').removeClass('active');
             $('.has-submenu').removeClass('open');
-
             $('.sidebar-menu a[href]').each(function() {
                 const href = $(this).attr('href');
                 if (!href || href === '#') return;
-
                 const linkPath = normalizePath(href);
                 if (linkPath === normalizedPath) {
                     $(this).addClass('active');
@@ -1330,12 +1299,8 @@
         }
 
         function loadPage(url, pushState = false) {
-            if (pushState) {
-                window.history.pushState({}, '', url);
-            }
-
+            if (pushState) window.history.pushState({}, '', url);
             const normalizedUrl = normalizePath(url);
-
             if (normalizedUrl === '/dashboard') {
                 loadDashboardContent();
             } else {
@@ -1346,17 +1311,12 @@
                     loadTableContent(table);
                 }
             }
-
             setActiveSidebarItemFromURL(url);
         }
 
         $(document).ready(function() {
-            // Initialize active state
             setActiveSidebarItemFromURL();
-
-            // Handle submenu toggles
             $('.has-submenu > a').on('click', function(e) {
-                // Only handle if it's a submenu toggle (no href or href is '#')
                 if (!$(this).attr('href') || $(this).attr('href') === '#') {
                     e.preventDefault();
                     e.stopPropagation();
@@ -1364,25 +1324,15 @@
                     $(this).find('.menu-arrow').toggleClass('rotate-180');
                 }
             });
-
-            // Handle navigation clicks
             $('.sidebar-menu a[href^="/"]').on('click', function(e) {
-                // Skip if it's a submenu toggle
-                if (!$(this).attr('href') || $(this).attr('href') === '#') {
-                    return;
-                }
-
+                if (!$(this).attr('href') || $(this).attr('href') === '#') return;
                 e.preventDefault();
                 const url = $(this).attr('href');
                 loadPage(url, true);
             });
-
-            // Handle browser back/forward
             window.onpopstate = function() {
                 loadPage(window.location.pathname, false);
             };
-
-            // Initial page load
             loadPage(window.location.pathname, false);
         });
     </script>
@@ -1390,7 +1340,6 @@
     <script>
         function loadTableContent(table) {
             const mainContent = document.querySelector('.main-content');
-
             if (!mainContent) {
                 console.error('Element .main-content tidak ditemukan.');
                 return;
@@ -1398,53 +1347,35 @@
 
             function renderTableHeaders(columns) {
                 if (!Array.isArray(columns)) return;
-
                 const theadHtml = columns.map(column => {
                     return `<th>${column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</th>`;
                 }).join('');
-
                 $(`#${table}Table thead tr`).html(`<th>Actions</th>${theadHtml}`);
             }
 
             function createColumns(serverColumns) {
                 if (!Array.isArray(serverColumns)) return [];
-
                 const columns = serverColumns.map(column => ({
                     data: column,
                     name: column
                 }));
-
-                // Add action column
                 columns.unshift({
                     data: null,
                     name: 'actions',
                     render: function(data, type, row) {
                         const id = row['id_' + table] || '';
-                        return `
-                        <div class="d-inline-flex gap-1">
-                            <button class="btn btn-outline-warning btn-sm edit-btn-${table}" 
-                                data-id="${id}" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#editModal">
-                                Edit
-                            </button>
-                            <button class="btn btn-outline-danger btn-sm delete-btn-${table}" 
-                                data-id="${id}" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#deleteModal">
-                                Delete
-                            </button>
-                        </div>
-                    `;
+                        return `<div class="d-inline-flex gap-1">
+                        <button class="btn btn-outline-warning btn-sm edit-btn-${table}" 
+                            data-id="${id}" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                        <button class="btn btn-outline-danger btn-sm delete-btn-${table}" 
+                            data-id="${id}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                    </div>`;
                     }
                 });
-
                 return columns;
             }
 
             let pencarian = "";
-
-            // Load initial HTML
             fetch('/ajax/' + table.replace(/_/g, '-'), {
                     method: 'GET',
                     headers: {
@@ -1464,7 +1395,6 @@
                     });
                 })
                 .then(() => {
-                    // Initialize DataTable
                     return $.ajax({
                         url: "/" + table.replace(/_/g, '-') + "/create",
                         type: "POST",
@@ -1478,7 +1408,6 @@
                 .then(json => {
                     renderTableHeaders(json.columns);
                     const dataTable = $(`#${table}Table`);
-
                     if (dataTable.length) {
                         dataTable.DataTable({
                             processing: true,
@@ -1508,13 +1437,11 @@
                     }
                 })
                 .then(() => {
-                    // Add New Record
                     $(`#add-btn-${table}`).off('click').on('click', function() {
                         const createFormSelector = `#${table}AddForm`;
                         const createModalSelector = `#${table}AddModal`;
-
                         if ($(createFormSelector).length && $(createModalSelector).length) {
-                            $(createFormSelector).attr('action', `/${table}/store`);
+                            $(createFormSelector).attr('action', `/${table.replace(/_/g, '-')}/store`);
                             $(createModalSelector).modal('show');
                         }
                     });
@@ -1524,16 +1451,14 @@
                         const form = $(this);
                         const url = form.attr('action');
                         const formData = form.serialize();
-
                         if (!url) return;
-
                         $.ajax({
                             url: url,
                             type: 'POST',
                             data: formData,
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                    ?.content || '',
+                                    ?.content || ''
                             },
                             success: function(response) {
                                 $(`#${table}AddModal`).modal('hide');
@@ -1544,25 +1469,21 @@
                         });
                     });
 
-                    // Edit Record
                     $(document).off('click', `.edit-btn-${table}`).on('click', `.edit-btn-${table}`, function() {
                         const id = $(this).data('id');
                         const formSelector = `#${table}EditForm`;
                         const modalSelector = `#${table}EditModal`;
-
                         if (!id || !$(formSelector).length || !$(modalSelector).length) return;
-
-                        $.get(`/${table}/edit/${id}`, function(data) {
+                        $.get(`/${table.replace(/_/g, '-')}/edit/${id}`, function(data) {
                             if (data?.data) {
                                 const record = data.data;
-                                // Update form fields with record data
                                 Object.keys(record).forEach(key => {
                                     if (!['id', 'created_at', 'updated_at'].includes(key)) {
                                         $(`${formSelector} [name='${key}']`).val(record[key]);
                                     }
                                 });
-
-                                $(formSelector).attr('action', `/${table}/update/${id}`);
+                                $(formSelector).attr('action',
+                                    `/${table.replace(/_/g, '-')}/update/${id}`);
                                 $(modalSelector).modal('show');
                             }
                         }).fail(handleAjaxError);
@@ -1573,16 +1494,14 @@
                         const form = $(this);
                         const url = form.attr('action');
                         const formData = form.serialize();
-
                         if (!url) return;
-
                         $.ajax({
                             url: url,
                             type: 'POST',
                             data: formData,
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                    ?.content || '',
+                                    ?.content || ''
                             },
                             success: function(response) {
                                 $(`#${table}EditModal`).modal('hide');
@@ -1593,15 +1512,12 @@
                         });
                     });
 
-                    // Delete Record
                     let selectedRow;
                     $(document).off('click', `.delete-btn-${table}`).on('click', `.delete-btn-${table}`, function() {
                         const userId = $(this).data('id');
                         const deleteForm = $(`#${table}DeleteForm`);
                         const deleteModal = $(`#${table}DeleteModal`);
-
                         if (!userId || !deleteForm.length || !deleteModal.length) return;
-
                         selectedRow = $(this).closest('tr');
                         deleteForm.attr('action', `/${table.replace(/_/g, '-')}/delete/${userId}`);
                         deleteModal.modal('show');
@@ -1612,36 +1528,30 @@
                         const form = $(this);
                         const url = form.attr('action');
                         const formData = form.serialize();
-
                         if (!url || !selectedRow) return;
-
                         $.ajax({
                             url: url,
                             type: 'POST',
                             data: formData,
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                    ?.content || '',
+                                    ?.content || ''
                             },
                             success: function(response) {
                                 const dataTable = $(`#${table}Table`).DataTable();
-                                if (dataTable) {
-                                    dataTable.row(selectedRow).remove().draw();
-                                }
+                                if (dataTable) dataTable.row(selectedRow).remove().draw();
                                 $(`#${table}DeleteModal`).modal('hide');
                                 showSuccessAlert(response?.success || 'Data berhasil dihapus!');
                             },
                             error: handleAjaxError
                         });
                     });
-
                 })
                 .catch(error => {
                     console.error(error);
                     mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
                 });
 
-            // Helper functions
             function showSuccessAlert(message) {
                 Swal.fire({
                     icon: 'success',

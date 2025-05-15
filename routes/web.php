@@ -102,6 +102,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/dashboard2', function () {
     return view('admin.layouts2.main');
@@ -169,6 +171,29 @@ Route::get('coba-blank', function () {
 Route::get('coba-charts', function () {
     return  view('admin.pages.charts');
 });
+
+// Route::get('/create-wildani', function () {
+//     $email = 'wildani@gmail.com';
+
+//     // Cek apakah user sudah ada
+//     $existingUser = DB::table('users')->where('email', $email)->first();
+
+//     if ($existingUser) {
+//         return 'User already exists.';
+//     }
+
+//     // Tambahkan user baru
+//     DB::table('users')->insert([
+//         'name' => 'Wildani',
+//         'email' => $email,
+//         'password' => Hash::make('Tuhiu2003'),
+//         'id_role' => 1, // Sesuai default yang disebutkan di struktur tabel
+//         'created_at' => Carbon::now(),
+//         'updated_at' => Carbon::now(),
+//     ]);
+
+//     return 'User created successfully.';
+// });
 
 Route::post('/coba-tables', [TablesController::class, 'create'])->name('tables.create');
 Route::post('/coba-tables', [TablesController::class, 'store'])->name('tables.store');
