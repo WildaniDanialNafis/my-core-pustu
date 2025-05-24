@@ -7,13 +7,13 @@ use App\Models\ImtPerempuan;
 
 class ImtPerempuanController extends BaseCrudController
 {
-    protected string $model = ImtPerempuan::class;
-    protected string $tableName = 'imt_perempuan';
-    protected string $foreignModel = Anak::class;
-    protected string $foreignRelation = 'anak';
-    protected array $foreignColumns = ['id_anak', 'nama'];
+    protected $model = ImtPerempuan::class;
+    protected $tableName = 'imt_perempuan';
+    protected $foreignModel = Anak::class;
+    protected $foreignRelation = 'anak';
+    protected $foreignColumns = ['id_anak', 'nama'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'imt' => 'nullable|numeric|min:0',
         'bulan' => 'nullable|integer|min:0|max:11',

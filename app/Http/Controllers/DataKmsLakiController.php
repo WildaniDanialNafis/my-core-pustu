@@ -7,13 +7,13 @@ use App\Models\DataKmsLaki;
 
 class DataKmsLakiController extends BaseCrudController
 {
-    protected string $model = DataKmsLaki::class;
-    protected string $tableName = 'data_kms_laki';
-    protected string $foreignModel = KmsLaki::class;
-    protected string $foreignRelation = 'kmsLaki';
-    protected array $foreignColumns = ['id_kms_laki', 'nama_anak'];
+    protected $model = DataKmsLaki::class;
+    protected $tableName = 'data_kms_laki';
+    protected $foreignModel = KmsLaki::class;
+    protected $foreignRelation = 'kmsLaki';
+    protected $foreignColumns = ['id_kms_laki', 'nama_anak'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_kms_laki' => 'required|exists:kms_laki,id_kms_laki',
         'umur' => 'nullable|integer|min:0',
         'bulan_penimbangan' => 'nullable|date',

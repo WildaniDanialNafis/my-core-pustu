@@ -7,13 +7,13 @@ use App\Models\KeteranganLahir;
 
 class KeteranganLahirController extends BaseCrudController
 {
-    protected string $model = KeteranganLahir::class;
-    protected string $tableName = 'keterangan_lahir';
-    protected string $foreignModel = Anak::class;
-    protected string $foreignRelation = 'anak';
-    protected array $foreignColumns = ['id_anak', 'nama'];
+    protected $model = KeteranganLahir::class;
+    protected $tableName = 'keterangan_lahir';
+    protected $foreignModel = Anak::class;
+    protected $foreignRelation = 'anak';
+    protected $foreignColumns = ['id_anak', 'nama'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'no' => 'nullable|string|max:255',
         'tanggal' => 'nullable|date',

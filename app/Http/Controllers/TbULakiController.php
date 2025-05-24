@@ -7,13 +7,13 @@ use App\Models\TbULaki;
 
 class TbULakiController extends BaseCrudController
 {
-    protected string $model = TbULaki::class;
-    protected string $tableName = 'tb_u_laki';
-    protected string $foreignModel = Anak::class;
-    protected string $foreignRelation = 'anak';
-    protected array $foreignColumns = ['id_anak', 'nama'];
+    protected $model = TbULaki::class;
+    protected $tableName = 'tb_u_laki';
+    protected $foreignModel = Anak::class;
+    protected $foreignRelation = 'anak';
+    protected $foreignColumns = ['id_anak', 'nama'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'tb' => 'nullable|numeric|min:0',
         'bulan' => 'nullable|integer|min:0|max:11',

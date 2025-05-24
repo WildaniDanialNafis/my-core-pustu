@@ -7,13 +7,13 @@ use App\Models\KesehatanGigi;
 
 class DataKesehatanGigiController extends BaseCrudController
 {
-    protected string $model = DataKesehatanGigi::class;
-    protected string $tableName = 'data_kesehatan_gigi';
-    protected string $foreignModel = KesehatanGigi::class;
-    protected string $foreignRelation = 'kesehatanGigi';
-    protected array $foreignColumns = ['id_kesehatan_gigi', 'nama'];
+    protected $model = DataKesehatanGigi::class;
+    protected $tableName = 'data_kesehatan_gigi';
+    protected $foreignModel = KesehatanGigi::class;
+    protected $foreignRelation = 'kesehatanGigi';
+    protected $foreignColumns = ['id_kesehatan_gigi', 'nama'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_kesehatan_gigi' => 'required|exists:kesehatan_gigi,id_kesehatan_gigi',
         'pemeriksaan' => 'nullable|date',
         'jumlah_gigi' => 'nullable|integer|min:0',

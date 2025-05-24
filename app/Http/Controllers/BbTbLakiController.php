@@ -7,13 +7,13 @@ use App\Models\BbTbLaki;
 
 class BbTbLakiController extends BaseCrudController
 {
-    protected string $model = BbTbLaki::class;
-    protected string $tableName = 'bb_tb_laki';
-    protected string $foreignModel = Anak::class;
-    protected string $foreignRelation = 'anak';
-    protected array $foreignColumns = ['id_anak', 'nama'];
+    protected $model = BbTbLaki::class;
+    protected $tableName = 'bb_tb_laki';
+    protected $foreignModel = Anak::class;
+    protected $foreignRelation = 'anak';
+    protected $foreignColumns = ['id_anak', 'nama'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'bb' => 'nullable|numeric|min:0',
         'tb' => 'nullable|numeric|min:0',

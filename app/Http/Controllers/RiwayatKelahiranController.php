@@ -7,13 +7,13 @@ use App\Models\RiwayatKelahiran;
 
 class RiwayatKelahiranController extends BaseCrudController
 {
-    protected string $model = RiwayatKelahiran::class;
-    protected string $tableName = 'riwayat_kelahiran';
-    protected string $foreignModel = Anak::class;
-    protected string $foreignRelation = 'anak';
-    protected array $foreignColumns = ['id_anak', 'nama'];
+    protected $model = RiwayatKelahiran::class;
+    protected $tableName = 'riwayat_kelahiran';
+    protected $foreignModel = Anak::class;
+    protected $foreignRelation = 'anak';
+    protected $foreignColumns = ['id_anak', 'nama'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'g' => 'nullable|string|max:255',
         'p' => 'nullable|string|max:255',

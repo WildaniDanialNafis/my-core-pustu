@@ -12,7 +12,7 @@ class DataKmsPerempuan extends Model
 
     protected $table = 'data_kms_perempuan';
 
-    protected $primaryKey = 'id_data_kms_permpuan';
+    protected $primaryKey = 'id_data_kms_perempuan';
 
     protected $fillable = [
         'id_kms_perempuan',

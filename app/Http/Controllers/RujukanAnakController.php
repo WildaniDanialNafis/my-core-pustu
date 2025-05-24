@@ -7,13 +7,13 @@ use App\Models\RujukanAnak;
 
 class RujukanAnakController extends BaseCrudController
 {
-    protected string $model = RujukanAnak::class;
-    protected string $tableName = 'rujukan_anak';
-    protected string $foreignModel = Anak::class;
-    protected string $foreignRelation = 'anak';
-    protected array $foreignColumns = ['id_anak', 'nama'];
+    protected $model = RujukanAnak::class;
+    protected $tableName = 'rujukan_anak';
+    protected $foreignModel = Anak::class;
+    protected $foreignRelation = 'anak';
+    protected $foreignColumns = ['id_anak', 'nama'];
 
-    protected array $validationRules = [
+    protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'tanggal' => 'nullable|date',
         'dirujuk_ke' => 'nullable|string|max:255',
