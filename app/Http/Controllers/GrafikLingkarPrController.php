@@ -12,6 +12,11 @@ class GrafikLingkarPrController extends Controller
      */
     public function index()
     {
+        return view('admin.layouts2.template-table');
+    }
+
+    public function dataGrafik()
+    {
         $data = LingkarKepalaPerempuan::select('bulan', 'tahun', 'lingkar_kepala')
             ->where('id_anak', 1)
             ->orderBy('tahun')
@@ -42,14 +47,19 @@ class GrafikLingkarPrController extends Controller
             $lkData[] = $item->lingkar_kepala;
         }
 
-        $graph = [
+        $earnings = [
             "labels" => $labels,
             "data" => $lkData
         ];
 
-        return view('admin.layouts2.template-table', [
-            'earnings' => $graph
-        ]);
+        if (request()->ajax()) {
+            return response()->json($earnings);
+        }
+    }
+
+    public function grafik()
+    {
+        return view('admin.layouts-grafik.main');
     }
 
     /**

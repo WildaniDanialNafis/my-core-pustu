@@ -10,7 +10,13 @@ class GrafikImtLakiController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
+    {
+        return view('admin.layouts2.template-table');
+    }
+
+    public function dataGrafik()
     {
         $data = ImtLaki::select('imt', 'bulan')
             ->where('id_anak', 1)
@@ -25,14 +31,19 @@ class GrafikImtLakiController extends Controller
             $imtData[] = $item->imt;
         }
 
-        $graph = [
+        $earnings = [
             "labels" => $labels,
             "data" => $imtData
         ];
 
-        return view('admin.layouts2.template-table', [
-            'earnings' => $graph
-        ]);
+        if (request()->ajax()) {
+            return response()->json($earnings);
+        }
+    }
+
+    public function grafik()
+    {
+        return view('admin.layouts-grafik.main');
     }
 
     /**

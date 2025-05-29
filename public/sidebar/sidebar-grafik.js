@@ -1,13 +1,13 @@
 const submenuItems3 = [
-    { href: "/grafik-berat-badan-umur-laki", text: "Grafik Berat Badan Umur Laki" },
-    { href: "/grafik-tinggi-badan-umur-laki", text: "Grafik Tinggi Badan Umur Laki" },
-    { href: "/grafik-bb-tb-laki", text: "Grafik Berat Badan Tinggi Badan Laki" },
-    { href: "/grafik-lingkar-laki", text: "Grafik Lingkar Laki" },
+    { href: "/grafik-bb-u-lk", text: "Grafik Berat Badan Umur Laki" },
+    { href: "/grafik-tb-u-lk", text: "Grafik Tinggi Badan Umur Laki" },
+    { href: "/grafik-bb-tb-lk", text: "Grafik Berat Badan Tinggi Badan Laki" },
+    { href: "/grafik-lingkar-lk", text: "Grafik Lingkar Laki" },
     { href: "/grafik-bb-u-pr", text: "Grafik Berat Badan Umur Perempuan" },
     { href: "/grafik-tb-u-pr", text: "Grafik Tinggi Badan Umur Perempuan" },
     { href: "/grafik-bb-tb-pr", text: "Grafik Berat Badan Tinggi Badan Perempuan" },
     { href: "/grafik-lingkar-pr", text: "Grafik Lingkar Badan Perempuan" },
-    { href: "/grafik-imt-laki", text: "Grafik IMT Laki" },
+    { href: "/grafik-imt-lk", text: "Grafik IMT Laki" },
     { href: "/grafik-imt-pr", text: "Grafik IMT Perempuan" },
 ];
 

@@ -197,44 +197,115 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route untuk semua endpoint AJAX
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('/grafik-berat-badan-umur-laki', function () {
-            return view('admin.layouts-grafik.main');
+            $data = BbULaki::select('bulan', 'tahun', 'bb')
+                ->where('id_anak', 1)
+                ->orderBy('tahun')
+                ->orderBy('bulan')
+                ->get();
+
+            $labels = [];
+            $bbData = [];
+
+            $startYear = null;
+
+            foreach ($data as $item) {
+                if ($startYear === null) {
+                    $startYear = $item->tahun;
+                }
+
+                $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+                if ($usiaBulan == 12) {
+                    $labels[] = "1 tahun";
+                } elseif ($usiaBulan == 24) {
+                    $labels[] = "2 tahun";
+                } else {
+                    $labels[] = $usiaBulan . " bln";
+                }
+
+                $bbData[] = $item->bb;
+            }
+
+            $earnings = [
+                "labels" => $labels,
+                "data" => $bbData
+            ];
+
+            return view('admin.layouts-grafik.main', [
+                'earnings' => $earnings
+            ]);
         })->name('grafik-berat-badan-umur-laki.ajax');
 
-        Route::get('/grafik-tinggi-badan-umur-laki', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-tinggi-badan-umur-laki.ajax');
+        Route::get('/huhu', function () {
+            $data = BbULaki::select('bulan', 'tahun', 'bb')
+                ->where('id_anak', 1)
+                ->orderBy('tahun')
+                ->orderBy('bulan')
+                ->get();
 
-        Route::get('/grafik-bb-tb-laki', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-bb-tb-laki.ajax');
+            $labels = [];
+            $bbData = [];
 
-        Route::get('/grafik-lingkar-laki', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-lingkar-laki.ajax');
+            $startYear = null;
 
-        Route::get('/grafik-bb-u-pr', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-bb-u-pr.ajax');
+            foreach ($data as $item) {
+                if ($startYear === null) {
+                    $startYear = $item->tahun;
+                }
 
-        Route::get('/grafik-tb-u-pr', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-tb-u-pr.ajax');
+                $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
 
-        Route::get('/grafik-bb-tb-pr', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-bb-tb-pr.ajax');
+                if ($usiaBulan == 12) {
+                    $labels[] = "1 tahun";
+                } elseif ($usiaBulan == 24) {
+                    $labels[] = "2 tahun";
+                } else {
+                    $labels[] = $usiaBulan . " bln";
+                }
 
-        Route::get('/grafik-lingkar-pr', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-lingkar-pr.ajax');
+                $bbData[] = $item->bb;
+            }
 
-        Route::get('/grafik-imt-laki', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-imt-laki.ajax');
+            $earnings = [
+                "labels" => $labels,
+                "data" => $bbData
+            ];
 
-        Route::get('/grafik-imt-pr', function () {
-            return view('admin.layouts-grafik.main');
-        })->name('grafik-imt-pr.ajax');
+            // Jika request AJAX, kirim sebagai JSON
+            if (request()->ajax()) {
+                return response()->json($earnings);
+            }
+        })->name('huhu.ajax');
+
+        Route::get('/data-grafik-bb-u-lk', [GrafikBeratBadanUmurLakiController::class, 'dataGrafik'])->name('data-grafik-bb-u-lk.grafik');
+        Route::get('/grafik-bb-u-lk', [GrafikBeratBadanUmurLakiController::class, 'grafik'])->name('grafik-bb-u-lk.grafik');
+
+        Route::get('/data-grafik-tb-u-lk', [GrafikTinggiBadanUmurLakiController::class, 'dataGrafik'])->name('data-grafik-tb-u-lk.grafik');
+        Route::get('/grafik-tb-u-lk', [GrafikTinggiBadanUmurLakiController::class, 'grafik'])->name('grafik-tb-u-lk.grafik');
+
+        Route::get('/data-grafik-bb-tb-lk', [GrafikBbTbLakiController::class, 'dataGrafik'])->name('data-grafik-bb-tb-lk.grafik');
+        Route::get('/grafik-bb-tb-lk', [GrafikBbTbLakiController::class, 'grafik'])->name('grafik-bb-tb-lk.grafik');
+
+        Route::get('/data-grafik-lingkar-lk', [GrafikLingkarLakiController::class, 'dataGrafik'])->name('data-grafik-lingkar-lk.grafik');
+        Route::get('/grafik-lingkar-lk', [GrafikLingkarLakiController::class, 'grafik'])->name('grafik-lingkar-lk.grafik');
+
+        Route::get('/data-grafik-bb-u-pr', [GrafikBbUPrController::class, 'dataGrafik'])->name('data-grafik-bb-u-pr.grafik');
+        Route::get('/grafik-bb-u-pr', [GrafikBbUPrController::class, 'grafik'])->name('grafik-bb-u-pr.grafik');
+
+        Route::get('/data-grafik-tb-u-pr', [GrafikTbUPrController::class, 'dataGrafik'])->name('data-grafik-tb-u-pr.grafik');
+        Route::get('/grafik-tb-u-pr', [GrafikTbUPrController::class, 'grafik'])->name('grafik-tb-u-pr.grafik');
+
+        Route::get('/data-grafik-bb-tb-pr', [GrafikBbTbPrController::class, 'dataGrafik'])->name('data-grafik-bb-tb-pr.grafik');
+        Route::get('/grafik-bb-tb-pr', [GrafikBbTbPrController::class, 'grafik'])->name('grafik-bb-tb-pr.grafik');
+
+        Route::get('/data-grafik-lingkar-pr', [GrafikLingkarPrController::class, 'dataGrafik'])->name('data-grafik-lingkar-pr.grafik');
+        Route::get('/grafik-lingkar-pr', [GrafikLingkarPrController::class, 'grafik'])->name('grafik-lingkar-pr.grafik');
+
+        Route::get('/data-grafik-imt-lk', [GrafikImtLakiController::class, 'dataGrafik'])->name('data-grafik-imt-lk.grafik');
+        Route::get('/grafik-imt-lk', [GrafikImtLakiController::class, 'grafik'])->name('grafik-imt-lk.grafik');
+
+        Route::get('/data-grafik-imt-pr', [GrafikImtPrController::class, 'dataGrafik'])->name('data-grafik-imt-pr.grafik');
+        Route::get('/grafik-imt-pr', [GrafikImtPrController::class, 'grafik'])->name('grafik-imt-pr.grafik');
 
         Route::get('/dashboard', function () {
             return view('admin.layouts2.main');
@@ -939,33 +1010,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/rujukan-anak/update/{id}', [RujukanAnakController::class, 'update'])->name('rujukan-anak.update');
         Route::delete('/rujukan-anak/delete/{id}', [RujukanAnakController::class, 'destroy'])->name('rujukan-anak.delete');
 
-        Route::get('/grafik-berat-badan-umur-laki', [GrafikBeratBadanUmurLakiController::class, 'index'])->name('grafik-berat-badan-umur-laki.index');
-        Route::post('/grafik-berat-badan-umur-laki/create', [GrafikBeratBadanUmurLakiController::class, 'create'])->name('grafik-berat-badan-umur-laki.create');
-        Route::post('/grafik-berat-badan-umur-laki/store', [GrafikBeratBadanUmurLakiController::class, 'store'])->name('grafik-berat-badan-umur-laki.store');
-        Route::get('/grafik-berat-badan-umur-laki/edit/{id}', [GrafikBeratBadanUmurLakiController::class, 'edit'])->name('grafik-berat-badan-umur-laki.edit');
-        Route::put('/grafik-berat-badan-umur-laki/update/{id}', [GrafikBeratBadanUmurLakiController::class, 'update'])->name('grafik-berat-badan-umur-laki.update');
-        Route::delete('/grafik-berat-badan-umur-laki/delete/{id}', [GrafikBeratBadanUmurLakiController::class, 'destroy'])->name('grafik-berat-badan-umur-laki.delete');
+        Route::get('/grafik-bb-u-lk', [GrafikBeratBadanUmurLakiController::class, 'index'])->name('grafik-bb-u-lk.index');
+        Route::post('/grafik-bb-u-lk/create', [GrafikBeratBadanUmurLakiController::class, 'create'])->name('grafik-bb-u-lk.create');
+        Route::post('/grafik-bb-u-lk/store', [GrafikBeratBadanUmurLakiController::class, 'store'])->name('grafik-bb-u-lk.store');
+        Route::get('/grafik-bb-u-lk/edit/{id}', [GrafikBeratBadanUmurLakiController::class, 'edit'])->name('grafik-bb-u-lk.edit');
+        Route::put('/grafik-bb-u-lk/update/{id}', [GrafikBeratBadanUmurLakiController::class, 'update'])->name('grafik-bb-u-lk.update');
+        Route::delete('/grafik-bb-u-lk/delete/{id}', [GrafikBeratBadanUmurLakiController::class, 'destroy'])->name('grafik-bb-u-lk.delete');
 
-        Route::get('/grafik-tinggi-badan-umur-laki', [GrafikTinggiBadanUmurLakiController::class, 'index'])->name('grafik-tinggi-badan-umur-laki.index');
-        Route::post('/grafik-tinggi-badan-umur-laki/create', [GrafikTinggiBadanUmurLakiController::class, 'create'])->name('grafik-tinggi-badan-umur-laki.create');
-        Route::post('/grafik-tinggi-badan-umur-laki/store', [GrafikTinggiBadanUmurLakiController::class, 'store'])->name('grafik-tinggi-badan-umur-laki.store');
-        Route::get('/grafik-tinggi-badan-umur-laki/edit/{id}', [GrafikTinggiBadanUmurLakiController::class, 'edit'])->name('grafik-tinggi-badan-umur-laki.edit');
-        Route::put('/grafik-tinggi-badan-umur-laki/update/{id}', [GrafikTinggiBadanUmurLakiController::class, 'update'])->name('grafik-tinggi-badan-umur-laki.update');
-        Route::delete('/grafik-tinggi-badan-umur-laki/delete/{id}', [GrafikTinggiBadanUmurLakiController::class, 'destroy'])->name('grafik-tinggi-badan-umur-laki.delete');
+        Route::get('/grafik-tb-u-lk', [GrafikTinggiBadanUmurLakiController::class, 'index'])->name('grafik-tb-u-lk.index');
+        Route::post('/grafik-tb-u-lk/create', [GrafikTinggiBadanUmurLakiController::class, 'create'])->name('grafik-tb-u-lk.create');
+        Route::post('/grafik-tb-u-lk/store', [GrafikTinggiBadanUmurLakiController::class, 'store'])->name('grafik-tb-u-lk.store');
+        Route::get('/grafik-tb-u-lk/edit/{id}', [GrafikTinggiBadanUmurLakiController::class, 'edit'])->name('grafik-tb-u-lk.edit');
+        Route::put('/grafik-tb-u-lk/update/{id}', [GrafikTinggiBadanUmurLakiController::class, 'update'])->name('grafik-tb-u-lk.update');
+        Route::delete('/grafik-tb-u-lk/delete/{id}', [GrafikTinggiBadanUmurLakiController::class, 'destroy'])->name('grafik-tb-u-lk.delete');
 
-        Route::get('/grafik-bb-tb-laki', [GrafikBbTbLakiController::class, 'index'])->name('grafik-bb-tb-laki.index');
-        Route::post('/grafik-bb-tb-laki/create', [GrafikBbTbLakiController::class, 'create'])->name('grafik-bb-tb-laki.create');
-        Route::post('/grafik-bb-tb-laki/store', [GrafikBbTbLakiController::class, 'store'])->name('grafik-bb-tb-laki.store');
-        Route::get('/grafik-bb-tb-laki/edit/{id}', [GrafikBbTbLakiController::class, 'edit'])->name('grafik-bb-tb-laki.edit');
-        Route::put('/grafik-bb-tb-laki/update/{id}', [GrafikBbTbLakiController::class, 'update'])->name('grafik-bb-tb-laki.update');
-        Route::delete('/grafik-bb-tb-laki/delete/{id}', [GrafikBbTbLakiController::class, 'destroy'])->name('grafik-bb-tb-laki.delete');
+        Route::get('/grafik-bb-tb-lk', [GrafikBbTbLakiController::class, 'index'])->name('grafik-bb-tb-lk.index');
+        Route::post('/grafik-bb-tb-lk/create', [GrafikBbTbLakiController::class, 'create'])->name('grafik-bb-tb-lk.create');
+        Route::post('/grafik-bb-tb-lk/store', [GrafikBbTbLakiController::class, 'store'])->name('grafik-bb-tb-lk.store');
+        Route::get('/grafik-bb-tb-lk/edit/{id}', [GrafikBbTbLakiController::class, 'edit'])->name('grafik-bb-tb-lk.edit');
+        Route::put('/grafik-bb-tb-lk/update/{id}', [GrafikBbTbLakiController::class, 'update'])->name('grafik-bb-tb-lk.update');
+        Route::delete('/grafik-bb-tb-lk/delete/{id}', [GrafikBbTbLakiController::class, 'destroy'])->name('grafik-bb-tb-lk.delete');
 
-        Route::get('/grafik-lingkar-laki', [GrafikLingkarLakiController::class, 'index'])->name('grafik-lingkar-laki.index');
-        Route::post('/grafik-lingkar-laki/create', [GrafikLingkarLakiController::class, 'create'])->name('grafik-lingkar-laki.create');
-        Route::post('/grafik-lingkar-laki/store', [GrafikLingkarLakiController::class, 'store'])->name('grafik-lingkar-laki.store');
-        Route::get('/grafik-lingkar-laki/edit/{id}', [GrafikLingkarLakiController::class, 'edit'])->name('grafik-lingkar-laki.edit');
-        Route::put('/grafik-lingkar-laki/update/{id}', [GrafikLingkarLakiController::class, 'update'])->name('grafik-lingkar-laki.update');
-        Route::delete('/grafik-lingkar-laki/delete/{id}', [GrafikLingkarLakiController::class, 'destroy'])->name('grafik-lingkar-laki.delete');
+        Route::get('/grafik-lingkar-lk', [GrafikLingkarLakiController::class, 'index'])->name('grafik-lingkar-lk.index');
+        Route::post('/grafik-lingkar-lk/create', [GrafikLingkarLakiController::class, 'create'])->name('grafik-lingkar-lk.create');
+        Route::post('/grafik-lingkar-lk/store', [GrafikLingkarLakiController::class, 'store'])->name('grafik-lingkar-lk.store');
+        Route::get('/grafik-lingkar-lk/edit/{id}', [GrafikLingkarLakiController::class, 'edit'])->name('grafik-lingkar-lk.edit');
+        Route::put('/grafik-lingkar-lk/update/{id}', [GrafikLingkarLakiController::class, 'update'])->name('grafik-lingkar-lk.update');
+        Route::delete('/grafik-lingkar-lk/delete/{id}', [GrafikLingkarLakiController::class, 'destroy'])->name('grafik-lingkar-lk.delete');
 
         Route::get('/grafik-bb-u-pr', [GrafikBbUPrController::class, 'index'])->name('grafik-bb-u-pr.index');
         Route::post('/grafik-bb-u-pr/create', [GrafikBbUPrController::class, 'create'])->name('grafik-bb-u-pr.create');
@@ -995,12 +1066,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/grafik-lingkar-pr/update/{id}', [GrafikLingkarPrController::class, 'update'])->name('grafik-lingkar-pr.update');
         Route::delete('/grafik-lingkar-pr/delete/{id}', [GrafikLingkarPrController::class, 'destroy'])->name('grafik-lingkar-pr.delete');
 
-        Route::get('/grafik-imt-laki', [GrafikImtLakiController::class, 'index'])->name('grafik-imt-laki.index');
-        Route::post('/grafik-imt-laki/create', [GrafikImtLakiController::class, 'create'])->name('grafik-imt-laki.create');
-        Route::post('/grafik-imt-laki/store', [GrafikImtLakiController::class, 'store'])->name('grafik-imt-laki.store');
-        Route::get('/grafik-imt-laki/edit/{id}', [GrafikImtLakiController::class, 'edit'])->name('grafik-imt-laki.edit');
-        Route::put('/grafik-imt-laki/update/{id}', [GrafikImtLakiController::class, 'update'])->name('grafik-imt-laki.update');
-        Route::delete('/grafik-imt-laki/delete/{id}', [GrafikImtLakiController::class, 'destroy'])->name('grafik-imt-laki.delete');
+        Route::get('/grafik-imt-lk', [GrafikImtLakiController::class, 'index'])->name('grafik-imt-lk.index');
+        Route::post('/grafik-imt-lk/create', [GrafikImtLakiController::class, 'create'])->name('grafik-imt-lk.create');
+        Route::post('/grafik-imt-lk/store', [GrafikImtLakiController::class, 'store'])->name('grafik-imt-lk.store');
+        Route::get('/grafik-imt-lk/edit/{id}', [GrafikImtLakiController::class, 'edit'])->name('grafik-imt-lk.edit');
+        Route::put('/grafik-imt-lk/update/{id}', [GrafikImtLakiController::class, 'update'])->name('grafik-imt-lk.update');
+        Route::delete('/grafik-imt-lk/delete/{id}', [GrafikImtLakiController::class, 'destroy'])->name('grafik-imt-lk.delete');
 
         Route::get('/grafik-imt-pr', [GrafikImtPrController::class, 'index'])->name('grafik-imt-pr.index');
         Route::post('/grafik-imt-pr/create', [GrafikImtPrController::class, 'create'])->name('grafik-imt-pr.create');
@@ -1010,344 +1081,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/grafik-imt-pr/delete/{id}', [GrafikImtPrController::class, 'destroy'])->name('grafik-imt-pr.delete');
     });
 });
-
-// Route::get('/grafik-berat-badan-umur-laki', function () {
-//     $data = BbULaki::select('bulan', 'tahun', 'bb')
-//         ->where('id_anak', 1)
-//         ->orderBy('tahun')
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $bbData = [];
-
-//     $startYear = null;
-
-//     foreach ($data as $item) {
-//         if ($startYear === null) {
-//             $startYear = $item->tahun;
-//         }
-
-//         $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
-
-//         if ($usiaBulan == 12) {
-//             $labels[] = "1 tahun";
-//         } elseif ($usiaBulan == 24) {
-//             $labels[] = "2 tahun";
-//         } else {
-//             $labels[] = $usiaBulan . " bln";
-//         }
-
-//         $bbData[] = $item->bb;
-//     }
-
-//     $earnings = [
-//         "labels" => $labels,
-//         "data" => $bbData
-//     ];
-
-//     return view('admin.layouts2.template-table', [
-//         'earnings' => $earnings
-//     ]);
-// });
-
-// Route::get('/grafik-tinggi-badan-umur-laki', function () {
-//     $data = TbULaki::select('bulan', 'tahun', 'tb')
-//         ->where('id_anak', 1)
-//         ->orderBy('tahun')
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $tbData = [];
-
-//     $startYear = null;
-
-//     foreach ($data as $item) {
-//         if ($startYear === null) {
-//             $startYear = $item->tahun;
-//         }
-
-//         $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
-
-//         if ($usiaBulan == 12) {
-//             $labels[] = "1 tahun";
-//         } elseif ($usiaBulan == 24) {
-//             $labels[] = "2 tahun";
-//         } else {
-//             $labels[] = $usiaBulan . " bln";
-//         }
-
-//         $tbData[] = $item->tb;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $tbData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
-
-// Route::get('/grafik-bb-tb-laki', function () {
-//     $data = BbTbLaki::select('bb', 'tb')
-//         ->where('id_anak', 1)
-//         ->orderBy('tb')
-//         ->get();
-
-//     $labels = [];
-//     $bbData = [];
-
-//     foreach ($data as $item) {
-//         $labels[] = $item->tb . ' cm';
-//         $bbData[] = $item->bb;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $bbData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
-
-// Route::get('/grafik-lingkar-laki', function () {
-//     $data = LingkarKepalaLaki::select('bulan', 'tahun', 'lingkar_kepala')
-//         ->where('id_anak', 1)
-//         ->orderBy('tahun')
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $lkData = [];
-
-//     $startYear = null;
-
-//     foreach ($data as $item) {
-//         if ($startYear === null) {
-//             $startYear = $item->tahun;
-//         }
-
-//         $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
-
-//         // Menambahkan label umur dalam bulan dan tahun
-//         if ($usiaBulan == 12) {
-//             $labels[] = "1 tahun";
-//         } elseif ($usiaBulan == 24) {
-//             $labels[] = "2 tahun";
-//         } else {
-//             $labels[] = $usiaBulan . " bln";
-//         }
-
-//         $lkData[] = $item->lingkar_kepala;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $lkData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
-
-// Route::get('/grafik-bb-u-pr', function () {
-//     $data = BbUPerempuan::select('bulan', 'tahun', 'bb')
-//         ->where('id_anak', 1)
-//         ->orderBy('tahun')
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $bbData = [];
-
-//     $startYear = null;
-
-//     foreach ($data as $item) {
-//         if ($startYear === null) {
-//             $startYear = $item->tahun;
-//         }
-
-//         $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
-
-//         if ($usiaBulan == 12) {
-//             $labels[] = "1 tahun";
-//         } elseif ($usiaBulan == 24) {
-//             $labels[] = "2 tahun";
-//         } else {
-//             $labels[] = $usiaBulan . " bln";
-//         }
-
-//         $bbData[] = $item->bb;
-//     }
-
-//     $earnings = [
-//         "labels" => $labels,
-//         "data" => $bbData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $earnings
-//     ]);
-// });
-
-// Route::get('/grafik-tb-u-pr', function () {
-//     $data = TbUPerempuan::select('bulan', 'tahun', 'tb')
-//         ->where('id_anak', 1)
-//         ->orderBy('tahun')
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $tbData = [];
-
-//     $startYear = null;
-
-//     foreach ($data as $item) {
-//         if ($startYear === null) {
-//             $startYear = $item->tahun;
-//         }
-
-//         $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
-
-//         if ($usiaBulan == 12) {
-//             $labels[] = "1 tahun";
-//         } elseif ($usiaBulan == 24) {
-//             $labels[] = "2 tahun";
-//         } else {
-//             $labels[] = $usiaBulan . " bln";
-//         }
-
-//         $tbData[] = $item->tb;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $tbData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
-
-// Route::get('/grafik-bb-tb-pr', function () {
-//     $data = BbTbPerempuan::select('bb', 'tb')
-//         ->where('id_anak', 1)
-//         ->orderBy('tb')
-//         ->get();
-
-//     $labels = [];
-//     $bbData = [];
-
-//     foreach ($data as $item) {
-//         $labels[] = $item->tb . ' cm';
-//         $bbData[] = $item->bb;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $bbData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
-
-// Route::get('/grafik-lingkar-pr', function () {
-//     $data = LingkarKepalaPerempuan::select('bulan', 'tahun', 'lingkar_kepala')
-//         ->where('id_anak', 1)
-//         ->orderBy('tahun')
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $lkData = [];
-
-//     $startYear = null;
-
-//     foreach ($data as $item) {
-//         if ($startYear === null) {
-//             $startYear = $item->tahun;
-//         }
-
-//         $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
-
-//         // Menambahkan label umur dalam bulan dan tahun
-//         if ($usiaBulan == 12) {
-//             $labels[] = "1 tahun";
-//         } elseif ($usiaBulan == 24) {
-//             $labels[] = "2 tahun";
-//         } else {
-//             $labels[] = $usiaBulan . " bln";
-//         }
-
-//         $lkData[] = $item->lingkar_kepala;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $lkData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
-
-// Route::get('/grafik-imt-laki', function () {
-//     $data = ImtLaki::select('imt', 'bulan')
-//         ->where('id_anak', 1)
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $imtData = [];
-
-//     foreach ($data as $item) {
-//         $labels[] = $item->bulan . ' bln';
-//         $imtData[] = $item->imt;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $imtData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
-
-// Route::get('/grafik-imt-pr', function () {
-//     $data = ImtPerempuan::select('imt', 'bulan')
-//         ->where('id_anak', 1)
-//         ->orderBy('bulan')
-//         ->get();
-
-//     $labels = [];
-//     $imtData = [];
-
-//     foreach ($data as $item) {
-//         $labels[] = $item->bulan . ' bln';
-//         $imtData[] = $item->imt;
-//     }
-
-//     $graph = [
-//         "labels" => $labels,
-//         "data" => $imtData
-//     ];
-
-//     return view('admin.pages.template-graph', [
-//         'earnings' => $graph
-//     ]);
-// });
 
 Route::get('/coba-grafik', function () {
     return view('admin.pages.coba-grafik');

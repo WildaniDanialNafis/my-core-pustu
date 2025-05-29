@@ -12,6 +12,10 @@ class GrafikTinggiBadanUmurLakiController extends Controller
      */
     public function index()
     {
+        return view('admin.layouts2.template-table');
+    }
+
+    public function dataGrafik() {
         $data = TbULaki::select('bulan', 'tahun', 'tb')
             ->where('id_anak', 1)
             ->orderBy('tahun')
@@ -41,14 +45,18 @@ class GrafikTinggiBadanUmurLakiController extends Controller
             $tbData[] = $item->tb;
         }
 
-        $graph = [
+        $earnings = [
             "labels" => $labels,
             "data" => $tbData
         ];
 
-        return view('admin.layouts2.template-table', [
-            'earnings' => $graph
-        ]);
+        if (request()->ajax()) {
+            return response()->json($earnings);
+        }
+    }
+
+    public function grafik() {
+        return view('admin.layouts-grafik.main');
     }
 
     /**

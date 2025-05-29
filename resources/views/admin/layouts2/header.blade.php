@@ -1,7 +1,7 @@
 <header class="header">
-    <a href="#" class="logo">
+    <a href="/dashboard" class="logo">
         <i class="fas fa-bolt"></i>
-        <span>NeonDash</span>
+        <span>Pustu Lada Pamekasan</span>
     </a>
 
     <div class="search-bar">
@@ -16,22 +16,25 @@
         </div>
 
         <div class="user-btn" id="userBtn">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="user-avatar">
+            <img src="{{ Auth::user()->profile_photo_url ?? 'https://randomuser.me/api/portraits/women/44.jpg' }}" alt="User" class="user-avatar">
 
             <!-- Dropdown yang ditambahkan -->
-            <div class="profile-dropdown">
+            <div class="profile-dropdown" id="profileDropdown">
                 <div class="profile-preview">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="dropdown-avatar">
+                    <img src="{{ Auth::user()->profile_photo_url ?? 'https://randomuser.me/api/portraits/women/44.jpg' }}" alt="User" class="dropdown-avatar">
                     <div class="profile-details">
-                        <span class="profile-name">Jessica Parker</span>
-                        <span class="profile-email">admin@neondash.com</span>
+                        <span class="profile-name">{{ Auth::user()->name }}</span>
+                        <span class="profile-email">{{ Auth::user()->email }}</span>
                     </div>
                 </div>
                 <div class="dropdown-divider"></div>
-                <button class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </button>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -51,12 +54,16 @@
         padding: 15px;
         z-index: 100;
         display: none;
-        animation: neonGlow 1.5s infinite alternate;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .user-btn:hover .profile-dropdown,
-    .profile-dropdown:hover {
+    .profile-dropdown.active {
         display: block;
+        opacity: 1;
+        transform: translateY(0);
+        animation: neonGlow 1.5s infinite alternate;
     }
 
     .profile-preview {
@@ -122,14 +129,70 @@
         text-shadow: 0 0 5px #ff555555;
     }
 
-    /* Animasi neon yang sudah ada */
+    /* Animasi neon */
     @keyframes neonGlow {
         from {
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
         }
-
         to {
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.4);
         }
     }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userBtn = document.getElementById('userBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+    let dropdownTimeout;
+    
+    // Toggle dropdown saat tombol user diklik
+    userBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('active');
+    });
+    
+    // Buka dropdown saat hover (opsional)
+    userBtn.addEventListener('mouseenter', function() {
+        clearTimeout(dropdownTimeout);
+        profileDropdown.classList.add('active');
+    });
+    
+    // Delay untuk menutup dropdown saat mouse keluar
+    userBtn.addEventListener('mouseleave', function() {
+        dropdownTimeout = setTimeout(() => {
+            if (!profileDropdown.matches(':hover')) {
+                profileDropdown.classList.remove('active');
+            }
+        }, 300);
+    });
+    
+    profileDropdown.addEventListener('mouseleave', function() {
+        dropdownTimeout = setTimeout(() => {
+            profileDropdown.classList.remove('active');
+        }, 300);
+    });
+    
+    // Batal timeout jika mouse kembali
+    profileDropdown.addEventListener('mouseenter', function() {
+        clearTimeout(dropdownTimeout);
+    });
+    
+    // Tutup dropdown saat klik di luar
+    document.addEventListener('click', function(e) {
+        if (!userBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.classList.remove('active');
+        }
+    });
+    
+    // Logout confirmation
+    const logoutForm = profileDropdown.querySelector('form');
+    if (logoutForm) {
+        logoutForm.addEventListener('submit', function(e) {
+            if (!confirm('Apakah Anda yakin ingin logout?')) {
+                e.preventDefault();
+            }
+        });
+    }
+});
+</script>
