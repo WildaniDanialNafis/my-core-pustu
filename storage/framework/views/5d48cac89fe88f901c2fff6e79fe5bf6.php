@@ -1108,9 +1108,17 @@
     <!-- Custom Sidebar Anak -->
     <script src="<?php echo e(asset('sidebar/sidebar-anak.js')); ?>"></script>
 
+    <script src="<?php echo e(asset('sidebar/sidebar-grafik.js')); ?>"></script>
+
     <script>
         <?php if(isset($table)): ?>
             let table = "<?php echo e($table); ?>";
+        <?php endif; ?>
+    </script>
+
+    <script>
+        <?php if(isset($earnings)): ?>
+            let earnings = <?php echo json_encode($earnings, 15, 512) ?>;
         <?php endif; ?>
     </script>
 
@@ -1276,6 +1284,1796 @@
                 alert('User menu would appear here');
             });
         }
+
+        function loadGrafikContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-berat-badan-umur-laki', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafik();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafik() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikTinggiContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-tinggi-badan-umur-laki', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikTinggi();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikTinggi() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikBbTbLakiContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-bb-tb-laki', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikBbTbLaki();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikBbTbLaki() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikLingkarLakiContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-lingkar-laki', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikLingkarLaki();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikLingkarLaki() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikBbUPrContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-bb-u-pr', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikBbUPr();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikBbUPr() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikTbUPrContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-tb-u-pr', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikTbUPr();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikTbUPr() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikBbTbPrContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-bb-tb-pr', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikBbTbPr();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikBbTbPr() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikLingkarPrContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-lingkar-pr', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikLingkarPr();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikLingkarPr() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikImtLakiContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-imt-laki', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikImtLaki();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikImtLaki() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
+
+        function loadGrafikImtPrContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) {
+                console.error('Element .main-content tidak ditemukan.');
+                return;
+            }
+            fetch('/ajax/grafik-imt-pr', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    intializeGrafikImtPr();
+                })
+                .catch(error => {
+                    console.error(error);
+                    mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+                });
+        }
+
+        function intializeGrafikImtPr() {
+            AOS.init({
+                once: true
+            });
+            $('#ordersTable').DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        label: 'Berat Badan (kg)',
+                        data: earnings.data,
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'BB: ' + context.parsed.y + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kg'
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Usia'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            const trafficChart = new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: earnings.labels,
+                    datasets: [{
+                        data: earnings.data,
+                        backgroundColor: earnings.labels.map((_, i) => {
+                            const colors = [
+                                'rgba(99, 102, 241, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(2, 132, 199, 0.8)',
+                                'rgba(202, 138, 4, 0.8)'
+                            ];
+                            return colors[i % colors.length];
+                        }),
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333',
+                                padding: 15,
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed} kg`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const chartHoverInfo = document.getElementById('chartHoverInfo');
+            document.getElementById('revenueChart').addEventListener('mousemove', function(evt) {
+                const points = revenueChart.getElementsAtEventForMode(evt, 'nearest', {
+                    intersect: false
+                }, true);
+                if (points.length) {
+                    const point = points[0];
+                    const value = revenueChart.data.datasets[point.datasetIndex].data[point.index];
+                    const label = revenueChart.data.labels[point.index];
+                    chartHoverInfo.classList.add('visible');
+                    chartHoverInfo.textContent = `${label}: $${value.toLocaleString()}`;
+                    chartHoverInfo.style.left = `${evt.offsetX + 20}px`;
+                    chartHoverInfo.style.top = `${evt.offsetY}px`;
+                } else {
+                    chartHoverInfo.classList.remove('visible');
+                }
+            });
+            document.getElementById('revenueChart').addEventListener('mouseout', function() {
+                chartHoverInfo.classList.remove('visible');
+            });
+        }
     </script>
 
     <script>
@@ -1303,6 +3101,26 @@
             const normalizedUrl = normalizePath(url);
             if (normalizedUrl === '/dashboard') {
                 loadDashboardContent();
+            } else if (normalizedUrl === '/grafik-berat-badan-umur-laki') {
+                loadGrafikContent();
+            } else if (normalizedUrl === '/grafik-tinggi-badan-umur-laki') {
+                loadGrafikTinggiContent();
+            } else if (normalizedUrl === '/grafik-bb-tb-laki') {
+                loadGrafikBbTbLakiContent();
+            } else if (normalizedUrl === '/grafik-lingkar-laki') {
+                loadGrafikLingkarLakiContent();
+            } else if (normalizedUrl === '/grafik-bb-u-pr') {
+                loadGrafikBbUPrContent();
+            } else if (normalizedUrl === '/grafik-tb-u-pr') {
+                loadGrafikTbUPrContent();
+            } else if (normalizedUrl === '/grafik-bb-tb-pr') {
+                loadGrafikBbTbPrContent();
+            } else if (normalizedUrl === '/grafik-lingkar-pr') {
+                loadGrafikLingkarPrContent();
+            } else if (normalizedUrl === '/grafik-imt-laki') {
+                loadGrafikImtLakiContent();
+            } else if (normalizedUrl === '/grafik-imt-pr') {
+                loadGrafikImtPrContent();
             } else {
                 const match = normalizedUrl.match(/^\/([a-zA-Z0-9\-]+)$/);
                 if (match) {

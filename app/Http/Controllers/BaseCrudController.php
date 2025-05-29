@@ -52,14 +52,14 @@ abstract class BaseCrudController extends Controller
     public function create(Request $request)
     {
         $columns = Schema::getColumnListing($this->tableName);
-    
+
         if ($request->has('columns') && $request->input('columns') === 'columns') {
             return response()->json(['columns' => $columns]);
         }
-    
+
         $query = $this->model::query();
         $searchValue = $request->input('search.value');
-    
+
         if (!empty($searchValue)) {
             $query->where(function ($q) use ($searchValue, $columns) {
                 foreach ($columns as $column) {
@@ -67,24 +67,24 @@ abstract class BaseCrudController extends Controller
                 }
             });
         }
-    
+
         $primaryKey = (new $this->model)->getKeyName();
-    
+
         $totalRecords = $this->model::count();
         $filteredRecords = $query->count();
-    
+
         $data = $query->orderByDesc($primaryKey)
-                      ->skip($request->input('start', 0))
-                      ->take($request->input('length', 10))
-                      ->get();
-    
+            ->skip($request->input('start', 0))
+            ->take($request->input('length', 10))
+            ->get();
+
         return response()->json([
             'draw' => intval($request->input('draw')),
             'recordsTotal' => $totalRecords,
             'recordsFiltered' => $filteredRecords,
             'data' => $data,
         ]);
-    }    
+    }
 
     public function store(Request $request)
     {

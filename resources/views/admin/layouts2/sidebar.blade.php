@@ -152,6 +152,20 @@
 
         </li>
 
+        <li class="menu-title" style="--delay: 9">Grafik</li>
+
+        <li class="menu-item has-submenu" style="--delay: 10">
+            <a class="mb-2">
+                <span class="menu-icon"><i class="fas fa-chart-line"></i></span>
+                <span class="menu-text">Grafik</span>
+                <span class="menu-arrow"><i class="fas fa-chevron-right"></i></span>
+            </a>
+
+            <ul class="submenu list-unstyled" id="submenu-list3">
+            </ul>
+
+        </li>
+
         <!-- Other menu items with similar onclick handlers -->
     </ul>
 
