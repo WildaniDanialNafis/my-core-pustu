@@ -90,7 +90,10 @@ abstract class BaseCrudController extends Controller
     {
         $validated = $request->validate($this->validationRules);
         $this->model::create($validated);
-        return redirect()->route("{$this->tableName}.index")->with('success', 'Data berhasil ditambahkan!');
+        
+        $routeName = str_replace('_', '-', $this->tableName);
+        
+        return redirect()->route("{$routeName}.index")->with('success', 'Data berhasil ditambahkan!');
     }
 
     public function edit(string $id)
@@ -108,7 +111,10 @@ abstract class BaseCrudController extends Controller
         $validated = $request->validate($this->validationRules);
         $data = $this->model::findOrFail($id);
         $data->update($validated);
-        return redirect()->route("{$this->tableName}.index")->with('success', 'Data berhasil diperbarui!');
+        
+        $routeName = str_replace('_', '-', $this->tableName);
+        
+        return redirect()->route("{$routeName}.index")->with('success', 'Data berhasil diperbarui!');
     }
 
     public function destroy(string $id)
