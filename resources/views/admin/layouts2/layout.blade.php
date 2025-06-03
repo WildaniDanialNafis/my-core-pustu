@@ -1102,13 +1102,13 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Custom Sidebar Ibu -->
-    <script src="{{ asset('sidebar/sidebar-ibu.js') }}"></script>
+    Custom Sidebar Ibu
+    <!-- <script src="{{ asset('sidebar/sidebar-ibu.js') }}"></script> -->
 
     <!-- Custom Sidebar Anak -->
-    <script src="{{ asset('sidebar/sidebar-anak.js') }}"></script>
+    <!-- <script src="{{ asset('sidebar/sidebar-anak.js') }}"></script> -->
 
-    <script src="{{ asset('sidebar/sidebar-grafik.js') }}"></script>
+    <!-- <script src="{{ asset('sidebar/sidebar-grafik.js') }}"></script> -->
 
     <script>
         @if (isset($table))
