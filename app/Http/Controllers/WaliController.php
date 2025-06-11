@@ -12,6 +12,7 @@ class WaliController extends BaseCrudController
     protected $foreignModel = User::class;
     protected $foreignRelation = 'user';
     protected $foreignColumns = ['id_user', 'name'];
+    protected $title = 'Wali';
     protected $validationRules = [
         'id_user' => 'required|exists:users,id_user',
         'nama' => 'nullable|string',

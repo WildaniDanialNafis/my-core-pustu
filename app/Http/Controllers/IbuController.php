@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Yajra\DataTables\Facades\DataTables;
 
-class IbuController extends Controller
+class IbuController extends BaseCrudController
 {
     protected $model = Ibu::class;
     protected $tableName = 'ibu';
     protected $foreignModel = User::class;
     protected $foreignColumns = ['id_user', 'name'];
+    protected $title = 'Ibu';
     protected $validationRules = [
         'id_user' => 'required|exists:users,id_user',
         'nama' => 'nullable|string|max:255',
@@ -35,148 +36,4 @@ class IbuController extends Controller
         'puskesmas_domisili' => 'nullable|string|max:255',
         'no_reg_kohort_ibu' => 'nullable|string|max:50',
     ];
-
-    /**
-     * Get table metadata (columns, types, foreign keys)
-     */
-    protected function getTableMetadata()
-    {
-        $columns = Schema::getColumnListing($this->tableName);
-
-        $columnTypes = [];
-        foreach ($columns as $column) {
-            $columnTypes[$column] = Schema::getColumnType($this->tableName, $column);
-        }
-
-        $model = new $this->model();
-        $foreignColumn = $model->user()->getForeignKeyName();
-        $foreignDatas = $this->foreignModel::all($this->foreignColumns);
-
-        return [
-            'table' => $this->tableName,
-            'columns' => $columns,
-            'columnTypes' => $columnTypes,
-            'foreignDatas' => $foreignDatas,
-            'foreignColumn' => $foreignColumn,
-            'columnDiambil' => $this->foreignColumns
-        ];
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('admin.layouts2.template-table', $this->getTableMetadata());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-        $columns = Schema::getColumnListing($this->tableName);
-    
-        if ($request->has('columns') && $request->input('columns') === 'columns') {
-            return response()->json(['columns' => $columns]);
-        }
-    
-        $query = $this->model::query();
-    
-        // Server-side search
-        $searchValue = $request->input('search.value');
-    
-        if (!empty($searchValue)) {
-            $query->where(function ($q) use ($searchValue, $columns) {
-                foreach ($columns as $column) {
-                    $q->orWhere($column, 'like', '%' . $searchValue . '%');
-                }
-            });
-        }
-    
-        // Count records
-        $totalRecords = $this->model::count();
-        $filteredRecords = $query->count();
-    
-        // Get paginated data
-        $data = $query->orderBy('id_ibu', 'desc')
-                      ->skip($request->input('start', 0))
-                      ->take($request->input('length', 10))
-                      ->get();
-    
-        return response()->json([
-            'draw' => intval($request->input('draw')),
-            'recordsTotal' => $totalRecords,
-            'recordsFiltered' => $filteredRecords,
-            'data' => $data,
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validate($this->validationRules);
-        $this->model::create($validated);
-        return redirect()->route('ibu.index')->with('success', 'Data berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $data = $this->model::findOrFail($id);
-        $columns = Schema::getColumnListing($this->tableName);
-        return response()->json([
-            'data' => $data,
-            'columns' => $columns
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validated = $request->validate($this->validationRules);
-        $data = $this->model::findOrFail($id);
-        $data->update($validated);
-        return redirect()->route('ibu.index')->with('success', 'Data berhasil diperbarui!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        try {
-            $data = $this->model::findOrFail($id);
-            $data->delete();
-            return response()->json(['success' => 'Data berhasil dihapus!']);
-        } catch (Exception $e) {
-            Log::error('Error saat menghapus data:', [
-                'error' => $e->getMessage(),
-                'id' => $id
-            ]);
-            return response()->json([
-                'error' => 'Terjadi kesalahan saat menghapus data.',
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-    
-    public function ajax()
-    {
-        return view('admin.layouts2.ajax', $this->getTableMetadata());
-    }
 }

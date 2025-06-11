@@ -12,7 +12,7 @@ class Kesehatan2Controller extends BaseCrudController
     protected $foreignModel = Kesehatan1::class;
     protected $foreignRelation = 'kesehatan1';
     protected $foreignColumns = ['id_kesehatan1', 'id_kesehatan1']; // atau ganti kolom kedua sesuai yang ingin ditampilkan
-
+    protected $title = 'Kesehatan 2';
     protected $validationRules = [
         'id_kesehatan1' => 'required|exists:kesehatan1,id_kesehatan1',
         'trimester' => 'nullable|in:1,2,3',

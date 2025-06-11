@@ -12,6 +12,7 @@ class ImunisasiController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
+    protected $title = 'Imunisasi';
     protected $validationRules = [
         'id_vaksin' => 'required|integer|between:1,17',
         'id_anak' => 'required|exists:anak,id_anak',

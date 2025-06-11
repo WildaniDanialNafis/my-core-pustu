@@ -12,6 +12,7 @@ class AmanatDarahController extends BaseCrudController
     protected $foreignModel = MenyambutPersalinan::class;
     protected $foreignRelation = 'menyambutPersalinan';
     protected $foreignColumns = ['id_menyambut_persalinan', 'nama_pembuat'];
+    protected $title = 'Amanat Darah';
     protected $validationRules = [
         'id_menyambut_persalinan' => 'required|exists:menyambut_persalinan,id_menyambut_persalinan',
         'nama' => 'nullable|string|max:255',

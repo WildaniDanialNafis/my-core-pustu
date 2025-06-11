@@ -12,6 +12,7 @@ class KN0Controller extends BaseCrudController
     protected $foreignModel = PelayananKesehatanNeonatus::class;
     protected $foreignRelation = 'pelayananKesehatanNeonatus';
     protected $foreignColumns = ['id_pelayanan_kesehatan_neonatus', 'id_pelayanan_kesehatan_neonatus']; 
+    protected $title = 'Kesehatan Neonatus 0';
     protected $validationRules = [
         'id_pelayanan_kesehatan_neonatus' => 'required|exists:pelayanan_kesehatan_neonatus,id_pelayanan_kesehatan_neonatus',
         'kondisi' => 'nullable|string|max:255',

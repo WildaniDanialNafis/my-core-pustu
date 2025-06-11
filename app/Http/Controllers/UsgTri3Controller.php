@@ -12,6 +12,7 @@ class UsgTri3Controller extends BaseCrudController
     protected $foreignModel = PemeriksaanTrimester3::class;
     protected $foreignRelation = 'pemeriksaanTrimester3';
     protected $foreignColumns = ['id_pemeriksaan_trimester3', 'id_pemeriksaan_trimester3'];
+    protected $title = 'USG Trimester 3';
     protected $validationRules = [
         'id_pemeriksaan_trimester3' => 'required|exists:pemeriksaan_trimester3,id_pemeriksaan_trimester3',
         'hpht' => 'nullable|date',

@@ -12,6 +12,7 @@ class PemeriksaanTrimester3Controller extends BaseCrudController
     protected $foreignModel = Ibu::class;
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
+    protected $title = 'Pemeriksaan Trimester 3';
     protected $validationRules = [
         'id_ibu' => 'required|exists:ibu,id_ibu',
         'rencana_konsultasi_lanjut' => 'nullable|in:Gizi,Kebidanan,Anak,Penyakit Dalam,Neurologi,THT,Psikiatri',

@@ -12,7 +12,7 @@ class ImtLakiController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
-
+    protected $title = 'IMT Anak Laki-laki';
     protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'imt' => 'nullable|numeric|min:0',

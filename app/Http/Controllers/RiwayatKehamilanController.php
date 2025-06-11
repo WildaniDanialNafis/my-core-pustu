@@ -12,6 +12,7 @@ class RiwayatKehamilanController extends BaseCrudController
     protected $foreignModel = EvaluasiKesehatanBumil::class;
     protected $foreignRelation = 'evaluasiKesehatanBumil';
     protected $foreignColumns = ['id_evaluasi_kesehatan_bumil', 'faskes'];
+    protected $title = 'Riwayat Kehamilan';
     protected $validationRules = [
         'id_evaluasi_kesehatan_bumil' => 'required|integer|exists:evaluasi_kesehatan_bumil,id_evaluasi_kesehatan_bumil',
         'tahun' => 'nullable|date',

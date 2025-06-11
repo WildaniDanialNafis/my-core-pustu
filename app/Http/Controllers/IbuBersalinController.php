@@ -12,6 +12,7 @@ class IbuBersalinController extends BaseCrudController
     protected $foreignModel = Ibu::class;
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
+    protected $title = 'Ibu Bersalin';
     protected $validationRules = [
         'id_ibu' => 'required|exists:ibu,id_ibu',
         'tanggal_bersalin' => 'nullable|date',

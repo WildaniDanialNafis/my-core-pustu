@@ -12,6 +12,7 @@ class KapsulAnakController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
+    protected $title = 'Kapsul Anak';
     protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'id_umur_kapsul_anak' => 'required|exists:umur_kapsul_anak,id_umur_kapsul_anak',

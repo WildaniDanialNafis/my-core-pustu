@@ -12,6 +12,7 @@ class Kesehatan1Controller extends BaseCrudController
     protected $foreignModel = Ibu::class;
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
+    protected $title = 'Kesehatan 1';
     protected $validationRules = [
         'id_ibu' => 'required|exists:ibu,id_ibu',
         'hpht' => 'nullable|date',

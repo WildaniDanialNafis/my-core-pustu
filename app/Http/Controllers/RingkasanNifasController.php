@@ -12,6 +12,7 @@ class RingkasanNifasController extends BaseCrudController
     protected $foreignModel = Ibu::class;
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
+    protected $title = 'Ringkasan Nifas';
     protected $validationRules = [
         'id_ibu' => 'required|exists:ibu,id_ibu',
         'kf' => 'nullable|in:KF1,KF2,KF3,KF4',

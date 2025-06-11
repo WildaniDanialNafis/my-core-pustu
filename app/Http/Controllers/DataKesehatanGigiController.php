@@ -12,7 +12,7 @@ class DataKesehatanGigiController extends BaseCrudController
     protected $foreignModel = KesehatanGigi::class;
     protected $foreignRelation = 'kesehatanGigi';
     protected $foreignColumns = ['id_kesehatan_gigi', 'nama'];
-
+    protected $title = 'Data Kesehatan Gigi';
     protected $validationRules = [
         'id_kesehatan_gigi' => 'required|exists:kesehatan_gigi,id_kesehatan_gigi',
         'pemeriksaan' => 'nullable|date',

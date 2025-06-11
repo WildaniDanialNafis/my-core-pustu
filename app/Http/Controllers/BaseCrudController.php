@@ -13,8 +13,9 @@ abstract class BaseCrudController extends Controller
     protected $tableName;
     protected $foreignModel = null;
     protected $foreignColumns = [];
-    protected $foreignRelation = null; // default null, akan gunakan relasi otomatis jika diisi
+    protected $foreignRelation = null;
     protected $validationRules = [];
+    protected $title;
 
     protected function getTableMetadata()
     {
@@ -33,6 +34,7 @@ abstract class BaseCrudController extends Controller
             $foreignColumn = $modelInstance->{$this->foreignRelation}()->getForeignKeyName();
             $foreignDatas = $this->foreignModel::all($this->foreignColumns);
         }
+        // dd($columnTypes);
 
         return [
             'table' => $this->tableName,
@@ -40,7 +42,8 @@ abstract class BaseCrudController extends Controller
             'columnTypes' => $columnTypes,
             'foreignDatas' => $foreignDatas,
             'foreignColumn' => $foreignColumn,
-            'columnDiambil' => $this->foreignColumns
+            'columnDiambil' => $this->foreignColumns,
+            'title' => $this->title
         ];
     }
 

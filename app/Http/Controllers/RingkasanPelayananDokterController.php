@@ -12,7 +12,7 @@ class RingkasanPelayananDokterController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
-
+    protected $title = 'Ringkasan Pelayanan Dokter';
     protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'tanggal' => 'nullable|date',

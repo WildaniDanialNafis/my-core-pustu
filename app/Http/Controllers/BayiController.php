@@ -12,6 +12,7 @@ class BayiController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
+    protected $title = 'Bayi';
     protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'tanggal' => 'nullable|date',

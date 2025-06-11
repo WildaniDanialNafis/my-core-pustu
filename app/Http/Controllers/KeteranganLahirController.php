@@ -12,7 +12,7 @@ class KeteranganLahirController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
-
+    protected $title = 'Keterangan Lahir';
     protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'no' => 'nullable|string|max:255',

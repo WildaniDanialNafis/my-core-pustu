@@ -12,6 +12,7 @@ class MenyambutPersalinanController extends BaseCrudController
     protected $foreignModel = Ibu::class;
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
+    protected $title = 'Menyambut Persalinan';
     protected $validationRules = [
         'id_ibu' => 'required|integer',
         'nama_pembuat' => 'nullable|string',

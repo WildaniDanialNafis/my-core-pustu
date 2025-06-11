@@ -12,7 +12,7 @@ class PelayananKesehatanNeonatusController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
-
+    protected $title = 'Pelayanan Kesehatan Neonatus';
     protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'catatan_penting' => 'nullable|string',

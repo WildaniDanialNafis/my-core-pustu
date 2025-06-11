@@ -12,6 +12,7 @@ class EvaluasiKehamilanController extends BaseCrudController
     protected $foreignModel = Ibu::class;
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
+    protected $title = 'Evaluasi Kehamilan';
     protected $validationRules = [
         'id_ibu' => 'required|exists:ibu,id_ibu',
         'pemeriksa' => 'nullable|string|max:255',

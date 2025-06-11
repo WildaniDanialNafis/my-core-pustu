@@ -12,6 +12,7 @@ class PemeriksaanKhususController extends BaseCrudController
     protected $foreignModel = EvaluasiKesehatanBumil::class;
     protected $foreignRelation = 'evaluasiKesehatanBumil';
     protected $foreignColumns = ['id_evaluasi_kesehatan_bumil', 'faskes'];
+    protected $title = 'Pemeriksaan Khusus';
     protected $validationRules = [
         'id_evaluasi_kesehatan_bumil' => 'required|integer|exists:evaluasi_kesehatan_bumil,id_evaluasi_kesehatan_bumil',
         'inspekulo' => 'nullable|string|max:255',

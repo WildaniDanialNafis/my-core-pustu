@@ -12,7 +12,7 @@ class TbULakiController extends BaseCrudController
     protected $foreignModel = Anak::class;
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
-
+    protected $title = 'Tinggi Badan Per Umur Anak Laki-laki';
     protected $validationRules = [
         'id_anak' => 'required|exists:anak,id_anak',
         'tb' => 'nullable|numeric|min:0',

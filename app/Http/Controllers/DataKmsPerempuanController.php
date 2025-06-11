@@ -12,6 +12,7 @@ class DataKmsPerempuanController extends BaseCrudController
     protected $foreignModel = KmsPerempuan::class;
     protected $foreignRelation = 'kmsPerempuan';
     protected $foreignColumns = ['id_kms_perempuan', 'nama_anak'];
+    protected $title = 'Data KMS Anak Perempuan';
     protected $validationRules = [
         'id_kms_perempuan' => 'required|exists:kms_perempuan,id_kms_perempuan',
         'umur' => 'nullable|integer|min:0',
