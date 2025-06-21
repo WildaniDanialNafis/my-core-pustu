@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PemantauanKia>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class PemantauanKiaFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class PemantauanKiaFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_anak' => Anak::factory(),
+            'id_anak' => $this->getForeignKeyId(Anak::class),
             'id_ceklis' => $this->faker->numberBetween(1, 10),
             'hasil_pemantauan' => $this->faker->randomElement(['Lengkap', 'Tidak Lengkap']),
         ];

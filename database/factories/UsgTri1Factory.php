@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UsgTri1>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class UsgTri1Factory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class UsgTri1Factory extends Factory
     public function definition(): array
     {
         return [
-            'id_pemeriksaan_trimester1' => PemeriksaanTrimester1::factory(),
+            'id_pemeriksaan_trimester1' => $this->getForeignKeyId(PemeriksaanTrimester1::class),
             'hpht' => $this->faker->dateTimeBetween('-1 years', 'now'),
             'usia_kehamilan' => $this->faker->numberBetween(4, 13),
             'gestational_sac' => $this->faker->randomFloat(2, 1, 10),

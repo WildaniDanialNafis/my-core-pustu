@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BbTbLaki>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class BbTbLakiFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class BbTbLakiFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_anak' => Anak::factory(),
+            'id_anak' => $this->getForeignKeyId(Anak::class),
             'bb' => $this->faker->randomFloat(2, 2, 20),
             'tb' => $this->faker->randomFloat(2, 30, 120),
         ];

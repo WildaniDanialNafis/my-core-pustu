@@ -9,9 +9,11 @@ use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class UserFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * The current password being used by the factory.
      */
     protected static ?string $password;

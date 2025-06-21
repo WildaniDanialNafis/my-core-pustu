@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PreeklampsiaFisik>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class PreeklampsiaFisikFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class PreeklampsiaFisikFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_skrining_preeklampsia' => SkriningPreeklampsia::factory(),
+            'id_skrining_preeklampsia' => $this->getForeignKeyId(SkriningPreeklampsia::class),
             'id_kriteria_pemeriksaan_fisik' => $this->faker->numberBetween(1, 2),
             'risiko' => $this->faker->randomElement(['', 'Risiko sedang', 'Risiko tinggi']),
         ];

@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\KmsLaki>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class KmsLakiFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class KmsLakiFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_anak' => Anak::factory(),
+            'id_anak' => $this->getForeignKeyId(Anak::class),
             'nama_anak' => $this->faker->name('male'),
             'nama_posyandu' => $this->faker->company(),
         ];

@@ -6,9 +6,11 @@ use App\Models\Anak;
 use App\Models\Wali;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use Database\Factories\Traits\HasForeignKey;
+
 class AnakFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * The name of the factory's corresponding model.
      *
      * @var string
@@ -23,7 +25,7 @@ class AnakFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_wali' => Wali::factory(),
+            'id_wali' => $this->getForeignKeyId(Wali::class),
             'nama' => $this->faker->name(),
             'nik' => $this->faker->numerify('##########'),
             'tmpt_lahir' => $this->faker->city(),

@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PenyimpanganPerkembangan>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class PenyimpanganPerkembanganFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class PenyimpanganPerkembanganFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_pelayanan_sdidtk' => PelayananSdidtk::factory(),
+            'id_pelayanan_sdidtk' => $this->getForeignKeyId(PelayananSdidtk::class),
             'kpsp' => $this->faker->randomElement(['Ds', 'Dm', 'Dp']),
             'tdd' => $this->faker->randomElement(['N', 'R']),
             'tdl' => $this->faker->randomElement(['N', 'R']),

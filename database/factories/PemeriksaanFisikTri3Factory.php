@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PemeriksaanFisikTri3>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class PemeriksaanFisikTri3Factory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -24,7 +26,7 @@ class PemeriksaanFisikTri3Factory extends Factory
         $normalOptions = ['Normal', 'Tidak Normal'];
 
         return [
-            'id_pemeriksaan_trimester3' => PemeriksaanTrimester3::factory(),
+            'id_pemeriksaan_trimester3' => $this->getForeignKeyId(PemeriksaanTrimester3::class),
             'keadaan_umum' => $this->faker->randomElement(['Baik', 'Sedang', 'Buruk']),
             'konjuctiva' => $this->faker->randomElement($normalOptions),
             'sklera' => $this->faker->randomElement($normalOptions),

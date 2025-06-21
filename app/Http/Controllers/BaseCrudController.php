@@ -34,7 +34,6 @@ abstract class BaseCrudController extends Controller
             $foreignColumn = $modelInstance->{$this->foreignRelation}()->getForeignKeyName();
             $foreignDatas = $this->foreignModel::all($this->foreignColumns);
         }
-        // dd($columnTypes);
 
         return [
             'table' => $this->tableName,
@@ -57,6 +56,14 @@ abstract class BaseCrudController extends Controller
         $columns = Schema::getColumnListing($this->tableName);
 
         if ($request->has('columns') && $request->input('columns') === 'columns') {
+            $columns = Schema::getColumnListing($this->tableName);
+        
+            if ($this->foreignRelation && $this->foreignColumns) {
+                foreach ($this->foreignColumns as $col) {
+                    $columns[] = $this->foreignRelation . '.' . $col;
+                }
+            }
+        
             return response()->json(['columns' => $columns]);
         }
 
@@ -69,6 +76,11 @@ abstract class BaseCrudController extends Controller
                     $q->orWhere($column, 'like', '%' . $searchValue . '%');
                 }
             });
+        }
+
+        // Tambahkan relasi jika tersedia
+        if ($this->foreignRelation) {
+            $query->with($this->foreignRelation);
         }
 
         $primaryKey = (new $this->model)->getKeyName();
@@ -93,15 +105,15 @@ abstract class BaseCrudController extends Controller
     {
         $validated = $request->validate($this->validationRules);
         $this->model::create($validated);
-        
+
         $routeName = str_replace('_', '-', $this->tableName);
-        
+
         return redirect()->route("{$routeName}.index")->with('success', 'Data berhasil ditambahkan!');
     }
 
     public function edit(string $id)
     {
-        $data = $this->model::findOrFail($id);
+        $data = $this->model::with($this->foreignRelation)->findOrFail($id);
         $columns = Schema::getColumnListing($this->tableName);
         return response()->json([
             'data' => $data,
@@ -114,9 +126,9 @@ abstract class BaseCrudController extends Controller
         $validated = $request->validate($this->validationRules);
         $data = $this->model::findOrFail($id);
         $data->update($validated);
-        
+
         $routeName = str_replace('_', '-', $this->tableName);
-        
+
         return redirect()->route("{$routeName}.index")->with('success', 'Data berhasil diperbarui!');
     }
 

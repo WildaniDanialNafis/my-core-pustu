@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ImtPerempuan>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class ImtPerempuanFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class ImtPerempuanFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_anak' => Anak::factory(),
+            'id_anak' => $this->getForeignKeyId(Anak::class),
             'imt' => $this->faker->randomFloat(2, 10, 30), // Nilai IMT dalam rentang umum anak
             'bulan' => $this->faker->numberBetween(0, 11),
             'tahun' => $this->faker->numberBetween(0, 5),

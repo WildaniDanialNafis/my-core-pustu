@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MinumTtd>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class MinumTtdFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class MinumTtdFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_kontrol_ttd' => KontrolTtd::factory(),
+            'id_kontrol_ttd' => $this->getForeignKeyId(KontrolTtd::class),
             'bulan_ke' => $this->faker->randomElement(['1', '2', '3', '4', '5', '6', '7', '8', '9']),
             'keterangan' => $this->faker->sentence(),
             'nama_bulan' => $this->faker->randomElement([

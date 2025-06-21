@@ -10,65 +10,57 @@
             </div>
             <form id="<?php echo e($table . 'AddForm'); ?>" method="POST">
                 <?php echo csrf_field(); ?>
-                <?php echo method_field('POST'); ?>
                 <div class="modal-body">
                     <?php $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $column): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <!-- Cek apakah kolom adalah id (gunakan index) atau 'created_at' / 'updated_at' (gunakan nama kolom) -->
-                    <?php if(!($index === 0 || in_array($column, ['created_at', 'updated_at']))): ?>
-                        <div class="mb-3">
-                            <label for="<?php echo e($column); ?>" class="form-label">
-                                <?php echo e(ucfirst(str_replace('_', ' ', $column))); ?>
+                        <?php if(!($index === 0 || in_array($column, ['created_at', 'updated_at']))): ?>
+                            <div class="mb-3">
+                                <label for="<?php echo e($column); ?>" class="form-label">
+                                    <?php echo e(ucfirst(str_replace('_', ' ', $column))); ?>
 
-                            </label>
+                                </label>
 
-                            <?php
-                                // Mendapatkan tipe kolom
-                                $type = $columnTypes[$column];
-                                // Tentukan tipe input berdasarkan tipe kolom
-                                $inputType = 'text'; // Default type
-
-                                if ($type === 'bigint') {
-                                    $inputType = 'number';
-                                } elseif ($type === 'varchar' || $type === 'char') {
+                                <?php
+                                    $type = $columnTypes[$column];
                                     $inputType = 'text';
-                                } elseif ($type === 'date') {
-                                    $inputType = 'date';
-                                } elseif ($type === 'timestamp') {
-                                    $inputType = 'datetime-local';
-                                } elseif ($type === 'text') {
-                                    $inputType = 'textarea';
-                                }
 
-                                // Untuk kolom 'id_foreign', ganti menjadi 'select'
-                                if ($column === $foreignColumn) {
-                                    $inputType = 'select';
-                                }
-                            ?>
+                                    if ($type === 'bigint') {
+                                        $inputType = 'number';
+                                    } elseif (in_array($type, ['varchar', 'char'])) {
+                                        $inputType = 'text';
+                                    } elseif ($type === 'date') {
+                                        $inputType = 'date';
+                                    } elseif ($type === 'timestamp') {
+                                        $inputType = 'datetime-local';
+                                    } elseif ($type === 'text') {
+                                        $inputType = 'textarea';
+                                    }
 
-                            <?php if($inputType == 'select'): ?>
-                                <select class="form-select" id="<?php echo e($column); ?>"
-                                    name="<?php echo e($column); ?>" required>
-                                    <option value="" disabled selected>Pilih
-                                        Pengguna</option>
-                                    <?php $__currentLoopData = $foreignDatas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $foreignData): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option
-                                            value="<?php echo e($foreignData[$foreignColumn]); ?>">
-                                            <?php echo e($foreignData[$columnDiambil[1]]); ?>
+                                    if ($column === $foreignColumn) {
+                                        $inputType = 'select';
+                                    }
+                                ?>
 
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            <?php elseif($inputType == 'textarea'): ?>
-                                <textarea class="form-control" id="<?php echo e($column); ?>" name="<?php echo e($column); ?>" placeholder="<?php echo e($column); ?>"
-                                    required></textarea>
-                            <?php else: ?>
-                                <input type="<?php echo e($inputType); ?>" class="form-control"
-                                    id="<?php echo e($column); ?>" name="<?php echo e($column); ?>"
-                                    placeholder="<?php echo e($column); ?>" required>
-                            <?php endif; ?>
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($inputType === 'select'): ?>
+                                    <select class="form-select" id="<?php echo e($column); ?>" name="<?php echo e($column); ?>">
+                                        <option value="" disabled selected>Pilih Pengguna</option>
+                                        <?php $__currentLoopData = $foreignDatas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $foreignData): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($foreignData[$foreignColumn]); ?>">
+                                                <?php echo e($foreignData[$columnDiambil[1]]); ?>
+
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                <?php elseif($inputType === 'textarea'): ?>
+                                    <textarea class="form-control" id="<?php echo e($column); ?>" name="<?php echo e($column); ?>" placeholder="<?php echo e($column); ?>"></textarea>
+                                <?php else: ?>
+                                    <input type="<?php echo e($inputType); ?>" class="form-control" id="<?php echo e($column); ?>" name="<?php echo e($column); ?>" placeholder="<?php echo e($column); ?>">
+                                <?php endif; ?>
+
+                                
+                                <div class="invalid-feedback d-block" id="error-<?php echo e($column); ?>"></div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">

@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Keluarga>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class KeluargaFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -18,7 +20,7 @@ class KeluargaFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_ibu' => Ibu::factory(), // Menyambungkan dengan user yang sudah ada
+            'id_ibu' => $this->getForeignKeyId(Ibu::class), // Menyambungkan dengan user yang sudah ada
             'nama' => $this->faker->name,
             'pembiayaan' => $this->faker->word,
             'no_jkn' => $this->faker->regexify('[0-9]{13}'),

@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RujukanAnak>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class RujukanAnakFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class RujukanAnakFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_anak' => Anak::factory(),
+            'id_anak' => $this->getForeignKeyId(Anak::class),
             'tanggal' => $this->faker->dateTime(),
             'dirujuk_ke' => $this->faker->company(),
             'sebab_dirujuk' => $this->faker->sentence(),

@@ -7,9 +7,11 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+use Database\Factories\Traits\HasForeignKey;
+
 class IbuFactory extends Factory
 {
-    // Menentukan model yang diwakili oleh factory ini
+    use HasForeignKey;    // Menentukan model yang diwakili oleh factory ini
     protected $model = Ibu::class;
 
     /**
@@ -21,7 +23,7 @@ class IbuFactory extends Factory
     {
         return [
             // Menghasilkan data palsu (fake data) menggunakan Faker
-            'id_user' => User::factory(), // Menyambungkan dengan user yang sudah ada
+            'id_user' => $this->getForeignKeyId(User::class), // Menyambungkan dengan user yang sudah ada
             'nama' => $this->faker->name,
             'pembiayaan' => $this->faker->word,
             'no_jkn' => $this->faker->regexify('[0-9]{13}'),

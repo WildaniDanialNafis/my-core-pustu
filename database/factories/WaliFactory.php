@@ -6,9 +6,11 @@ use App\Models\Wali;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use Database\Factories\Traits\HasForeignKey;
+
 class WaliFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * The name of the factory's corresponding model.
      *
      * @var string
@@ -23,7 +25,7 @@ class WaliFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_user' => User::factory(),
+            'id_user' => $this->getForeignKeyId(User::class),
             'nama' => $this->faker->name(),
             'nik' => $this->faker->numerify('##########'),
             'tmpt_lahir' => $this->faker->city(),

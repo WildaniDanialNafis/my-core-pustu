@@ -1403,23 +1403,68 @@
 
             function createColumns(serverColumns) {
                 if (!Array.isArray(serverColumns)) return [];
-                const columns = serverColumns.map(column => ({
-                    data: column,
-                    name: column
-                }));
+
+                const looksLikeDate = (value) => {
+                    if (typeof value !== 'string') return false;
+
+                    const patterns = [
+                        /^\d{4}-\d{2}-\d{2}$/, // 2025-12-31
+                        /^\d{4}\/\d{2}\/\d{2}$/, // 2025/12/31
+                        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/, // 2025-12-31T14:00
+                        /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/, // 2025-12-31 14:00
+                        /^\d{2}-\d{2}-\d{4}$/, // 31-12-2025
+                        /^\d{4}\.\d{2}\.\d{2}$/ // 2025.12.31
+                    ];
+
+                    return patterns.some(pattern => pattern.test(value)) && !isNaN(Date.parse(value));
+                };
+
+                const getNestedValue = (obj, path) => {
+                    return path.split('.').reduce((acc, part) => acc?.[part], obj);
+                };
+
+                const columns = serverColumns.map(column => {
+                    return {
+                        data: column,
+                        name: column,
+                        render: function(data, type, row) {
+                            const value = getNestedValue(row, column);
+
+                            if (looksLikeDate(value)) {
+                                const date = new Date(value);
+                                const hasTime = value.includes('T') || value.includes(' ');
+                                return date.toLocaleString('id-ID', {
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: 'numeric',
+                                    ...(hasTime && {
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        hour12: false
+                                    })
+                                });
+                            }
+
+                            return value ?? '';
+                        }
+                    };
+                });
+
+                // Tambahkan kolom aksi
                 columns.unshift({
                     data: null,
                     name: 'actions',
                     render: function(data, type, row) {
-                        const id = row['id_' + table] || '';
+                        const id = row['id_' + table] || row['id']; // fallback to 'id' if needed
                         return `<div class="d-inline-flex gap-1">
-                        <button class="btn btn-outline-warning btn-sm edit-btn-${table}" 
-                            data-id="${id}" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-                        <button class="btn btn-outline-danger btn-sm delete-btn-${table}" 
-                            data-id="${id}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
-                    </div>`;
+                <button class="btn btn-outline-warning btn-sm edit-btn-${table}" 
+                    data-id="${id}" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                <button class="btn btn-outline-danger btn-sm delete-btn-${table}" 
+                    data-id="${id}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            </div>`;
                     }
                 });
+
                 return columns;
             }
 
@@ -1611,12 +1656,23 @@
             }
 
             function handleAjaxError(xhr) {
-                console.error('Error:', xhr?.responseJSON || xhr.responseText);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Terjadi kesalahan saat memproses permintaan.'
-                });
+                $('.invalid-feedback').text('').hide();
+                $('input, select, textarea').removeClass('is-invalid');
+
+                if (xhr?.responseJSON?.errors) {
+                    const errors = xhr.responseJSON.errors;
+
+                    for (const field in errors) {
+                        $(`[name="${field}"]`).addClass('is-invalid');
+                        $(`#error-${field}`).text(errors[field][0]).show();
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan',
+                        text: xhr?.responseJSON?.message || 'Terjadi kesalahan pada server.',
+                    });
+                }
             }
         }
     </script>

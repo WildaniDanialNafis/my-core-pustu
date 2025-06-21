@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\KriteriaAnamnesis>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class KriteriaAnamnesisFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>

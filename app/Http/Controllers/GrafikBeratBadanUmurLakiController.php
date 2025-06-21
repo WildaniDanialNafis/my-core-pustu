@@ -15,25 +15,81 @@ class GrafikBeratBadanUmurLakiController extends Controller
         return view('admin.layouts2.template-table');
     }
 
-    public function dataGrafik() {
+    // public function dataGrafik() {
+    //     $data = BbULaki::select('bulan', 'tahun', 'bb')
+    //         ->where('id_anak', 1)
+    //         ->orderBy('tahun')
+    //         ->orderBy('bulan')
+    //         ->get();
+
+    //     $labels = [];
+    //     $bbData = [];
+
+    //     $startYear = null;
+
+    //     foreach ($data as $item) {
+    //         if ($startYear === null) {
+    //             $startYear = $item->tahun;
+    //         }
+
+    //         $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+    //         if ($usiaBulan == 12) {
+    //             $labels[] = "1 tahun";
+    //         } elseif ($usiaBulan == 24) {
+    //             $labels[] = "2 tahun";
+    //         } else {
+    //             $labels[] = $usiaBulan . " bln";
+    //         }
+
+    //         $bbData[] = $item->bb;
+    //     }
+
+    //     $earnings = [
+    //         "labels" => $labels,
+    //         "data" => $bbData
+    //     ];
+
+    //     if (request()->ajax()) {
+    //         return response()->json($earnings);
+    //     }
+    // }
+
+    public function dataGrafik()
+    {
         $data = BbULaki::select('bulan', 'tahun', 'bb')
-            ->where('id_anak', 1)
             ->orderBy('tahun')
             ->orderBy('bulan')
             ->get();
 
+        $groupedByUsia = [];
+
+        // Cari tahun paling awal sebagai referensi awal
+        $startYear = $data->min('tahun');
+
+        foreach ($data as $item) {
+            $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
+
+            if (!isset($groupedByUsia[$usiaBulan])) {
+                $groupedByUsia[$usiaBulan] = [
+                    'total_bb' => 0,
+                    'count' => 0
+                ];
+            }
+
+            $groupedByUsia[$usiaBulan]['total_bb'] += $item->bb;
+            $groupedByUsia[$usiaBulan]['count'] += 1;
+        }
+
+        // Susun hasil akhir
         $labels = [];
         $bbData = [];
 
-        $startYear = null;
+        // Urutkan berdasarkan usia bulan
+        ksort($groupedByUsia);
 
-        foreach ($data as $item) {
-            if ($startYear === null) {
-                $startYear = $item->tahun;
-            }
-
-            $usiaBulan = ($item->tahun - $startYear) * 12 + $item->bulan;
-
+        foreach ($groupedByUsia as $usiaBulan => $values) {
+            // Buat label
             if ($usiaBulan == 12) {
                 $labels[] = "1 tahun";
             } elseif ($usiaBulan == 24) {
@@ -42,7 +98,9 @@ class GrafikBeratBadanUmurLakiController extends Controller
                 $labels[] = $usiaBulan . " bln";
             }
 
-            $bbData[] = $item->bb;
+            // Hitung rata-rata
+            $rataBb = $values['total_bb'] / $values['count'];
+            $bbData[] = round($rataBb, 2); // dibulatkan 2 digit desimal
         }
 
         $earnings = [
@@ -55,7 +113,8 @@ class GrafikBeratBadanUmurLakiController extends Controller
         }
     }
 
-    public function grafik() {
+    public function grafik()
+    {
         return view('admin.layouts-grafik.main');
     }
 

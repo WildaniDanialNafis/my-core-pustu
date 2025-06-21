@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\KondisiKesehatanBumil>
  */
+use Database\Factories\Traits\HasForeignKey;
+
 class KondisiKesehatanBumilFactory extends Factory
 {
-    /**
+    use HasForeignKey;    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -22,7 +24,7 @@ class KondisiKesehatanBumilFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_evaluasi_kesehatan_bumil' => EvaluasiKesehatanBumil::factory(),
+            'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'tanggal_periksa' => $this->faker->date(),
             'tb' => $this->faker->randomFloat(2, 140, 180),
             'bb' => $this->faker->randomFloat(2, 40, 100),
