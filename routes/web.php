@@ -14,6 +14,7 @@ use App\Http\Controllers\BbULakiController;
 use App\Http\Controllers\BbUPerempuanController;
 use App\Http\Controllers\BeratBadanBumilController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardLalaController;
 use App\Http\Controllers\DataKesehatanGigiController;
 use App\Http\Controllers\DataKmsLakiController;
 use App\Http\Controllers\DataKmsPerempuanController;
@@ -112,6 +113,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+
+Route::get('/dashboard-lala', [DashboardLalaController::class, 'index'])->name('dashboard-lala.index');
 
 Route::get('/dashboard2', function () {
     return view('admin.layouts2.main');

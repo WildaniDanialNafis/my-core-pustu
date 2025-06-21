@@ -110,6 +110,16 @@
             </a>
         </li>
 
+        <li class="menu-title" style="--delay: 1">Main</li>
+
+        <li class="menu-item" style="--delay: 2">
+            <a href="/dashboard-lala" class="active">
+                <span class="menu-icon"><i class="fas fa-home"></i></span>
+                <span class="menu-text">Dashboard Lala</span>
+                <span class="menu-badge">New</span>
+            </a>
+        </li>
+
         {{-- <li class="menu-item" style="--delay: 3">
             <a href="/analytics">
                 <span class="menu-icon"><i class="fas fa-chart-line"></i></span>

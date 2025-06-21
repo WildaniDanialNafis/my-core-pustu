@@ -1102,51 +1102,21 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        <?php if(isset($table)): ?>
-            let table = "<?php echo e($table); ?>";
-        <?php endif; ?>
-    </script>
-
-    <script>
-        <?php if(isset($earnings)): ?>
-            let earnings = <?php echo json_encode($earnings, 15, 512) ?>;
-        <?php endif; ?>
-    </script>
-
-    <!-- Custom Sidebar Ibu -->
     <script src="<?php echo e(asset('sidebar/sidebar-ibu.js')); ?>"></script>
 
-    <!-- Custom Sidebar Anak -->
     <script src="<?php echo e(asset('sidebar/sidebar-anak.js')); ?>"></script>
 
     <script src="<?php echo e(asset('sidebar/sidebar-grafik.js')); ?>"></script>
 
-    <script src="<?php echo e(asset('components/dashboard.js')); ?>"></script>
+    <script src="<?php echo e(asset('sidebar/sidebar-loader.js')); ?>"></script>
 
-    <script src="<?php echo e(asset('graph/grafik-bb-u-lk.js')); ?>"></script>
+    
+    
+    
 
-    <script src="<?php echo e(asset('graph/grafik-tb-u-lk.js')); ?>"></script>
+    
 
-    <script src="<?php echo e(asset('graph/grafik-bb-tb-lk.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('graph/grafik-lingkar-lk.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('graph/grafik-bb-u-pr.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('graph/grafik-tb-u-pr.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('graph/grafik-bb-tb-pr.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('graph/grafik-lingkar-pr.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('graph/grafik-imt-lk.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('graph/grafik-imt-pr.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('components/graph-navigation.js')); ?>"></script>
-
-    <script src="<?php echo e(asset('components/datatable-loader.js')); ?>"></script>
+    
 </body>
 
 </html>
