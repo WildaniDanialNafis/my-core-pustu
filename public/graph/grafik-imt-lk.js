@@ -4,78 +4,74 @@ function getCsrfToken() {
     return document.querySelector('meta[name="csrf-token"]')?.content || '';
 }
 
-function loadGrafikImtLk() {
+async function loadGrafikImtLk() {
     const csrfToken = getCsrfToken();
 
-    return fetch('/ajax/data-grafik-imt-lk', {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Gagal fetch ke /ajax/data-grafik-imt-lk');
-            return response.json();
-        })
-        .then(data => {
-            dataGrafikImtLk = data;
-            return data;
-        })
-        .then(() => renderGrafikImtLk(csrfToken))
-        .catch(error => {
-            console.error('Error:', error);
+    try {
+        const response = await fetch('/ajax/data-grafik-imt-lk', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
+            }
         });
+        if (!response.ok) throw new Error('Gagal fetch ke /ajax/data-grafik-imt-lk');
+
+        const data = await response.json();
+        dataGrafikImtLk = data;
+
+        await renderGrafikImtLk(csrfToken);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-function renderGrafikImtLk(csrfToken) {
+async function renderGrafikImtLk(csrfToken) {
     const mainContent = document.querySelector('.main-content');
     if (!mainContent) {
         console.error('Element .main-content tidak ditemukan.');
         return;
     }
 
-    fetch('/ajax/grafik-imt-lk', {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Gagal mengambil konten grafik.');
-            return response.text();
-        })
-        .then(html => {
-            mainContent.innerHTML = html;
-
-            if (!dataGrafikImtLk) {
-                console.error('Data grafik belum tersedia');
-                return;
+    try {
+        const response = await fetch('/ajax/grafik-imt-lk', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
             }
-
-            initializeChartsImtLk(dataGrafikImtLk);
-
-            AOS.init({ once: true });
-
-            const ordersTable = document.getElementById('ordersTable');
-            if (ordersTable) {
-                $(ordersTable).DataTable({
-                    responsive: true,
-                    dom: '<"top"f>rt<"bottom"lip><"clear">',
-                    pageLength: 5,
-                    lengthMenu: [5, 10, 25, 50],
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search orders...",
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
         });
+        if (!response.ok) throw new Error('Gagal mengambil konten grafik.');
+
+        const html = await response.text();
+        mainContent.innerHTML = html;
+
+        if (!dataGrafikImtLk) {
+            console.error('Data grafik belum tersedia');
+            return;
+        }
+
+        initializeChartsImtLk(dataGrafikImtLk);
+
+        AOS.init({ once: true });
+
+        const ordersTable = document.getElementById('ordersTable');
+        if (ordersTable) {
+            $(ordersTable).DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+    }
 }
 
 function initializeChartsImtLk(data) {

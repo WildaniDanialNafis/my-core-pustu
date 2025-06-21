@@ -13,9 +13,4 @@ class RiwayatPenyakitKeluargaController extends BaseCrudController
     protected $foreignRelation = 'evaluasiKesehatanBumil';
     protected $foreignColumns = ['id_evaluasi_kesehatan_bumil', 'faskes'];
     protected $title = 'Riwayat Penyakit Keluarga';
-    protected $validationRules = [
-        'id_evaluasi_kesehatan_bumil' => 'required|integer|exists:evaluasi_kesehatan_bumil,id_evaluasi_kesehatan_bumil',
-        'riwayat_penyakit' => 'nullable|in:Hipertensi,Diabetes,Sesak Nafas,Jantung,TB,Alergi,Jiwa,Kelainan Darah,Hepatitis B',
-        'penjelasan' => 'nullable|string',
-    ];
 }

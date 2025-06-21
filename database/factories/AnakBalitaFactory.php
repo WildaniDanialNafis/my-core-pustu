@@ -3,16 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Anak;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AnakBalita>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AnakBalitaFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>

@@ -13,14 +13,4 @@ class RingkasanKesehatanController extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Ringkasan Kesehatan';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'tanggal_periksa' => 'nullable|date',
-        'nama' => 'nullable|string|max:255',
-        'paraf' => 'nullable|string|max:255',
-        'keluhan' => 'nullable|string',
-        'pemeriksaan' => 'nullable|string',
-        'tindakan' => 'nullable|string',
-        'tanggal_kembali' => 'nullable|date',
-    ];
 }

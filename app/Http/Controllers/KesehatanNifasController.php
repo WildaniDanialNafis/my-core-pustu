@@ -13,16 +13,4 @@ class KesehatanNifasController extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Kesehatan Nifas';
-    protected $validationRules = [
-        'id_ibu' => 'integer|exists:ibu,id_ibu',
-        'tanggal_periksa' => 'nullable|date',
-        'tempat' => 'nullable|string',
-        'periksa_payudara' => 'nullable|string',
-        'periksa_pendarahan' => 'nullable|string',
-        'periksa_jalan_lahir' => 'nullable|string',
-        'vitamin_a' => 'nullable|string',
-        'kb_pasca_persalinan' => 'nullable|string',
-        'konseling' => 'nullable|string',
-        'test_laksana_kasus' => 'nullable|string',
-    ];
 }

@@ -13,10 +13,4 @@ class NasihatAnakController extends BaseCrudController
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
     protected $title = 'Nasihat Anak';
-    protected $validationRules = [
-        'id_anak' => 'required|exists:anak,id_anak',
-        'id_umur_nasihat_anak' => 'required|integer|between:1,7',
-        'nasihat' => 'nullable|string',
-        'tanggal' => 'nullable|date',
-    ];
 }

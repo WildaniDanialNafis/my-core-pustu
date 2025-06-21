@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\KN2;
 use App\Models\PelayananKesehatanNeonatus;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\KN2>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class KN2Factory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = KN2::class;
 
     public function definition(): array

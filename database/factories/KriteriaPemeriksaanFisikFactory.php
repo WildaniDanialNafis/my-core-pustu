@@ -2,16 +2,14 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\KriteriaPemeriksaanFisik>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class KriteriaPemeriksaanFisikFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -19,7 +17,6 @@ class KriteriaPemeriksaanFisikFactory extends Factory
     public function definition(): array
     {
         return [
-            //
         ];
     }
 }

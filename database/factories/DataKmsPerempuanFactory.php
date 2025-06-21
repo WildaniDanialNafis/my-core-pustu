@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\DataKmsPerempuan;
 use App\Models\KmsPerempuan;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DataKmsPerempuan>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DataKmsPerempuanFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = DataKmsPerempuan::class;
 
     public function definition(): array

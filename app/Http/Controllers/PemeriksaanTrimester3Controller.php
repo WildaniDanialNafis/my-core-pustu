@@ -13,13 +13,4 @@ class PemeriksaanTrimester3Controller extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Pemeriksaan Trimester 3';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'rencana_konsultasi_lanjut' => 'nullable|in:Gizi,Kebidanan,Anak,Penyakit Dalam,Neurologi,THT,Psikiatri',
-        'rencana_tempat_bersalin' => 'nullable|in:FKTP,FKRTL',
-        'rencana_kontrasepsi' => 'nullable|in:MAL,Pil,Suntik,AKDR,Implan,Steril,Belum Memilih',
-        'konseling' => 'nullable|in:Ya,Tidak',
-        'jelaskan' => 'nullable|string',
-        'kesimpulan' => 'nullable|string',
-    ];
 }

@@ -13,9 +13,4 @@ class PreeklampsiaFisikController extends BaseCrudController
     protected $foreignRelation = 'skriningPreeklampsia';
     protected $foreignColumns = ['id_skrining_preeklampsia', 'nama_dokter'];
     protected $title = 'Preeklampsia';
-    protected $validationRules = [
-        'id_skrining_preeklampsia' => 'required|exists:skrining_preeklampsia,id_skrining_preeklampsia',
-        'id_kriteria_pemeriksaan_fisik' => 'required|integer|in:1,2',
-        'risiko' => 'nullable|in:,Risiko sedang,Risiko tinggi',
-    ];
 }

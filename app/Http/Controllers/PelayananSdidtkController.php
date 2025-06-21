@@ -13,10 +13,4 @@ class PelayananSdidtkController extends BaseCrudController
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
     protected $title = 'Pelayanan SDIDTK';
-    protected $validationRules = [
-        'id_anak' => 'required|exists:anak,id_anak',
-        'id_umur_sdidtk' => 'required|integer|between:1,15',
-        'tindakan' => 'nullable|string',
-        'kunjungan_ulang' => 'nullable|string',
-    ];
 }

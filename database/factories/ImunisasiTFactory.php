@@ -4,24 +4,21 @@ namespace Database\Factories;
 
 use App\Models\EvaluasiKesehatanBumil;
 use App\Models\ImunisasiT;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ImunisasiT>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ImunisasiTFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = ImunisasiT::class;
 
-        public function definition(): array
+    public function definition(): array
     {
         return [
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),

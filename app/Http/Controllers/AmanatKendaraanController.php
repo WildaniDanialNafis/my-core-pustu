@@ -13,10 +13,4 @@ class AmanatKendaraanController extends BaseCrudController
     protected $foreignRelation = 'menyambutPersalinan';
     protected $foreignColumns = ['id_menyambut_persalinan', 'nama_pembuat'];
     protected $title = 'Amanat Kendaraan';
-    protected $validationRules = [
-        'id_menyambut_persalinan' => 'required|integer',
-        'kendaraan' => 'nullable|string',
-        'nama' => 'nullable|string',
-        'hp' => 'nullable|string',
-    ];
 }

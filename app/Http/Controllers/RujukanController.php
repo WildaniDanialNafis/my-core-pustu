@@ -13,12 +13,4 @@ class RujukanController extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Rujukan';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'rujukan' => 'nullable|string',
-        'tanggal_umpan_balik' => 'nullable|date',
-        'diagnosis_akhir_balik' => 'nullable|string',
-        'resume_umpan_balik' => 'nullable|string',
-        'anjuran' => 'nullable|in:FKTP,FKRTL',
-    ];
 }

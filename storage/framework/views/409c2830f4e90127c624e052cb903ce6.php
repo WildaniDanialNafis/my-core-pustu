@@ -1,14 +1,15 @@
 <!-- Add New Item Modal -->
-<div class="modal fade" id="<?php echo e($table . 'AddModal'); ?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+<div class="modal fade" id="<?php echo e($table . 'AddModal'); ?>" tabindex="-1" aria-labelledby="addModalLabel">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="addModalLabel">
                     <i class="fas fa-plus-circle me-2"></i>Tambah Data Baru
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
-            <form id="<?php echo e($table . 'AddForm'); ?>" method="POST">
+            <form id="<?php echo e($table . 'AddForm'); ?>" method="POST" class="add-form">
                 <?php echo csrf_field(); ?>
                 <div class="modal-body">
                     <?php $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $column): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -53,11 +54,12 @@
                                 <?php elseif($inputType === 'textarea'): ?>
                                     <textarea class="form-control" id="<?php echo e($column); ?>" name="<?php echo e($column); ?>" placeholder="<?php echo e($column); ?>"></textarea>
                                 <?php else: ?>
-                                    <input type="<?php echo e($inputType); ?>" class="form-control" id="<?php echo e($column); ?>" name="<?php echo e($column); ?>" placeholder="<?php echo e($column); ?>">
+                                    <input type="<?php echo e($inputType); ?>" class="form-control" id="<?php echo e($column); ?>"
+                                        name="<?php echo e($column); ?>" placeholder="<?php echo e($column); ?>">
                                 <?php endif; ?>
 
                                 
-                                <div class="invalid-feedback d-block" id="error-<?php echo e($column); ?>"></div>
+                                <div class="invalid-feedback d-block" id="add-error-<?php echo e($column); ?>"></div>
                             </div>
                         <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -73,4 +75,5 @@
             </form>
         </div>
     </div>
-</div><?php /**PATH /var/www/my-core-pustu/resources/views/admin/layouts2/create-modal.blade.php ENDPATH**/ ?>
+</div>
+<?php /**PATH /var/www/my-core-pustu/resources/views/admin/layouts2/create-modal.blade.php ENDPATH**/ ?>

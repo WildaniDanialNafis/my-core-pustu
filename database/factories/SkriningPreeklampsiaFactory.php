@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\Ibu;
 use App\Models\SkriningPreeklampsia;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SkriningPreeklampsia>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SkriningPreeklampsiaFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = SkriningPreeklampsia::class;
 
     public function definition(): array

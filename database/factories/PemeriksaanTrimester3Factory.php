@@ -4,22 +4,19 @@ namespace Database\Factories;
 
 use App\Models\Ibu;
 use App\Models\PemeriksaanTrimester3;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PemeriksaanTrimester3>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PemeriksaanTrimester3Factory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
-    protected $model = PemeriksaanTrimester3::class; 
+    protected $model = PemeriksaanTrimester3::class;
 
     public function definition(): array
     {

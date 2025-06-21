@@ -4,78 +4,76 @@ function getCsrfToken() {
     return document.querySelector('meta[name="csrf-token"]')?.content || '';
 }
 
-function loadGrafikLingkarPr() {
+async function loadGrafikLingkarPr() {
     const csrfToken = getCsrfToken();
 
-    return fetch('/ajax/data-grafik-lingkar-pr', {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Gagal fetch ke /ajax/data-grafik-lingkar-pr');
-            return response.json();
-        })
-        .then(data => {
-            dataGrafikLingkarPr = data;
-            return data;
-        })
-        .then(() => renderGrafikLingkarPr(csrfToken))
-        .catch(error => {
-            console.error('Error:', error);
+    try {
+        const response = await fetch('/ajax/data-grafik-lingkar-pr', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
+            }
         });
+
+        if (!response.ok) throw new Error('Gagal fetch ke /ajax/data-grafik-lingkar-pr');
+
+        const data = await response.json();
+        dataGrafikLingkarPr = data;
+
+        await renderGrafikLingkarPr(csrfToken);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-function renderGrafikLingkarPr(csrfToken) {
+async function renderGrafikLingkarPr(csrfToken) {
     const mainContent = document.querySelector('.main-content');
     if (!mainContent) {
         console.error('Element .main-content tidak ditemukan.');
         return;
     }
 
-    fetch('/ajax/grafik-lingkar-pr', {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Gagal mengambil konten grafik.');
-            return response.text();
-        })
-        .then(html => {
-            mainContent.innerHTML = html;
-
-            if (!dataGrafikLingkarPr) {
-                console.error('Data grafik belum tersedia');
-                return;
+    try {
+        const response = await fetch('/ajax/grafik-lingkar-pr', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
             }
-
-            initializeChartsLingkarPr(dataGrafikLingkarPr);
-
-            AOS.init({ once: true });
-
-            const ordersTable = document.getElementById('ordersTable');
-            if (ordersTable) {
-                $(ordersTable).DataTable({
-                    responsive: true,
-                    dom: '<"top"f>rt<"bottom"lip><"clear">',
-                    pageLength: 5,
-                    lengthMenu: [5, 10, 25, 50],
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search orders...",
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
         });
+
+        if (!response.ok) throw new Error('Gagal mengambil konten grafik.');
+
+        const html = await response.text();
+        mainContent.innerHTML = html;
+
+        if (!dataGrafikLingkarPr) {
+            console.error('Data grafik belum tersedia');
+            return;
+        }
+
+        initializeChartsLingkarPr(dataGrafikLingkarPr);
+
+        AOS.init({ once: true });
+
+        const ordersTable = document.getElementById('ordersTable');
+        if (ordersTable) {
+            $(ordersTable).DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+    }
 }
 
 function initializeChartsLingkarPr(data) {

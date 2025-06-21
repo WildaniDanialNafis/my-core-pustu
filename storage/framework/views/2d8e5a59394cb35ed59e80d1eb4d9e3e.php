@@ -9,7 +9,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <form id="<?php echo e($table . 'EditForm'); ?>" method="POST">
+            <form id="<?php echo e($table . 'EditForm'); ?>" method="POST" class="edit-form">
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('PUT'); ?>
                 <div class="modal-body">
@@ -62,7 +62,7 @@
                                     <?php endif; ?>
 
                                     
-                                    <div class="invalid-feedback d-block" id="error-<?php echo e($column); ?>"></div>
+                                    <div class="invalid-feedback d-block" id="edit-error-<?php echo e($column); ?>"></div>
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

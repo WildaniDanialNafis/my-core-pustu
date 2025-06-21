@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\Anak;
 use App\Models\LingkarKepalaPerempuan;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LingkarKepalaPerempuan>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LingkarKepalaPerempuanFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = LingkarKepalaPerempuan::class;
 
     public function definition(): array

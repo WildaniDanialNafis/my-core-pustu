@@ -4,24 +4,20 @@ namespace Database\Factories;
 
 use App\Models\Anak;
 use App\Models\Wali;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AnakFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
     protected $model = Anak::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition(): array
     {
         return [

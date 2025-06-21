@@ -13,9 +13,4 @@ class PreeklampsiaAnamnesisController extends BaseCrudController
     protected $foreignRelation = 'skriningPreeklampsia';
     protected $foreignColumns = ['id_skrining_preeklampsia', 'nama_dokter'];
     protected $title = 'Preeklampsia Anamnesis';
-    protected $validationRules = [
-        'id_skrining_preeklampsia' => 'required|exists:skrining_preeklampsia,id_skrining_preeklampsia',
-        'id_kriteria_anamnesis' => 'required|integer|between:1,14',
-        'risiko' => 'nullable|in:,Risiko sedang,Risiko tinggi',
-    ];
 }

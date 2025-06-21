@@ -4,25 +4,18 @@ namespace Database\Factories;
 
 use App\Models\Ibu;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IbuFactory extends Factory
 {
     use HasForeignKey;    // Menentukan model yang diwakili oleh factory ini
+
     protected $model = Ibu::class;
 
-    /**
-     * Definisikan data default untuk factory ini.
-     *
-     * @return array
-     */
     public function definition()
     {
         return [
-            // Menghasilkan data palsu (fake data) menggunakan Faker
             'id_user' => $this->getForeignKeyId(User::class), // Menyambungkan dengan user yang sudah ada
             'nama' => $this->faker->name,
             'pembiayaan' => $this->faker->word,

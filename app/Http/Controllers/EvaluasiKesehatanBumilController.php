@@ -13,9 +13,4 @@ class EvaluasiKesehatanBumilController extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Evaluasi Kesehatan Bumil';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'nama_dokter' => 'nullable|string|max:255',
-        'faskes' => 'nullable|string|max:255',
-    ];
 }

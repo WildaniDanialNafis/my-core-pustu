@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\Anak;
 use App\Models\PelayananSdidtk;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PelayananSdidtk>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PelayananSdidtkFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = PelayananSdidtk::class;
 
     public function definition(): array

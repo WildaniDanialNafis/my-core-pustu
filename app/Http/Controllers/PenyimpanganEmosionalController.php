@@ -13,10 +13,4 @@ class PenyimpanganEmosionalController extends BaseCrudController
     protected $foreignRelation = 'pelayananSdidtk';
     protected $foreignColumns = ['id_pelayanan_sdidtk', 'id_pelayanan_sdidtk'];
     protected $title = 'Penyimpangan Emosional';
-    protected $validationRules = [
-        'id_pelayanan_sdidtk' => 'required|exists:pelayanan_sdidtk,id_pelayanan_sdidtk',
-        'kmpe' => 'nullable|in:N,R',
-        'm_chat' => 'nullable|in:N,R',
-        'gpph' => 'nullable|in:N,R',
-    ];
 }

@@ -13,9 +13,4 @@ class KontrolTtdController extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Kontrol TTD';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'nama_pengontrol' => 'nullable|string|max:255',
-        'hubungan' => 'nullable|string|max:255',
-    ];
 }

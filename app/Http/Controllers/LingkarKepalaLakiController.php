@@ -13,10 +13,4 @@ class LingkarKepalaLakiController extends BaseCrudController
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
     protected $title = 'Lingkar Kepala Per Umur Anak Laki-laki';
-    protected $validationRules = [
-        'id_anak' => 'required|exists:anak,id_anak',
-        'lingkar_kepala' => 'nullable|numeric|min:0',
-        'bulan' => 'nullable|integer|min:0|max:11',
-        'tahun' => 'nullable|integer|min:0',
-    ];
 }

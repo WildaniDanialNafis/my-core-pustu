@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\EvaluasiKesehatanBumil;
 use App\Models\RiwayatKehamilan;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RiwayatKehamilan>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RiwayatKehamilanFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = RiwayatKehamilan::class;
 
     public function definition(): array

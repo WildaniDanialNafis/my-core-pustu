@@ -4,78 +4,75 @@ function getCsrfToken() {
     return document.querySelector('meta[name="csrf-token"]')?.content || '';
 }
 
-function loadGrafikBbUPr() {
+async function loadGrafikBbUPr() {
     const csrfToken = getCsrfToken();
 
-    return fetch('/ajax/data-grafik-bb-u-pr', {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Gagal fetch ke /ajax/data-grafik-bb-u-pr');
-            return response.json();
-        })
-        .then(data => {
-            dataGrafikBbUPr = data;
-            return data;
-        })
-        .then(() => renderGrafikBbUPr(csrfToken))
-        .catch(error => {
-            console.error('Error:', error);
+    try {
+        const response = await fetch('/ajax/data-grafik-bb-u-pr', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
+            }
         });
+        if (!response.ok) throw new Error('Gagal fetch ke /ajax/data-grafik-bb-u-pr');
+
+        const data = await response.json();
+        dataGrafikBbUPr = data;
+
+        await renderGrafikBbUPr(csrfToken);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-function renderGrafikBbUPr(csrfToken) {
+async function renderGrafikBbUPr(csrfToken) {
     const mainContent = document.querySelector('.main-content');
     if (!mainContent) {
         console.error('Element .main-content tidak ditemukan.');
         return;
     }
 
-    fetch('/ajax/grafik-bb-u-pr', {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Gagal mengambil konten grafik.');
-            return response.text();
-        })
-        .then(html => {
-            mainContent.innerHTML = html;
-
-            if (!dataGrafikBbUPr) {
-                console.error('Data grafik belum tersedia');
-                return;
+    try {
+        const response = await fetch('/ajax/grafik-bb-u-pr', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
             }
-
-            initializeChartsBbUPr(dataGrafikBbUPr);
-
-            AOS.init({ once: true });
-
-            const ordersTable = document.getElementById('ordersTable');
-            if (ordersTable) {
-                $(ordersTable).DataTable({
-                    responsive: true,
-                    dom: '<"top"f>rt<"bottom"lip><"clear">',
-                    pageLength: 5,
-                    lengthMenu: [5, 10, 25, 50],
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search orders...",
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
         });
+
+        if (!response.ok) throw new Error('Gagal mengambil konten grafik.');
+
+        const html = await response.text();
+        mainContent.innerHTML = html;
+
+        if (!dataGrafikBbUPr) {
+            console.error('Data grafik belum tersedia');
+            return;
+        }
+
+        initializeChartsBbUPr(dataGrafikBbUPr);
+
+        AOS.init({ once: true });
+
+        const ordersTable = document.getElementById('ordersTable');
+        if (ordersTable) {
+            $(ordersTable).DataTable({
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search orders...",
+                }
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
+    }
 }
 
 function initializeChartsBbUPr(data) {
@@ -96,7 +93,7 @@ function initializeChartsBbUPr(data) {
             datasets: [{
                 label: 'Berat Badan (kg)',
                 data: data.data,
-                backgroundColor: 'rgba(236, 72, 153, 0.1)', // warna pink lembut
+                backgroundColor: 'rgba(236, 72, 153, 0.1)', // pink lembut
                 borderColor: 'rgba(236, 72, 153, 1)',
                 borderWidth: 2,
                 tension: 0.4,

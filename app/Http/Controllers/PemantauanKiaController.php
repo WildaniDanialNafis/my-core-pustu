@@ -13,9 +13,4 @@ class PemantauanKiaController extends BaseCrudController
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
     protected $title = 'Pemantauan KIA';
-    protected $validationRules = [
-        'id_anak' => 'required|exists:anak,id_anak',
-        'id_ceklis' => 'required|integer|between:1,10',
-        'hasil_pemantauan' => 'nullable|in:Lengkap,Tidak Lengkap',
-    ];
 }

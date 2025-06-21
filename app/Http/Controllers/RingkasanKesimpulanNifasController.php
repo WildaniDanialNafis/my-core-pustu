@@ -13,13 +13,4 @@ class RingkasanKesimpulanNifasController extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Ringkasan Kesimpulan Nifas';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'keadaan_ibu' => 'nullable|in:Sehat,Sakit,Meninggal',
-        'keadaan_bayi' => 'nullable|in:Sehat,Sakit,Kelainan Bawaan,Meninggal',
-        'keterangan_keadaan_bayi' => 'nullable|string',
-        'komplikasi_nifas' => 'nullable|in:Pendarahan,Infeksi,Hipertensi,Lain-lain',
-        'keterangan_komplikasi_nifas' => 'nullable|string',
-        'kesimpulan' => 'nullable|string',
-    ];
 }

@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\KontrolTtd;
 use App\Models\MinumTtd;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MinumTtd>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MinumTtdFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = MinumTtd::class;
 
     public function definition(): array
@@ -29,7 +26,7 @@ class MinumTtdFactory extends Factory
             'keterangan' => $this->faker->sentence(),
             'nama_bulan' => $this->faker->randomElement([
                 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
             ]),
         ];
     }

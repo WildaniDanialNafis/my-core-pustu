@@ -9,7 +9,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <form id="{{ $table . 'EditForm' }}" method="POST">
+            <form id="{{ $table . 'EditForm' }}" method="POST" class="edit-form">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -60,7 +60,7 @@
                                     @endif
 
                                     {{-- Tempat munculnya error --}}
-                                    <div class="invalid-feedback d-block" id="error-{{ $column }}"></div>
+                                    <div class="invalid-feedback d-block" id="edit-error-{{ $column }}"></div>
                                 </div>
                             @endif
                         @endforeach

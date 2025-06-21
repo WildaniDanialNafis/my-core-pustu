@@ -13,10 +13,4 @@ class SkriningPreeklampsiaController extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Skrining Preeklampsia';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'kesimpulan' => 'nullable|string',
-        'paraf_dokter' => 'nullable|string|max:255',
-        'nama_dokter' => 'nullable|string|max:255',
-    ];
 }

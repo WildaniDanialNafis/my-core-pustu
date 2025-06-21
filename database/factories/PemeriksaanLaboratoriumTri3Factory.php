@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\PemeriksaanLaboratoriumTri3;
 use App\Models\PemeriksaanTrimester3;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PemeriksaanLaboratoriumTri3>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PemeriksaanLaboratoriumTri3Factory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = PemeriksaanLaboratoriumTri3::class;
 
     public function definition(): array

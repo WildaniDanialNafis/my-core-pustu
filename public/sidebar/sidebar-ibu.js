@@ -1,4 +1,3 @@
-
 const submenuItems = [
     { href: "/ibu", text: "Ibu" },
     { href: "/keluarga", text: "Keluarga" },
@@ -41,19 +40,23 @@ const submenuItems = [
     { href: "/rujukan", text: "Rujukan" }
 ];
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const submenuList = document.getElementById("submenu-list1");
 
-    submenuItems.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.className = "mb-2";
-        li.style.setProperty("--delay", index + 1);
-
-        const a = document.createElement("a");
-        a.href = item.href;
-        a.textContent = item.text;
-
-        li.appendChild(a);
-        submenuList.appendChild(li);
-    });
+    for (let [index, item] of submenuItems.entries()) {
+        await addSubmenuItem(submenuList, item, index);
+    }
 });
+
+async function addSubmenuItem(container, item, index) {
+    const li = document.createElement("li");
+    li.className = "mb-2";
+    li.style.setProperty("--delay", index + 1);
+
+    const a = document.createElement("a");
+    a.href = item.href;
+    a.textContent = item.text;
+
+    li.appendChild(a);
+    container.appendChild(li);
+}

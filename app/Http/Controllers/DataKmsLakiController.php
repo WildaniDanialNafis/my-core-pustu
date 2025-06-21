@@ -13,13 +13,4 @@ class DataKmsLakiController extends BaseCrudController
     protected $foreignRelation = 'kmsLaki';
     protected $foreignColumns = ['id_kms_laki', 'nama_anak'];
     protected $title = 'Data KMS Anak Laki-laki';
-    protected $validationRules = [
-        'id_kms_laki' => 'required|exists:kms_laki,id_kms_laki',
-        'umur' => 'nullable|integer|min:0',
-        'bulan_penimbangan' => 'nullable|date',
-        'bb' => 'nullable|numeric|min:0',
-        'kbm' => 'nullable|numeric|min:0',
-        'n_t' => 'nullable|in:N,T',
-        'asi_eksklusif' => 'nullable|string|max:255',
-    ];
 }

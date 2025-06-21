@@ -13,8 +13,7 @@
                     <i class="fas fa-download me-2"></i>Export
                 </button>
                 <button class="btn btn-primary animate__animated animate__fadeIn animate__delay-2s"
-                    id="{{ 'add-btn-' . $table ?? '' }}" data-bs-toggle="modal"
-                    data-bs-target="{{ '#' . $title ?? '' . 'AddModal' }}">
+                    id="{{ 'add-btn-' . $table ?? '' }}">
                     <i class="fas fa-plus me-2"></i>Tambah Baru
                 </button>
             </div>

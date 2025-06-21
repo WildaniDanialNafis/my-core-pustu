@@ -1,14 +1,15 @@
 <!-- Add New Item Modal -->
-<div class="modal fade" id="{{ $table . 'AddModal' }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{ $table . 'AddModal' }}" tabindex="-1" aria-labelledby="addModalLabel">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="addModalLabel">
                     <i class="fas fa-plus-circle me-2"></i>Tambah Data Baru
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
-            <form id="{{ $table . 'AddForm' }}" method="POST">
+            <form id="{{ $table . 'AddForm' }}" method="POST" class="add-form">
                 @csrf
                 <div class="modal-body">
                     @foreach ($columns as $index => $column)
@@ -51,11 +52,12 @@
                                 @elseif ($inputType === 'textarea')
                                     <textarea class="form-control" id="{{ $column }}" name="{{ $column }}" placeholder="{{ $column }}"></textarea>
                                 @else
-                                    <input type="{{ $inputType }}" class="form-control" id="{{ $column }}" name="{{ $column }}" placeholder="{{ $column }}">
+                                    <input type="{{ $inputType }}" class="form-control" id="{{ $column }}"
+                                        name="{{ $column }}" placeholder="{{ $column }}">
                                 @endif
 
                                 {{-- Tempat munculnya error --}}
-                                <div class="invalid-feedback d-block" id="error-{{ $column }}"></div>
+                                <div class="invalid-feedback d-block" id="add-error-{{ $column }}"></div>
                             </div>
                         @endif
                     @endforeach

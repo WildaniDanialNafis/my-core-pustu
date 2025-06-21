@@ -13,10 +13,4 @@ class MinumTtdController extends BaseCrudController
     protected $foreignRelation = 'kontrolTtd';
     protected $foreignColumns = ['id_kontrol_ttd', 'nama_pengontrol'];
     protected $title = 'Minum TTD';
-    protected $validationRules = [
-        'id_kontrol_ttd' => 'integer|exists:kontrol_ttd,id_kontrol_ttd',
-        'bulan_ke' => 'string',
-        'keterangan' => 'string|nullable',
-        'nama_bulan' => 'string|nullable',
-    ];
 }

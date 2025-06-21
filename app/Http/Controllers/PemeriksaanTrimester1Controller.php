@@ -13,9 +13,4 @@ class PemeriksaanTrimester1Controller extends BaseCrudController
     protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
     protected $title = 'Pemeriksaan Trimester 1';
-    protected $validationRules = [
-        'id_ibu' => 'required|exists:ibu,id_ibu',
-        'kesimpulan' => 'nullable|string',
-        'rekomendasi' => 'nullable|string',
-    ];
 }

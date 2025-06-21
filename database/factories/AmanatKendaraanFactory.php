@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\AmanatKendaraan;
 use App\Models\MenyambutPersalinan;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AmanatKendaraan>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AmanatKendaraanFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = AmanatKendaraan::class;
 
     public function definition(): array

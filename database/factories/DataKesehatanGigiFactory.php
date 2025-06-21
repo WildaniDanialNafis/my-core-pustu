@@ -4,21 +4,18 @@ namespace Database\Factories;
 
 use App\Models\DataKesehatanGigi;
 use App\Models\KesehatanGigi;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DataKesehatanGigi>
- */
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DataKesehatanGigiFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     protected $model = DataKesehatanGigi::class;
 
     public function definition(): array

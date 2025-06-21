@@ -13,10 +13,4 @@ class ImtPerempuanController extends BaseCrudController
     protected $foreignRelation = 'anak';
     protected $foreignColumns = ['id_anak', 'nama'];
     protected $title = 'IMT Anak Perempuan';
-    protected $validationRules = [
-        'id_anak' => 'required|exists:anak,id_anak',
-        'imt' => 'nullable|numeric|min:0',
-        'bulan' => 'nullable|integer|min:0|max:11',
-        'tahun' => 'nullable|integer|min:0',
-    ];
 }

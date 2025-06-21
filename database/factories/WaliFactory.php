@@ -2,26 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Wali;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Wali;
 use Database\Factories\Traits\HasForeignKey;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WaliFactory extends Factory
 {
-    use HasForeignKey;    /**
+    use HasForeignKey;
+
+    /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
     protected $model = Wali::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition(): array
     {
         return [

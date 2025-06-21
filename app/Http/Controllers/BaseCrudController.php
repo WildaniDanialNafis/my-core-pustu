@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\AutoValidationRules;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Schema;
 
 abstract class BaseCrudController extends Controller
 {
+    use AutoValidationRules;
+
     protected $model;
     protected $tableName;
     protected $foreignModel = null;
@@ -16,6 +19,117 @@ abstract class BaseCrudController extends Controller
     protected $foreignRelation = null;
     protected $validationRules = [];
     protected $title;
+
+    protected function ensureValidationRules()
+    {
+        if (empty($this->validationRules)) {
+            $this->initValidationRules();
+        }
+    }
+
+    public function index()
+    {
+        return view('admin.layouts2.template-table', $this->getTableMetadata());
+    }
+
+    public function create(Request $request)
+    {
+        $columns = Schema::getColumnListing($this->tableName);
+
+        if ($request->input('columns') === 'columns') {
+            if ($this->foreignRelation && $this->foreignColumns) {
+                foreach ($this->foreignColumns as $col) {
+                    $columns[] = $this->foreignRelation . '.' . $col;
+                }
+            }
+            return response()->json(['columns' => $columns]);
+        }
+
+        $query = $this->model::query();
+        $searchValue = $request->input('search.value');
+
+        if (!empty($searchValue)) {
+            $query->where(function ($q) use ($searchValue, $columns) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'like', '%' . $searchValue . '%');
+                }
+            });
+        }
+
+        if ($this->foreignRelation) {
+            $query->with($this->foreignRelation);
+        }
+
+        $primaryKey = (new $this->model)->getKeyName();
+        $totalRecords = $this->model::count();
+        $filteredRecords = $query->count();
+
+        $data = $query->orderByDesc($primaryKey)
+                     ->skip($request->input('start', 0))
+                     ->take($request->input('length', 10))
+                     ->get();
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $data,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $this->ensureValidationRules();
+        $validated = $request->validate($this->validationRules);
+        $this->model::create($validated);
+
+        return redirect()->route(str_replace('_', '-', $this->tableName) . '.index')
+                         ->with('success', 'Data berhasil ditambahkan!');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $this->ensureValidationRules();
+        $validated = $request->validate($this->validationRules);
+        $data = $this->model::findOrFail($id);
+        $data->update($validated);
+
+        return redirect()->route(str_replace('_', '-', $this->tableName) . '.index')
+                         ->with('success', 'Data berhasil diperbarui!');
+    }
+
+    public function edit(string $id)
+    {
+        $data = $this->model::with($this->foreignRelation)->findOrFail($id);
+        $columns = Schema::getColumnListing($this->tableName);
+        return response()->json([
+            'data' => $data,
+            'columns' => $columns
+        ]);
+    }
+
+    public function destroy(string $id)
+    {
+        try {
+            $data = $this->model::findOrFail($id);
+            $data->delete();
+            return response()->json(['success' => 'Data berhasil dihapus!']);
+        } catch (Exception $e) {
+            Log::error('Error saat menghapus data:', [
+                'error' => $e->getMessage(),
+                'id' => $id
+            ]);
+            return response()->json([
+                'error' => 'Terjadi kesalahan saat menghapus data.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function ajax()
+    {
+        return view('admin.layouts2.ajax', $this->getTableMetadata());
+    }
 
     protected function getTableMetadata()
     {
@@ -44,114 +158,5 @@ abstract class BaseCrudController extends Controller
             'columnDiambil' => $this->foreignColumns,
             'title' => $this->title
         ];
-    }
-
-    public function index()
-    {
-        return view('admin.layouts2.template-table', $this->getTableMetadata());
-    }
-
-    public function create(Request $request)
-    {
-        $columns = Schema::getColumnListing($this->tableName);
-
-        if ($request->has('columns') && $request->input('columns') === 'columns') {
-            $columns = Schema::getColumnListing($this->tableName);
-        
-            if ($this->foreignRelation && $this->foreignColumns) {
-                foreach ($this->foreignColumns as $col) {
-                    $columns[] = $this->foreignRelation . '.' . $col;
-                }
-            }
-        
-            return response()->json(['columns' => $columns]);
-        }
-
-        $query = $this->model::query();
-        $searchValue = $request->input('search.value');
-
-        if (!empty($searchValue)) {
-            $query->where(function ($q) use ($searchValue, $columns) {
-                foreach ($columns as $column) {
-                    $q->orWhere($column, 'like', '%' . $searchValue . '%');
-                }
-            });
-        }
-
-        // Tambahkan relasi jika tersedia
-        if ($this->foreignRelation) {
-            $query->with($this->foreignRelation);
-        }
-
-        $primaryKey = (new $this->model)->getKeyName();
-
-        $totalRecords = $this->model::count();
-        $filteredRecords = $query->count();
-
-        $data = $query->orderByDesc($primaryKey)
-            ->skip($request->input('start', 0))
-            ->take($request->input('length', 10))
-            ->get();
-
-        return response()->json([
-            'draw' => intval($request->input('draw')),
-            'recordsTotal' => $totalRecords,
-            'recordsFiltered' => $filteredRecords,
-            'data' => $data,
-        ]);
-    }
-
-    public function store(Request $request)
-    {
-        $validated = $request->validate($this->validationRules);
-        $this->model::create($validated);
-
-        $routeName = str_replace('_', '-', $this->tableName);
-
-        return redirect()->route("{$routeName}.index")->with('success', 'Data berhasil ditambahkan!');
-    }
-
-    public function edit(string $id)
-    {
-        $data = $this->model::with($this->foreignRelation)->findOrFail($id);
-        $columns = Schema::getColumnListing($this->tableName);
-        return response()->json([
-            'data' => $data,
-            'columns' => $columns
-        ]);
-    }
-
-    public function update(Request $request, string $id)
-    {
-        $validated = $request->validate($this->validationRules);
-        $data = $this->model::findOrFail($id);
-        $data->update($validated);
-
-        $routeName = str_replace('_', '-', $this->tableName);
-
-        return redirect()->route("{$routeName}.index")->with('success', 'Data berhasil diperbarui!');
-    }
-
-    public function destroy(string $id)
-    {
-        try {
-            $data = $this->model::findOrFail($id);
-            $data->delete();
-            return response()->json(['success' => 'Data berhasil dihapus!']);
-        } catch (Exception $e) {
-            Log::error('Error saat menghapus data:', [
-                'error' => $e->getMessage(),
-                'id' => $id
-            ]);
-            return response()->json([
-                'error' => 'Terjadi kesalahan saat menghapus data.',
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public function ajax()
-    {
-        return view('admin.layouts2.ajax', $this->getTableMetadata());
     }
 }
