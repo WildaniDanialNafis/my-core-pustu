@@ -147,6 +147,7 @@ class DatabaseSeeder extends Seeder
         // Data utama
         Ibu::factory()->count(10)->create();
         Keluarga::factory()->count(10)->create();
+        Kesehatan1::factory()->count(10)->create();
         Kesehatan2::factory()->count(10)->create();
         KesehatanBersalin::factory()->count(10)->create();
         KesehatanNifas::factory()->count(10)->create();
