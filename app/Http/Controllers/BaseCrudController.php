@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 abstract class BaseCrudController extends Controller
 {
@@ -41,11 +42,15 @@ abstract class BaseCrudController extends Controller
         $columns = Schema::getColumnListing($this->tableName);
 
         if ($request->input('columns') === 'columns') {
-            if ($this->foreignRelation && $this->foreignColumns) {
+            $columns = [];
+        
+            if (!empty($this->foreignRelation) && is_array($this->foreignColumns)) {
+                $relationTable = Str::snake($this->foreignRelation);
                 foreach ($this->foreignColumns as $col) {
-                    $columns[] = $this->foreignRelation . '.' . $col;
+                    $columns[] = "{$relationTable}.{$col}";
                 }
             }
+        
             return response()->json(['columns' => $columns]);
         }
 
