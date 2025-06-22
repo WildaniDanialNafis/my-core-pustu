@@ -42,15 +42,14 @@ abstract class BaseCrudController extends Controller
         $columns = Schema::getColumnListing($this->tableName);
 
         if ($request->input('columns') === 'columns') {
-            $columns = [];
-        
+
             if (!empty($this->foreignRelation) && is_array($this->foreignColumns)) {
                 $relationTable = Str::snake($this->foreignRelation);
                 foreach ($this->foreignColumns as $col) {
                     $columns[] = "{$relationTable}.{$col}";
                 }
             }
-        
+
             return response()->json(['columns' => $columns]);
         }
 

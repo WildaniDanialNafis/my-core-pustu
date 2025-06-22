@@ -4,11 +4,11 @@ function getCsrfToken() {
     return document.querySelector('meta[name="csrf-token"]')?.content || '';
 }
 
-async function loadGrafikBbULk() {
+async function loadGrafikCoba(url) {
     const csrfToken = getCsrfToken();
 
     try {
-        const response = await fetch('/ajax/data-grafik-bb-u-lk', {
+        const response = await fetch(url +'/data', {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -16,63 +16,14 @@ async function loadGrafikBbULk() {
             }
         });
 
-        if (!response.ok) throw new Error('Gagal fetch ke /ajax/data-grafik-bb-u-lk');
+        if (!response.ok) throw new Error('Gagal fetch ke '+ url +'/data');
 
         const data = await response.json();
         dataGrafikBbULk = data;
 
-        await renderGrafikBbULk(csrfToken);
+        initializeChartsBbULk(data); // tidak perlu await
     } catch (error) {
         console.error('Error:', error);
-    }
-}
-
-async function renderGrafikBbULk(csrfToken) {
-    const mainContent = document.querySelector('.main-content');
-    if (!mainContent) {
-        console.error('Element .main-content tidak ditemukan.');
-        return;
-    }
-
-    try {
-        const response = await fetch('/ajax/grafik-bb-u-lk', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': csrfToken
-            }
-        });
-
-        if (!response.ok) throw new Error('Gagal mengambil konten grafik.');
-
-        const html = await response.text();
-        mainContent.innerHTML = html;
-
-        if (!dataGrafikBbULk) {
-            console.error('Data grafik belum tersedia');
-            return;
-        }
-
-        initializeChartsBbULk(dataGrafikBbULk);
-
-        AOS.init({ once: true });
-
-        const ordersTable = document.getElementById('ordersTable');
-        if (ordersTable) {
-            $(ordersTable).DataTable({
-                responsive: true,
-                dom: '<"top"f>rt<"bottom"lip><"clear">',
-                pageLength: 5,
-                lengthMenu: [5, 10, 25, 50],
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search orders...",
-                }
-            });
-        }
-    } catch (error) {
-        console.error(error);
-        mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
     }
 }
 

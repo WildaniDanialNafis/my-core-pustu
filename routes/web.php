@@ -1012,13 +1012,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/rujukan-anak/edit/{id}', [RujukanAnakController::class, 'edit'])->name('rujukan-anak.edit');
         Route::put('/rujukan-anak/update/{id}', [RujukanAnakController::class, 'update'])->name('rujukan-anak.update');
         Route::delete('/rujukan-anak/delete/{id}', [RujukanAnakController::class, 'destroy'])->name('rujukan-anak.delete');
+    });
 
+    Route::prefix('grafik')->group(function () {
         Route::get('/grafik-bb-u-lk', [GrafikBeratBadanUmurLakiController::class, 'index'])->name('grafik-bb-u-lk.index');
         Route::post('/grafik-bb-u-lk/create', [GrafikBeratBadanUmurLakiController::class, 'create'])->name('grafik-bb-u-lk.create');
         Route::post('/grafik-bb-u-lk/store', [GrafikBeratBadanUmurLakiController::class, 'store'])->name('grafik-bb-u-lk.store');
         Route::get('/grafik-bb-u-lk/edit/{id}', [GrafikBeratBadanUmurLakiController::class, 'edit'])->name('grafik-bb-u-lk.edit');
         Route::put('/grafik-bb-u-lk/update/{id}', [GrafikBeratBadanUmurLakiController::class, 'update'])->name('grafik-bb-u-lk.update');
         Route::delete('/grafik-bb-u-lk/delete/{id}', [GrafikBeratBadanUmurLakiController::class, 'destroy'])->name('grafik-bb-u-lk.delete');
+        Route::get('/grafik-bb-u-lk/data', [GrafikBeratBadanUmurLakiController::class, 'dataGrafik'])->name('grafik-bb-u-lk.data');
 
         Route::get('/grafik-tb-u-lk', [GrafikTinggiBadanUmurLakiController::class, 'index'])->name('grafik-tb-u-lk.index');
         Route::post('/grafik-tb-u-lk/create', [GrafikTinggiBadanUmurLakiController::class, 'create'])->name('grafik-tb-u-lk.create');
@@ -1026,6 +1029,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-tb-u-lk/edit/{id}', [GrafikTinggiBadanUmurLakiController::class, 'edit'])->name('grafik-tb-u-lk.edit');
         Route::put('/grafik-tb-u-lk/update/{id}', [GrafikTinggiBadanUmurLakiController::class, 'update'])->name('grafik-tb-u-lk.update');
         Route::delete('/grafik-tb-u-lk/delete/{id}', [GrafikTinggiBadanUmurLakiController::class, 'destroy'])->name('grafik-tb-u-lk.delete');
+        Route::get('/grafik-tb-u-lk/data', [GrafikTinggiBadanUmurLakiController::class, 'dataGrafik'])->name('grafik-tb-u-lk.data');
 
         Route::get('/grafik-bb-tb-lk', [GrafikBbTbLakiController::class, 'index'])->name('grafik-bb-tb-lk.index');
         Route::post('/grafik-bb-tb-lk/create', [GrafikBbTbLakiController::class, 'create'])->name('grafik-bb-tb-lk.create');
@@ -1033,6 +1037,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-bb-tb-lk/edit/{id}', [GrafikBbTbLakiController::class, 'edit'])->name('grafik-bb-tb-lk.edit');
         Route::put('/grafik-bb-tb-lk/update/{id}', [GrafikBbTbLakiController::class, 'update'])->name('grafik-bb-tb-lk.update');
         Route::delete('/grafik-bb-tb-lk/delete/{id}', [GrafikBbTbLakiController::class, 'destroy'])->name('grafik-bb-tb-lk.delete');
+        Route::get('/grafik-bb-tb-lk/data', [GrafikBbTbLakiController::class, 'dataGrafik'])->name('grafik-bb-tb-lk.data');
 
         Route::get('/grafik-lingkar-lk', [GrafikLingkarLakiController::class, 'index'])->name('grafik-lingkar-lk.index');
         Route::post('/grafik-lingkar-lk/create', [GrafikLingkarLakiController::class, 'create'])->name('grafik-lingkar-lk.create');
@@ -1040,6 +1045,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-lingkar-lk/edit/{id}', [GrafikLingkarLakiController::class, 'edit'])->name('grafik-lingkar-lk.edit');
         Route::put('/grafik-lingkar-lk/update/{id}', [GrafikLingkarLakiController::class, 'update'])->name('grafik-lingkar-lk.update');
         Route::delete('/grafik-lingkar-lk/delete/{id}', [GrafikLingkarLakiController::class, 'destroy'])->name('grafik-lingkar-lk.delete');
+        Route::get('/grafik-lingkar-lk/data', [GrafikLingkarLakiController::class, 'dataGrafik'])->name('grafik-lingkar-lk.data');
 
         Route::get('/grafik-bb-u-pr', [GrafikBbUPrController::class, 'index'])->name('grafik-bb-u-pr.index');
         Route::post('/grafik-bb-u-pr/create', [GrafikBbUPrController::class, 'create'])->name('grafik-bb-u-pr.create');
@@ -1047,6 +1053,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-bb-u-pr/edit/{id}', [GrafikBbUPrController::class, 'edit'])->name('grafik-bb-u-pr.edit');
         Route::put('/grafik-bb-u-pr/update/{id}', [GrafikBbUPrController::class, 'update'])->name('grafik-bb-u-pr.update');
         Route::delete('/grafik-bb-u-pr/delete/{id}', [GrafikBbUPrController::class, 'destroy'])->name('grafik-bb-u-pr.delete');
+        Route::get('/grafik-bb-u-pr/data', [GrafikBbUPrController::class, 'dataGrafik'])->name('grafik-bb-u-pr.data');
 
         Route::get('/grafik-tb-u-pr', [GrafikTbUPrController::class, 'index'])->name('grafik-tb-u-pr.index');
         Route::post('/grafik-tb-u-pr/create', [GrafikTbUPrController::class, 'create'])->name('grafik-tb-u-pr.create');
@@ -1054,6 +1061,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-tb-u-pr/edit/{id}', [GrafikTbUPrController::class, 'edit'])->name('grafik-tb-u-pr.edit');
         Route::put('/grafik-tb-u-pr/update/{id}', [GrafikTbUPrController::class, 'update'])->name('grafik-tb-u-pr.update');
         Route::delete('/grafik-tb-u-pr/delete/{id}', [GrafikTbUPrController::class, 'destroy'])->name('grafik-tb-u-pr.delete');
+        Route::get('/grafik-tb-u-pr/data', [GrafikTbUPrController::class, 'dataGrafik'])->name('grafik-tb-u-pr.data');
 
         Route::get('/grafik-bb-tb-pr', [GrafikBbTbPrController::class, 'index'])->name('grafik-bb-tb-pr.index');
         Route::post('/grafik-bb-tb-pr/create', [GrafikBbTbPrController::class, 'create'])->name('grafik-bb-tb-pr.create');
@@ -1061,6 +1069,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-bb-tb-pr/edit/{id}', [GrafikBbTbPrController::class, 'edit'])->name('grafik-bb-tb-pr.edit');
         Route::put('/grafik-bb-tb-pr/update/{id}', [GrafikBbTbPrController::class, 'update'])->name('grafik-bb-tb-pr.update');
         Route::delete('/grafik-bb-tb-pr/delete/{id}', [GrafikBbTbPrController::class, 'destroy'])->name('grafik-bb-tb-pr.delete');
+        Route::get('/grafik-bb-tb-pr/data', [GrafikBbTbPrController::class, 'dataGrafik'])->name('grafik-bb-tb-pr.data');
 
         Route::get('/grafik-lingkar-pr', [GrafikLingkarPrController::class, 'index'])->name('grafik-lingkar-pr.index');
         Route::post('/grafik-lingkar-pr/create', [GrafikLingkarPrController::class, 'create'])->name('grafik-lingkar-pr.create');
@@ -1068,6 +1077,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-lingkar-pr/edit/{id}', [GrafikLingkarPrController::class, 'edit'])->name('grafik-lingkar-pr.edit');
         Route::put('/grafik-lingkar-pr/update/{id}', [GrafikLingkarPrController::class, 'update'])->name('grafik-lingkar-pr.update');
         Route::delete('/grafik-lingkar-pr/delete/{id}', [GrafikLingkarPrController::class, 'destroy'])->name('grafik-lingkar-pr.delete');
+        Route::get('/grafik-lingkar-pr/data', [GrafikLingkarPrController::class, 'dataGrafik'])->name('grafik-lingkar-pr.data');
 
         Route::get('/grafik-imt-lk', [GrafikImtLakiController::class, 'index'])->name('grafik-imt-lk.index');
         Route::post('/grafik-imt-lk/create', [GrafikImtLakiController::class, 'create'])->name('grafik-imt-lk.create');
@@ -1075,6 +1085,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-imt-lk/edit/{id}', [GrafikImtLakiController::class, 'edit'])->name('grafik-imt-lk.edit');
         Route::put('/grafik-imt-lk/update/{id}', [GrafikImtLakiController::class, 'update'])->name('grafik-imt-lk.update');
         Route::delete('/grafik-imt-lk/delete/{id}', [GrafikImtLakiController::class, 'destroy'])->name('grafik-imt-lk.delete');
+        Route::get('/grafik-imt-lk/data', [GrafikImtLakiController::class, 'dataGrafik'])->name('grafik-imt-lk.data');
 
         Route::get('/grafik-imt-pr', [GrafikImtPrController::class, 'index'])->name('grafik-imt-pr.index');
         Route::post('/grafik-imt-pr/create', [GrafikImtPrController::class, 'create'])->name('grafik-imt-pr.create');
@@ -1082,6 +1093,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/grafik-imt-pr/edit/{id}', [GrafikImtPrController::class, 'edit'])->name('grafik-imt-pr.edit');
         Route::put('/grafik-imt-pr/update/{id}', [GrafikImtPrController::class, 'update'])->name('grafik-imt-pr.update');
         Route::delete('/grafik-imt-pr/delete/{id}', [GrafikImtPrController::class, 'destroy'])->name('grafik-imt-pr.delete');
+        Route::get('/grafik-imt-pr/data', [GrafikImtPrController::class, 'dataGrafik'])->name('grafik-imt-pr.data');
     });
 });
 

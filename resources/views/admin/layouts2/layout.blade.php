@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <base href="{{ url('/') }}/">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -22,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- AOS (Animate On Scroll) -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="{{ asset('aos-master/dist/aos.css') }}" rel="stylesheet">
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -1095,12 +1096,16 @@
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ asset('aos-master/dist/aos.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    AOS.init({ once: true });
+  </script>
 
     <script src="{{ asset('sidebar/sidebar-ibu.js') }}"></script>
 
@@ -1132,26 +1137,84 @@
         @endif
     </script>
 
-    {{-- <script src="{{ asset('graph/grafik-bb-u-lk.js') }}"></script>
+    <script src="{{ asset('graph/grafik-bb-u-lk.js') }}"></script>
 
-    <script src="{{ asset('graph/grafik-tb-u-lk.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-tb-u-lk.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-bb-tb-lk.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-bb-tb-lk.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-lingkar-lk.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-lingkar-lk.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-bb-u-pr.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-bb-u-pr.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-tb-u-pr.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-tb-u-pr.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-bb-tb-pr.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-bb-tb-pr.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-lingkar-pr.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-lingkar-pr.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-imt-lk.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-imt-lk.js') }}"></script> --}}
 
-    <script src="{{ asset('graph/grafik-imt-pr.js') }}"></script> --}}
+    {{-- <script src="{{ asset('graph/grafik-imt-pr.js') }}"></script> --}}
     @stack('script')
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text">Memuat...</div>
+        </div>
+    </div>
+
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-content {
+            text-align: center;
+            transform: translateY(-20%);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(99, 102, 241, 0.2);
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #4f46e5;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+    </style>
 </body>
 
 </html>
