@@ -1112,11 +1112,28 @@
 
     
     
-    
+    <script src="<?php echo e(asset('components/dashboard.js')); ?>"></script>
+
+    <script src="<?php echo e(asset('components/dashboard-lala.js')); ?>"></script>
+
+    <script src="<?php echo e(asset('components/anc.js')); ?>"></script>
+
+    <script src="<?php echo e(asset('components/datatable-loader.js')); ?>"></script>
+
+    <script>
+        <?php if(isset($table)): ?>
+            let table = "<?php echo e($table); ?>";
+        <?php endif; ?>
+    </script>
+
+    <script>
+        <?php if(isset($earnings)): ?>
+            let earnings = <?php echo json_encode($earnings, 15, 512) ?>;
+        <?php endif; ?>
+    </script>
 
     
-
-    
+    <?php echo $__env->yieldPushContent('script'); ?>
 </body>
 
 </html>

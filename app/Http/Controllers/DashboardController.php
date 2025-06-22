@@ -12,9 +12,13 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            return view('admin.layouts2.main');
+        }
+
+        return view('admin.layouts2.template-table');
     }
 
     /**

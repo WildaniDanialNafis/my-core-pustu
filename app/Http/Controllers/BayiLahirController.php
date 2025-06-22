@@ -10,7 +10,7 @@ class BayiLahirController extends BaseCrudController
     protected $model = BayiLahir::class;
     protected $tableName = 'bayi_lahir';
     protected $foreignModel = Ibu::class;
-    protected $foreignRelation = 'ibu';
     protected $foreignColumns = ['id_ibu', 'nama'];
+    protected $foreignRelation = 'ibu';
     protected $title = 'Bayi Lahir';
 }

@@ -1112,11 +1112,15 @@
 
     {{-- <script src="{{ asset('components/graph-navigation.js') }}"></script> --}}
     
-    {{-- <script src="{{ asset('components/dashboard.js') }}"></script> --}}
+    <script src="{{ asset('components/dashboard.js') }}"></script>
 
-    {{-- <script src="{{ asset('components/datatable-loader.js') }}"></script> --}}
+    <script src="{{ asset('components/dashboard-lala.js') }}"></script>
 
-    {{-- <script>
+    <script src="{{ asset('components/anc.js') }}"></script>
+
+    <script src="{{ asset('components/datatable-loader.js') }}"></script>
+
+    <script>
         @if (isset($table))
             let table = "{{ $table }}";
         @endif
@@ -1128,7 +1132,7 @@
         @endif
     </script>
 
-    <script src="{{ asset('graph/grafik-bb-u-lk.js') }}"></script>
+    {{-- <script src="{{ asset('graph/grafik-bb-u-lk.js') }}"></script>
 
     <script src="{{ asset('graph/grafik-tb-u-lk.js') }}"></script>
 
@@ -1147,6 +1151,7 @@
     <script src="{{ asset('graph/grafik-imt-lk.js') }}"></script>
 
     <script src="{{ asset('graph/grafik-imt-pr.js') }}"></script> --}}
+    @stack('script')
 </body>
 
 </html>

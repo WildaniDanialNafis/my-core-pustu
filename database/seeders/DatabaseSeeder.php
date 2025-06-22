@@ -152,8 +152,10 @@ class DatabaseSeeder extends Seeder
         KesehatanBersalin::factory()->count(10)->create();
         KesehatanNifas::factory()->count(10)->create();
         MinumTtd::factory()->count(10)->create();
+        MenyambutPersalinan::factory()->count(10)->create();
         AmanatPenolongPersalinan::factory()->count(10)->create();
         AmanatKendaraan::factory()->count(10)->create();
+        EvaluasiKesehatanBumil::factory()->count(10)->create();
         AmanatDarah::factory()->count(10)->create();
         KondisiKesehatanBumil::factory()->count(10)->create();
         ImunisasiT::factory()->count(10)->create();
@@ -187,6 +189,7 @@ class DatabaseSeeder extends Seeder
         RingkasanNifas::factory()->count(10)->create();
         RingkasanKesimpulanNifas::factory()->count(10)->create();
         Rujukan::factory()->count(10)->create();
+        Wali::factory()->count(10)->create();
         Anak::factory()->count(10)->create();
         BayiBaruLahir::factory()->count(10)->create();
         Bayi::factory()->count(10)->create();

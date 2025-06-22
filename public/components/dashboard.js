@@ -1,31 +1,4 @@
-async function loadDashboardContent() {
-    const mainContent = document.querySelector('.main-content');
-    if (!mainContent) {
-        console.error('Element .main-content tidak ditemukan.');
-        return;
-    }
-
-    try {
-        const response = await fetch('/ajax/dashboard', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
-            }
-        });
-
-        if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
-
-        const html = await response.text();
-        mainContent.innerHTML = html;
-        initializeDashboardComponents();
-    } catch (error) {
-        console.error(error);
-        mainContent.innerHTML = `<div class="error">Terjadi kesalahan: ${error.message}</div>`;
-    }
-}
-
-function initializeDashboardComponents() {
+async function initializeDashboardComponents() {
     AOS.init({ once: true });
 
     $('#ordersTable').DataTable({
@@ -160,8 +133,3 @@ function initializeDashboardComponents() {
         alert('User menu would appear here');
     });
 }
-
-// Jalankan ketika DOM sudah siap
-document.addEventListener('DOMContentLoaded', async () => {
-    await loadDashboardContent();
-});

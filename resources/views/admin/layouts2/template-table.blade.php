@@ -2,6 +2,15 @@
 
 @section('content')
     <main class="main-content">
-        {{-- <button onclick="loadDashboardContent()">Ajax Dashboard</button> --}}
+       
     </main>
+
+    {{-- @php
+        $routeName = Request::path();
+    @endphp
+
+    @push('script')
+        <script src="{{ asset('components/' . $routeName . '.js') }}"></script>
+    @endpush --}}
+
 @endsection

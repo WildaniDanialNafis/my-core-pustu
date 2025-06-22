@@ -27,8 +27,12 @@ abstract class BaseCrudController extends Controller
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            return view('admin.layouts2.ajax', $this->getTableMetadata());
+        }
+
         return view('admin.layouts2.template-table', $this->getTableMetadata());
     }
 
@@ -126,10 +130,10 @@ abstract class BaseCrudController extends Controller
         }
     }
 
-    public function ajax()
-    {
-        return view('admin.layouts2.ajax', $this->getTableMetadata());
-    }
+    // public function ajax()
+    // {
+    //     return view('admin.layouts2.ajax', $this->getTableMetadata());
+    // }
 
     protected function getTableMetadata()
     {

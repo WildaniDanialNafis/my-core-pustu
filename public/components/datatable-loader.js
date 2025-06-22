@@ -93,12 +93,6 @@ async function loadTableContent(table) {
     try {
         let pencarian = "";
         
-        // Load initial HTML content
-        const response = await fetch(`/ajax/${table.replace(/_/g, '-')}`);
-        if (!response.ok) throw new Error('Gagal mengambil konten dashboard.');
-        const html = await response.text();
-        mainContent.innerHTML = html;
-        
         // Initialize AOS
         await new Promise(resolve => setTimeout(resolve, 10));
         AOS.init({ once: true });
