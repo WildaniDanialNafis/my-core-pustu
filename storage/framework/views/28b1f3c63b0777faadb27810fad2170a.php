@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Google Fonts -->
-    <link href="<?php echo e(asset('css2.css')); ?>" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Animate.css -->
     <link rel="stylesheet" href="<?php echo e(asset('animate.min.css')); ?>" />
@@ -590,40 +592,40 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="<?php echo e(asset('bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js')); ?>"></script>
-
-    <!-- Custom JS -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Password toggle functionality
-            const togglePassword = document.querySelector('#togglePassword');
-            const password = document.querySelector('#password');
-
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Password Toggle Fix
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        
+        if (togglePassword && passwordInput) {
             togglePassword.addEventListener('click', function() {
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
-                this.classList.toggle('fa-eye-slash');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Toggle icon
                 this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
             });
+        }
 
-            // Form validation
-            const form = document.getElementById('loginForm');
-            const email = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-
-            form.addEventListener('submit', function(e) {
+        // 2. Form Validation
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            const emailInput = document.getElementById('email');
+            
+            loginForm.addEventListener('submit', function(e) {
                 let isValid = true;
 
-                // Validate email
-                if (!email.value || !/^\S+@\S+\.\S+$/.test(email.value)) {
-                    email.classList.add('is-invalid');
+                // Email validation
+                if (!emailInput.value || !/^\S+@\S+\.\S+$/.test(emailInput.value)) {
+                    emailInput.classList.add('is-invalid');
                     isValid = false;
                 } else {
-                    email.classList.remove('is-invalid');
+                    emailInput.classList.remove('is-invalid');
                 }
 
-                // Validate password
+                // Password validation
                 if (!passwordInput.value || passwordInput.value.length < 6) {
                     passwordInput.classList.add('is-invalid');
                     isValid = false;
@@ -634,74 +636,37 @@
                 if (!isValid) {
                     e.preventDefault();
                 } else {
-                    // Show loading spinner
-                    const submitBtn = form.querySelector('button[type="submit"]');
+                    // Show loading state
+                    const submitBtn = loginForm.querySelector('button[type="submit"]');
                     const spinner = submitBtn.querySelector('.spinner-border');
-                    const icon = submitBtn.querySelector('.fa-sign-in-alt');
+                    const loginIcon = submitBtn.querySelector('.fa-sign-in-alt');
 
                     submitBtn.disabled = true;
-                    icon.classList.add('d-none');
+                    loginIcon.classList.add('d-none');
                     spinner.classList.remove('d-none');
                 }
             });
+        }
 
-            // Theme switcher (optional)
-            const themeSwitcher = document.createElement('button');
-            themeSwitcher.innerHTML = '<i class="fas fa-moon"></i>';
-            themeSwitcher.className =
-                'btn btn-sm btn-outline-secondary position-fixed bottom-0 end-0 m-3 rounded-circle';
-            themeSwitcher.style.zIndex = '1000';
-            themeSwitcher.style.width = '40px';
-            themeSwitcher.style.height = '40px';
-            document.body.appendChild(themeSwitcher);
+        // 3. Animate elements on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll(
+                '.login-card, .logo-container, .app-title, .app-subtitle');
 
-            themeSwitcher.addEventListener('click', function() {
-                const html = document.documentElement;
-                const currentTheme = html.getAttribute('data-bs-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
 
-                html.setAttribute('data-bs-theme', newTheme);
-                this.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' :
-                    '<i class="fas fa-moon"></i>';
-
-                // Save preference to localStorage
-                localStorage.setItem('theme', newTheme);
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                }
             });
+        };
 
-            // Check for saved theme preference
-            if (localStorage.getItem('theme') === 'dark') {
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-                themeSwitcher.innerHTML = '<i class="fas fa-sun"></i>';
-            }
-
-            // Animate elements on scroll
-            const animateOnScroll = function() {
-                const elements = document.querySelectorAll(
-                    '.login-card, .logo-container, .app-title, .app-subtitle');
-
-                elements.forEach(element => {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight / 1.3;
-
-                    if (elementPosition < screenPosition) {
-                        element.style.opacity = '1';
-                    }
-                });
-            };
-
-            window.addEventListener('scroll', animateOnScroll);
-            animateOnScroll(); // Initialize
-        });
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#password');
-
-        togglePassword.addEventListener('click', function() {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-            this.classList.toggle('fa-eye');
-        });
-    </script>
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Initialize
+    });
+</script>
 </body>
 
 </html>
