@@ -13,7 +13,9 @@
     <link rel="icon" type="image/png" href="<?php echo e(asset('logo-pustu.png')); ?>">
     <link href="<?php echo e(asset('bootstrap-5.3.7-dist/css/bootstrap.min.css')); ?>" rel="stylesheet">
     <!-- Google Fonts -->
-        
+        <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
