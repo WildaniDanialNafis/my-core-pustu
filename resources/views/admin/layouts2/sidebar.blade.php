@@ -110,7 +110,7 @@
             </a>
         </li>
 
-        <li class="menu-title" style="--delay: 1">Main</li>
+        {{-- <li class="menu-title" style="--delay: 1">Main</li>
 
         <li class="menu-item" style="--delay: 2">
             <a href="/dashboard-lala" class="active">
@@ -129,7 +129,7 @@
                 <span class="menu-text">Anc</span>
                 <span class="menu-badge">New</span>
             </a>
-        </li>
+        </li> --}}
 
         {{-- <li class="menu-item" style="--delay: 3">
             <a href="/analytics">

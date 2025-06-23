@@ -1,6 +1,7 @@
 <header class="header">
     <a href="/dashboard" class="logo">
-        <i class="fas fa-bolt"></i>
+        <i><img src="<?php echo e(asset('logo-pustu.png')); ?>" alt="logo-pustu" style="width: 32px; height: 32px;">
+        </i>
         <span>Pustu Lada Pamekasan</span>
     </a>
 

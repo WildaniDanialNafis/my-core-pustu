@@ -13,7 +13,15 @@
         "laravel/tinker": "^2.9",
         "yajra/laravel-datatables": "^11.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/beberlei/phpstan-plantuml"
+        }
+    ],
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.5",
+        "beyondcode/laravel-er-diagram-generator": "^5.0",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.3",
         "laravel/pail": "^1.1",
@@ -21,7 +29,9 @@
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^11.0.1"
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.0.1",
+        "beberlei/phpstan-plantuml": "dev-main"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +51,9 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:models -N"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -70,6 +82,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

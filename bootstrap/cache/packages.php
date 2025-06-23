@@ -1,4 +1,18 @@
 <?php return array (
+  'barryvdh/laravel-ide-helper' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
+    ),
+  ),
+  'beyondcode/laravel-er-diagram-generator' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'BeyondCode\\ErdGenerator\\ErdGeneratorServiceProvider',
+    ),
+  ),
   'laravel-lang/actions' => 
   array (
     'providers' => 

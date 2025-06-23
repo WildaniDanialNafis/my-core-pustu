@@ -57,7 +57,6 @@ use App\Http\Controllers\KondisiKesehatanBumilController;
 use App\Http\Controllers\KontrolTtdController;
 use App\Http\Controllers\LingkarKepalaLakiController;
 use App\Http\Controllers\LingkarKepalaPerempuanController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenyambutPersalinanController;
 use App\Http\Controllers\MinumTtdController;
 use App\Http\Controllers\NasihatAnakController;
@@ -97,51 +96,18 @@ use App\Http\Controllers\TbUPerempuanController;
 use App\Http\Controllers\UsgTri1Controller;
 use App\Http\Controllers\UsgTri3Controller;
 use App\Http\Controllers\WaliController;
-use App\Models\BbTbLaki;
-use App\Models\BbTbPerempuan;
-use App\Models\BbULaki;
-use App\Models\BbUPerempuan;
-use App\Models\Ibu;
-use App\Models\ImtLaki;
-use App\Models\ImtPerempuan;
-use App\Models\Keluarga;
-use App\Models\LingkarKepalaLaki;
-use App\Models\LingkarKepalaPerempuan;
-use App\Models\TbULaki;
-use App\Models\TbUPerempuan;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-
-Route::get('/dashboard-lala', [DashboardLalaController::class, 'index'])->name('dashboard-lala.index');
-
-Route::get('/dashboard2', function () {
-    return view('admin.layouts2.main');
-});
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-
-Route::get('/anc', [AncController::class, 'index'])->name('dashboard.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::get('/coba-dashboard', [DashboardController::class, 'create'])->name('dashboard.create');
-
-// Route::get('/coba-login', [LoginController::class, 'create'])->name('login.create');
-// Route::post('/coba-login', [LoginController::class, 'store'])->name('login.store');
-
-Route::get('/coba-register', [RegisterController::class, 'create'])->name('register.create');
-Route::post('/coba-register', [RegisterController::class, 'store'])->name('register.store');
 
 Route::get('coba-buttons', function () {
     return  view('admin.pages.buttons');
@@ -190,13 +156,11 @@ Route::put('/coba-tables/update/{id}', [TablesController::class, 'update'])->nam
 Route::delete('/coba-tables/delete/{id}', [TablesController::class, 'destroy'])->name('tables.delete');
 Route::post('/users/data', [TablesController::class, 'getUsers'])->name('users.data');
 
-Route::post('/ajax', function (Request $request) {
-    return view('admin.layouts2.ajax', [
-        'table' => $request->input('table'),
-    ]);
-});
-
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    // Route::get('/anc', [AncController::class, 'index'])->name('dashboard.index');
+
     // Route untuk semua endpoint AJAX
     // Route::group(['prefix' => 'ajax'], function () {
     //     Route::get('/grafik-berat-badan-umur-laki', function () {

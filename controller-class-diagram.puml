@@ -1,0 +1,1106 @@
+@startuml
+
+class PemeriksaanLaboratoriumTri3Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RiwayatKelahiranController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KondisiKesehatanBumilController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class UmurKapsulAnakController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class GrafikImtPrController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class GrafikImtLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RiwayatPenyakitKeluargaController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ImtLakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PenyimpanganPertumbuhanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class LingkarKepalaPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PelayananKesehatanNeonatusController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class BbTbLakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class AnakBalitaController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikBeratBadanUmurLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RingkasanNifasController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PemeriksaanLaboratoriumTri1Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class Controller {
+}
+
+class BayiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KriteriaAnamnesisController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RingkasanMtbsController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KmsLakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikBbUPrController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class KesehatanBersalinController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class WaliController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ImunisasiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class JenisVaksinController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class DataKmsPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class AncController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RiwayatKesehatanBumilController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class EvaluasiKesehatanBumilController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class UmurNasihatAnakController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class IdentitasAnakController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class PemeriksaanTrimester1Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class MenyambutPersalinanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class EvaluasiKehamilanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class CeklisController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RiwayatPerilakuBerisikoController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RujukanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class UmurSdidtkController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class PemeriksaanFisikTri1Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class TbULakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KeteranganLahirController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class LingkarKepalaLakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PenyimpanganEmosionalController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RujukanAnakController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KN3Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class LoginController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class PemeriksaanTrimester3Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ImunisasiTController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikLingkarPrController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class MinumTtdController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class UsgTri3Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class DataKesehatanGigiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class DashboardLalaController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class Kesehatan1Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KontrolTtdController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class NasihatAnakController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikBbTbPrController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class PemeriksaanFisikTri3Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PreeklampsiaFisikController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class Ibu2Controller extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class KesehatanNifasController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RingkasanKesimpulanNifasController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PreeklampsiaAnamnesisController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikTbUPrController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class PemeriksaanKhususController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RingkasanPelayananDokterController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RiwayatKehamilanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ProfileController extends Controller {
+  +edit()
+  +update()
+  +destroy()
+}
+
+class Kesehatan2Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikTinggiBadanUmurLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RingkasanKesehatanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KN2Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class DataKmsLakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class DashboardController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class KN0Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class AmanatPenolongPersalinanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PenyimpanganPerkembanganController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KriteriaPemeriksaanFisikController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class IbuController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class TablesController extends Controller {
+  +index()
+  +create()
+  +getUsers()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class AmanatDarahController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class BbUPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class SkriningPreeklampsiaController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ImtPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikLingkarLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RegisterController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class AnakController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PelayananSdidtkController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class IbuBersalinController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KesehatanGigiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class TbUPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KN1Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class BayiBaruLahirController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KapsulAnakController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class BbTbPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class AmanatKendaraanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KmsPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class UsgTri1Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RegisteredUserController extends Controller {
+  +create()
+  +store()
+}
+
+class EmailVerificationPromptController extends Controller {
+  +__invoke()
+}
+
+class EmailVerificationNotificationController extends Controller {
+  +store()
+}
+
+class AuthenticatedSessionController extends Controller {
+  +create()
+  +store()
+  +destroy()
+}
+
+class VerifyEmailController extends Controller {
+  +__invoke()
+}
+
+class NewPasswordController extends Controller {
+  +create()
+  +store()
+}
+
+class PasswordController extends Controller {
+  +update()
+}
+
+class PasswordResetLinkController extends Controller {
+  +create()
+  +store()
+}
+
+class ConfirmablePasswordController extends Controller {
+  +show()
+  +store()
+}
+
+class BbULakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikBbTbLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class PemantauanKiaController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KeluargaController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class BeratBadanBumilController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class BayiLahirController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+@enduml

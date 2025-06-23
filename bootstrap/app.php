@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,5 +16,20 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+        $exceptions->renderable(function (NotFoundHttpException $e, $request) {
+            if (! $request->expectsJson()) {
+                $previous = url()->previous();
+                $current = url()->current();
+
+                if ($previous !== $current) {
+                    return redirect()->back()->with('error', 'Halaman tidak ditemukan.');
+                } else {
+                    return redirect('/')->with('error', 'Halaman tidak ditemukan.');
+                }
+            }
+
+            return response()->json(['message' => 'Not Found.'], 404);
+        });
+    })
+    ->create();
+

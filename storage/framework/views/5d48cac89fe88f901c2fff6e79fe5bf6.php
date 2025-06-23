@@ -6,12 +6,12 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Neon Dashboard - Premium Admin Template" />
+    <meta name="description" content="PUSTU Lawanagn Daya Pamekasan" />
     <meta name="author" content="" />
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-    <title>Neon Dashboard - Premium Admin Template</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <title>PUSTU Lawanagn Daya Pamekasan</title>
+    <link rel="icon" type="image/png" href="<?php echo e(asset('logo-pustu.png')); ?>">
+    <link href="<?php echo e(asset('bootstrap-5.3.7-dist/css/bootstrap.min.css')); ?>" rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -1091,21 +1091,21 @@
     <?php echo $__env->yieldContent('content'); ?>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="<?php echo e(asset('jquery-3.7.1.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js')); ?>"></script>
     <script src="<?php echo e(asset('aos-master/dist/aos.js')); ?>"></script>
+    
+    <script src="<?php echo e(asset('chart.js')); ?>"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js"></script>
 
     <script>
-    AOS.init({ once: true });
-  </script>
+        AOS.init({ once: true });
+    </script>
 
     <script src="<?php echo e(asset('sidebar/sidebar-ibu.js')); ?>"></script>
 
