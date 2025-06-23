@@ -13,21 +13,20 @@
     <link rel="icon" type="image/png" href="<?php echo e(asset('logo-pustu.png')); ?>">
     <link href="<?php echo e(asset('bootstrap-5.3.7-dist/css/bootstrap.min.css')); ?>" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+        
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
     <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="<?php echo e(asset('animate.min.css')); ?>" />
 
     <!-- AOS (Animate On Scroll) -->
     <link href="<?php echo e(asset('aos-master/dist/aos.css')); ?>" rel="stylesheet">
 
     <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="<?php echo e(asset('dataTables.bootstrap5.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('buttons.bootstrap5.min.css')); ?>">
 
     <style>
         /* .loading-overlay {
@@ -1094,14 +1093,12 @@
     <script src="<?php echo e(asset('jquery-3.7.1.min.js')); ?>"></script>
     <script src="<?php echo e(asset('bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js')); ?>"></script>
     <script src="<?php echo e(asset('aos-master/dist/aos.js')); ?>"></script>
-    
     <script src="<?php echo e(asset('chart.js')); ?>"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js"></script>
+    <script src="<?php echo e(asset('jquery.dataTables.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('dataTables.bootstrap5.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('dataTables.buttons.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('buttons.bootstrap5.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('sweetalert2.all.min.js')); ?>"></script>
 
     <script>
         AOS.init({ once: true });
@@ -1125,19 +1122,11 @@
 
     <script src="<?php echo e(asset('components/datatable-loader.js')); ?>"></script>
 
-    <script>
-        <?php if(isset($table)): ?>
-            let table = "<?php echo e($table); ?>";
-        <?php endif; ?>
-    </script>
+    
 
-    <script>
-        <?php if(isset($earnings)): ?>
-            let earnings = <?php echo json_encode($earnings, 15, 512) ?>;
-        <?php endif; ?>
-    </script>
+    <script src="<?php echo e(asset('graph/template-grafik.js')); ?>"></script>
 
-    <script src="<?php echo e(asset('graph/grafik-bb-u-lk.js')); ?>"></script>
+    
 
     
 

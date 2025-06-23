@@ -141,7 +141,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->count(8)->create([
             'password' => Hash::make('password'), // default password
             // kamu bisa tetapkan 'id_role' tetap, atau random:
-            'id_role' => rand(1, 3), // misalnya role 1-3
+            'id_role' => rand(1, 2), // misalnya role 1-3
         ]);
 
         // Data utama

@@ -7,20 +7,19 @@
     <meta name="description" content="Sistem Informasi Kesehatan Ibu dan Anak">
     <meta name="author" content="Dinas Kesehatan">
     <title>Login | SI-KIA</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo-pustu.png') }}">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('bootstrap-5.3.7-dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="{{ asset('css2.css') }}" rel="stylesheet">
 
     <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{{ asset('animate.min.css') }}" />
 
     <!-- Custom Styles -->
     <style>
@@ -484,7 +483,7 @@
                     <div class="login-container">
                         <div class="text-center mb-4">
                             <div class="logo-container">
-                                <img src="{{ asset('assets/img/logo.jpeg') }}" alt="SI-KIA Logo" class="img-fluid">
+                                <img src="{{ asset('logo-pustu.png') }}" alt="SI-KIA Logo" class="img-fluid">
                             </div>
                             <h1 class="app-title">Sistem Informasi KIA</h1>
                             <p class="app-subtitle text-muted">Pelayanan Kesehatan Ibu dan Anak Terpadu</p>
@@ -592,7 +591,7 @@
     </footer>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Custom JS -->
     <script>
