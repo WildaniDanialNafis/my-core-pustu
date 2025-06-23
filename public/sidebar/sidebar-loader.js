@@ -106,8 +106,10 @@ async function initializePageSpecificComponents(href) {
 
     const tableName = path.replace(/-/g, '_');
 
+    console.info(functionName);
+
     if (typeof window[functionName] === 'function') {
-        await window[functionName]();
+        await window[functionName](path);
     } else if (typeof window.loadTableContent === 'function') {
         await window.loadTableContent(tableName);
     } else {

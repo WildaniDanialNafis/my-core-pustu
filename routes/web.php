@@ -158,6 +158,7 @@ Route::post('/users/data', [TablesController::class, 'getUsers'])->name('users.d
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/data', [DashboardController::class, 'dataGrafik'])->name('dashboard.data');
 
     // Route::get('/anc', [AncController::class, 'index'])->name('dashboard.index');
 

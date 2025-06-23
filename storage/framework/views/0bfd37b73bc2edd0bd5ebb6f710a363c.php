@@ -61,7 +61,11 @@
     <div class="col-md-8">
         <div class="card" data-aos="fade-up" data-aos-duration="800">
             <div class="card-header">
-                <h5 class="card-title">Revenue Overview</h5>
+                <?php
+                    $url = str_replace('/', '-', request()->path());
+                ?>
+
+                <h5 class="card-title" id="title-line-<?php echo e($url ?? ''); ?>">Revenue Overview</h5>
                 <div class="dropdown">
                     <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="chartDropdown"
                         data-bs-toggle="dropdown">

@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 async function addSubmenuItem(container, item, index) {
     const li = document.createElement("li");
     li.className = "mb-2";
-    li.style.setProperty("--delay", index + 1);
+    // li.style.setProperty("--delay", index + 1);
 
     const a = document.createElement("a");
     a.href = item.href;

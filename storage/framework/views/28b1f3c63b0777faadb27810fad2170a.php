@@ -593,80 +593,80 @@
     </footer>
 
    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 1. Password Toggle Fix
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-        
-        if (togglePassword && passwordInput) {
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                
-                // Toggle icon
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
-            });
-        }
-
-        // 2. Form Validation
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            const emailInput = document.getElementById('email');
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Password Toggle Fix
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
             
-            loginForm.addEventListener('submit', function(e) {
-                let isValid = true;
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    // Toggle icon
+                    this.classList.toggle('fa-eye');
+                    this.classList.toggle('fa-eye-slash');
+                });
+            }
 
-                // Email validation
-                if (!emailInput.value || !/^\S+@\S+\.\S+$/.test(emailInput.value)) {
-                    emailInput.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    emailInput.classList.remove('is-invalid');
-                }
+            // 2. Form Validation
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                const emailInput = document.getElementById('email');
+                
+                loginForm.addEventListener('submit', function(e) {
+                    let isValid = true;
 
-                // Password validation
-                if (!passwordInput.value || passwordInput.value.length < 6) {
-                    passwordInput.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    passwordInput.classList.remove('is-invalid');
-                }
+                    // Email validation
+                    if (!emailInput.value || !/^\S+@\S+\.\S+$/.test(emailInput.value)) {
+                        emailInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        emailInput.classList.remove('is-invalid');
+                    }
 
-                if (!isValid) {
-                    e.preventDefault();
-                } else {
-                    // Show loading state
-                    const submitBtn = loginForm.querySelector('button[type="submit"]');
-                    const spinner = submitBtn.querySelector('.spinner-border');
-                    const loginIcon = submitBtn.querySelector('.fa-sign-in-alt');
+                    // Password validation
+                    if (!passwordInput.value || passwordInput.value.length < 6) {
+                        passwordInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        passwordInput.classList.remove('is-invalid');
+                    }
 
-                    submitBtn.disabled = true;
-                    loginIcon.classList.add('d-none');
-                    spinner.classList.remove('d-none');
-                }
-            });
-        }
+                    if (!isValid) {
+                        e.preventDefault();
+                    } else {
+                        // Show loading state
+                        const submitBtn = loginForm.querySelector('button[type="submit"]');
+                        const spinner = submitBtn.querySelector('.spinner-border');
+                        const loginIcon = submitBtn.querySelector('.fa-sign-in-alt');
 
-        // 3. Animate elements on scroll
-        const animateOnScroll = function() {
-            const elements = document.querySelectorAll(
-                '.login-card, .logo-container, .app-title, .app-subtitle');
+                        submitBtn.disabled = true;
+                        loginIcon.classList.add('d-none');
+                        spinner.classList.remove('d-none');
+                    }
+                });
+            }
 
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
+            // 3. Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll(
+                    '.login-card, .logo-container, .app-title, .app-subtitle');
 
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                }
-            });
-        };
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
 
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll(); // Initialize
-    });
-</script>
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initialize
+        });
+    </script>
 </body>
 
 </html>

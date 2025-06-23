@@ -87,7 +87,7 @@ class Ibu extends Model
         return $this->hasMany(BeratBadanBumil::class, 'id_ibu');
     }
 
-    public function skringingPreeklampsia()
+    public function skriningPreeklampsia()
     {
         return $this->hasMany(SkriningPreeklampsia::class,'id_ibu');
     }
