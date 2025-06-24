@@ -21,9 +21,12 @@ class BeratBadanBumilFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'minggu' => $this->faker->numberBetween(1, 42),
             'berat_badan' => $this->faker->randomFloat(1, 40, 120),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

@@ -21,12 +21,16 @@ class RujukanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'rujukan' => $this->faker->sentence(),
             'tanggal_umpan_balik' => $this->faker->optional()->dateTime(),
             'diagnosis_akhir_balik' => $this->faker->sentence(),
             'resume_umpan_balik' => $this->faker->paragraph(),
             'anjuran' => $this->faker->randomElement(['FKTP', 'FKRTL']),
+            'tanggal_umpan_balik' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

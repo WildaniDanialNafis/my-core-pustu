@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('hpht')->nullable();
             $table->integer('bb')->nullable();
             $table->integer('tb')->nullable();
-            $table->integer('imt')->nullable();
+            $table->decimal('imt', 5,2)->nullable();
             $table->timestamps();
         });
     }

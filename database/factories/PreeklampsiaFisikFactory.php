@@ -21,9 +21,12 @@ class PreeklampsiaFisikFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_skrining_preeklampsia' => $this->getForeignKeyId(SkriningPreeklampsia::class),
             'id_kriteria_pemeriksaan_fisik' => $this->faker->numberBetween(1, 2),
             'risiko' => $this->faker->randomElement(['', 'Risiko sedang', 'Risiko tinggi']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

@@ -21,10 +21,13 @@ class PenyimpanganEmosionalFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_pelayanan_sdidtk' => $this->getForeignKeyId(PelayananSdidtk::class),
             'kmpe' => $this->faker->randomElement(['N', 'R']),
             'm_chat' => $this->faker->randomElement(['N', 'R']),
             'gpph' => $this->faker->randomElement(['N', 'R']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

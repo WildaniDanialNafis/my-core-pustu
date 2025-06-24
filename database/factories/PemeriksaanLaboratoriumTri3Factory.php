@@ -21,6 +21,7 @@ class PemeriksaanLaboratoriumTri3Factory extends Factory
     public function definition(): array
     {
         return [
+
             'id_pemeriksaan_trimester3' => $this->getForeignKeyId(PemeriksaanTrimester3::class),
             'tanggal' => $this->faker->dateTimeBetween('-9 months', 'now'),
             'hemoglobin' => $this->faker->randomFloat(1, 6.0, 18.0),
@@ -29,6 +30,9 @@ class PemeriksaanLaboratoriumTri3Factory extends Factory
             'tindak_gula_puasa' => $this->faker->optional()->sentence(),
             'gula_darah_2_jam_post_pradinal' => $this->faker->randomFloat(1, 80, 200),
             'tindak_gula_darah_2_jam_post_pradinal' => $this->faker->optional()->sentence(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

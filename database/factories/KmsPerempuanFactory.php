@@ -21,9 +21,12 @@ class KmsPerempuanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'nama_anak' => $this->faker->name(),
             'nama_posyandu' => $this->faker->word(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

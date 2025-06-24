@@ -21,9 +21,12 @@ class KontrolTtdFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'nama_pengontrol' => $this->faker->name(),
             'hubungan' => $this->faker->randomElement(['Suami', 'Ibu', 'Mertua', 'Tetangga', 'Teman']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

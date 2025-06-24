@@ -21,9 +21,12 @@ class PemeriksaanTrimester1Factory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'kesimpulan' => $this->faker->sentence(),
             'rekomendasi' => $this->faker->sentence(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

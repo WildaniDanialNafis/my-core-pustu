@@ -21,10 +21,13 @@ class SkriningPreeklampsiaFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'kesimpulan' => $this->faker->sentence(10),
             'paraf_dokter' => $this->faker->lexify('paraf-????'),
             'nama_dokter' => $this->faker->name,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

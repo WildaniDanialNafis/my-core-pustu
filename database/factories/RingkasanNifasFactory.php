@@ -21,12 +21,16 @@ class RingkasanNifasFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'kf' => $this->faker->randomElement(['KF1', 'KF2', 'KF3', 'KF4']),
             'tanggal' => $this->faker->dateTime(),
             'faskes' => $this->faker->company(),
             'klasifikasi' => $this->faker->sentence(),
             'tindakan' => $this->faker->sentence(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

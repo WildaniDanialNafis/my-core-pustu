@@ -21,10 +21,13 @@ class TbUPerempuanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'tb' => $this->faker->randomFloat(2, 40, 120),
             'bulan' => $this->faker->numberBetween(0, 11),
             'tahun' => $this->faker->numberBetween(0, 5),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

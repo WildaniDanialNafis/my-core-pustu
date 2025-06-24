@@ -21,10 +21,13 @@ class LingkarKepalaLakiFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'lingkar_kepala' => $this->faker->randomFloat(2, 30, 55),
             'bulan' => $this->faker->numberBetween(0, 11),
             'tahun' => $this->faker->numberBetween(0, 5),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

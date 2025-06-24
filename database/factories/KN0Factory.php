@@ -21,6 +21,7 @@ class KN0Factory extends Factory
     public function definition(): array
     {
         return [
+
             'id_pelayanan_kesehatan_neonatus' => $this->getForeignKeyId(PelayananKesehatanNeonatus::class),
             'kondisi' => $this->faker->word(),
             'bb' => $this->faker->randomFloat(2, 2, 5),
@@ -36,6 +37,9 @@ class KN0Factory extends Factory
             'masalah' => $this->faker->sentence(),
             'dirujuk_ke' => $this->faker->company(),
             'nama_jelas_petugas' => $this->faker->name(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

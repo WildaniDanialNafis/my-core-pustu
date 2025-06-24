@@ -21,6 +21,7 @@ class WaliFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_user' => $this->getForeignKeyId(User::class),
             'nama' => $this->faker->name(),
             'nik' => $this->faker->numerify('##########'),
@@ -41,6 +42,8 @@ class WaliFactory extends Factory
             'alamat' => $this->faker->address(),
             'telepon' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

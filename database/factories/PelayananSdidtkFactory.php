@@ -21,10 +21,13 @@ class PelayananSdidtkFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'id_umur_sdidtk' => $this->faker->numberBetween(1, 15),
             'tindakan' => $this->faker->sentence(),
             'kunjungan_ulang' => $this->faker->sentence(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

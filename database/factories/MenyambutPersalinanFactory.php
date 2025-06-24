@@ -21,6 +21,7 @@ class MenyambutPersalinanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'nama_pembuat' => $this->faker->name(),
             'alamat' => $this->faker->address(),
@@ -41,6 +42,9 @@ class MenyambutPersalinanFactory extends Factory
             'nakes' => $this->faker->randomElement(['Bidan', 'Dokter']),
             'paraf_nakes' => $this->faker->word(),
             'nama_nakes' => $this->faker->name(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

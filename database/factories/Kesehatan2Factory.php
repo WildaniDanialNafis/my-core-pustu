@@ -21,6 +21,7 @@ class Kesehatan2Factory extends Factory
     public function definition(): array
     {
         return [
+
             'id_kesehatan1' => $this->getForeignKeyId(Kesehatan1::class),
             'trimester' => $this->faker->randomElement(['1', '2', '3']),
             'tanggal_periksa' => $this->faker->date(),
@@ -42,6 +43,9 @@ class Kesehatan2Factory extends Factory
             'ppia2' => $this->faker->word(),
             'ppia3' => $this->faker->word(),
             'test_laksana_kasus' => $this->faker->text(),
+            'tanggal_periksa' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

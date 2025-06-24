@@ -21,9 +21,12 @@ class PemantauanKiaFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'id_ceklis' => $this->faker->numberBetween(1, 10),
             'hasil_pemantauan' => $this->faker->randomElement(['Lengkap', 'Tidak Lengkap']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

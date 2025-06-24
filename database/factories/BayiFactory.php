@@ -21,6 +21,7 @@ class BayiFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'tanggal' => $this->faker->dateTime(),
             'tempat' => $this->faker->city(),
@@ -34,6 +35,9 @@ class BayiFactory extends Factory
             'ppia1' => $this->faker->word(),
             'ppia2' => $this->faker->word(),
             'ppia3' => $this->faker->word(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

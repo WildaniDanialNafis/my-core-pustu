@@ -21,8 +21,11 @@ class RiwayatKesehatanBumilFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'riwayat_penyakit' => $this->faker->sentence(3),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

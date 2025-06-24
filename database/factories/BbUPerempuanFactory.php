@@ -21,10 +21,13 @@ class BbUPerempuanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'bb' => $this->faker->randomFloat(2, 2, 20),
             'bulan' => $this->faker->numberBetween(0, 11),
             'tahun' => $this->faker->numberBetween(0, 5),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

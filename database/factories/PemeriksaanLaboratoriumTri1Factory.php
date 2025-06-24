@@ -23,6 +23,7 @@ class PemeriksaanLaboratoriumTri1Factory extends Factory
         $reaktif = ['R', 'NR'];
 
         return [
+
             'id_pemeriksaan_trimester1' => $this->getForeignKeyId(PemeriksaanTrimester1::class),
             'tanggal' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'hemoglobin' => $this->faker->randomFloat(1, 8, 15),
@@ -42,6 +43,9 @@ class PemeriksaanLaboratoriumTri1Factory extends Factory
             'tindak_hepatitis_b' => $this->faker->sentence(),
             'lain_lain' => $this->faker->sentence(),
             'tindak_lain_lain' => $this->faker->sentence(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

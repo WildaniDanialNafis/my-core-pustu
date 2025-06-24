@@ -21,6 +21,7 @@ class RujukanAnakFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'tanggal' => $this->faker->dateTime(),
             'dirujuk_ke' => $this->faker->company(),
@@ -29,6 +30,9 @@ class RujukanAnakFactory extends Factory
             'tindakan_sementara' => $this->faker->sentence(),
             'nama_yang_merujuk' => $this->faker->name(),
             'paraf_yang_merujuk' => $this->faker->word(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

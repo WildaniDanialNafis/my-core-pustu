@@ -21,9 +21,12 @@ class EvaluasiKesehatanBumilFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'nama_dokter' => $this->faker->name(),
             'faskes' => $this->faker->company(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

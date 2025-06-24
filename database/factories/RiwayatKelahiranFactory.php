@@ -21,6 +21,7 @@ class RiwayatKelahiranFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'g' => $this->faker->randomDigitNotZero(),
             'p' => $this->faker->randomDigitNotZero(),
@@ -30,6 +31,9 @@ class RiwayatKelahiranFactory extends Factory
             'tindakan' => $this->faker->randomElement(['Ekstraksi Vakum', 'Ekstraksi Forsep', 'SC']),
             'penolong_persalinan' => $this->faker->randomElement(['Dokter Spesialis', 'Dokter', 'Bidan']),
             'cap_kaki_bayi' => $this->faker->imageUrl(),
+            'tanggal_lahir' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

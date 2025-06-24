@@ -21,9 +21,12 @@ class AmanatDarahFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_menyambut_persalinan' => $this->getForeignKeyId(MenyambutPersalinan::class),
             'nama' => $this->faker->name(),
             'hp' => $this->faker->numerify('08##########'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

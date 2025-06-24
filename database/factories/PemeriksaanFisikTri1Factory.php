@@ -23,6 +23,7 @@ class PemeriksaanFisikTri1Factory extends Factory
         $status = ['Normal', 'Tidak Normal'];
 
         return [
+
             'id_pemeriksaan_trimester1' => $this->getForeignKeyId(PemeriksaanTrimester1::class),
             'keadaan_umum' => $this->faker->sentence(),
             'konjuctiva' => $this->faker->randomElement($status),
@@ -35,6 +36,8 @@ class PemeriksaanFisikTri1Factory extends Factory
             'paru' => $this->faker->randomElement($status),
             'perut' => $this->faker->randomElement($status),
             'tungkai' => $this->faker->randomElement($status),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

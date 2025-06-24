@@ -109,6 +109,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/form', function() {
+    return view('admin.layouts2.isi-form');
+});
+
 Route::get('coba-buttons', function () {
     return  view('admin.pages.buttons');
 });

@@ -57,7 +57,14 @@ class DashboardController extends Controller
         })->count();
 
         // Cakupan layanan per hari di bulan ini
-        $cakupanPerHari = RingkasanKesehatan::selectRaw('DAY(tanggal_periksa) as hari, COUNT(*) as jumlah')
+        // $cakupanPerHari = RingkasanKesehatan::selectRaw('DAY(tanggal_periksa) as hari, COUNT(*) as jumlah')
+        //     ->whereBetween('tanggal_periksa', [$startOfMonth, $endOfMonth])
+        //     ->groupBy('hari')
+        //     ->orderBy('hari')
+        //     ->pluck('jumlah', 'hari')
+        //     ->toArray();
+
+        $cakupanPerHari = RingkasanKesehatan::selectRaw("EXTRACT(DAY FROM tanggal_periksa)::int as hari, COUNT(*) as jumlah")
             ->whereBetween('tanggal_periksa', [$startOfMonth, $endOfMonth])
             ->groupBy('hari')
             ->orderBy('hari')

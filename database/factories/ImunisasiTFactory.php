@@ -21,9 +21,12 @@ class ImunisasiTFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'tt_ke' => $this->faker->randomElement(['1', '2', '3', '4', '5']),
             'status' => $this->faker->randomElement(['Belum', 'Sudah']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

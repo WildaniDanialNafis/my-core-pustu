@@ -21,9 +21,12 @@ class BbTbLakiFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'bb' => $this->faker->randomFloat(2, 2, 20),
             'tb' => $this->faker->randomFloat(2, 30, 120),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

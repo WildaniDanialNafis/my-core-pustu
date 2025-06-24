@@ -19,6 +19,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -27,6 +28,7 @@ class UserFactory extends Factory
             'id_role' => 2,
             'created_at' => fake()->dateTimeBetween('first day of January this year', 'last day of December this year'),
             'updated_at' => now(),
+            'email_verified_at' => fake()->dateTimeBetween('-60 days', 'now'),
         ];
     }
 

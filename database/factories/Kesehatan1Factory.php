@@ -18,11 +18,14 @@ class Kesehatan1Factory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'hpht' => $this->faker->date(),
             'bb' => $this->faker->numberBetween(40, 100),
             'tb' => $this->faker->numberBetween(140, 180),
             'imt' => $this->faker->randomFloat(2, 18.5, 30),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

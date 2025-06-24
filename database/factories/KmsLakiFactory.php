@@ -21,9 +21,12 @@ class KmsLakiFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'nama_anak' => $this->faker->name('male'),
             'nama_posyandu' => $this->faker->company(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

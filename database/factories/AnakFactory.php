@@ -21,6 +21,7 @@ class AnakFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_wali' => $this->getForeignKeyId(Wali::class),
             'nama' => $this->faker->name(),
             'nik' => $this->faker->numerify('##########'),
@@ -38,6 +39,8 @@ class AnakFactory extends Factory
             'kabupaten' => $this->faker->city(),
             'alamat' => $this->faker->address(),
             'telepon' => $this->faker->phoneNumber(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

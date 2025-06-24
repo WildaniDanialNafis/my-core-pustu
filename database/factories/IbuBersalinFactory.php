@@ -21,6 +21,7 @@ class IbuBersalinFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'tanggal_bersalin' => $this->faker->dateTime(),
             'umur_kehamilan' => $this->faker->numberBetween(28, 42),
@@ -32,6 +33,9 @@ class IbuBersalinFactory extends Factory
             'keterangan_keadaan_ibu' => $this->faker->sentence(),
             'kb_pasca_persalinan' => $this->faker->sentence(),
             'keterangan_tambahan' => $this->faker->paragraph(),
+            'tanggal_bersalin' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

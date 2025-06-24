@@ -21,9 +21,12 @@ class PelayananKesehatanNeonatusFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'catatan_penting' => $this->faker->paragraph(),
             'nama_nakes' => $this->faker->name(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

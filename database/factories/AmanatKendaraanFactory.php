@@ -21,10 +21,13 @@ class AmanatKendaraanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_menyambut_persalinan' => $this->getForeignKeyId(MenyambutPersalinan::class),
             'kendaraan' => $this->faker->randomElement(['Kendaraan', 'Ambulan Desa']),
             'nama' => $this->faker->name(),
             'hp' => $this->faker->numerify('08##########'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

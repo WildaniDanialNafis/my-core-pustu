@@ -21,12 +21,15 @@ class KapsulAnakFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'id_umur_kapsul_anak' => $this->faker->numberBetween(1, 5),
             'kapsul' => $this->faker->randomElement(['Biru', 'Merah']),
             'februari' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
             'agustus' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
             'obat_cacing' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

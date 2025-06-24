@@ -21,6 +21,7 @@ class BayiLahirFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'anak_ke' => $this->faker->numberBetween(1, 5),
             'berat_lahir' => $this->faker->randomFloat(2, 2.0, 4.5),
@@ -45,6 +46,8 @@ class BayiLahirFactory extends Factory
                 'Imunisasi HB0',
             ]),
             'keterangan_tambahan' => $this->faker->paragraph(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

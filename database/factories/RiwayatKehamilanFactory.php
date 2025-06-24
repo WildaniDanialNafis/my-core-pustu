@@ -21,12 +21,15 @@ class RiwayatKehamilanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'tahun' => $this->faker->dateTimeBetween('-10 years', 'now'),
             'berat_lahir' => $this->faker->randomFloat(1, 2.0, 5.0),
             'persalinan' => $this->faker->randomElement(['Normal', 'Caesar', 'Vacuum']),
             'penolong_persalinan' => $this->faker->randomElement(['Dokter', 'Bidan', 'Dukun']),
             'komplikasi' => $this->faker->optional()->sentence,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

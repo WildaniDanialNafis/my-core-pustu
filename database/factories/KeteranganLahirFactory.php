@@ -21,6 +21,7 @@ class KeteranganLahirFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'no' => $this->faker->uuid(),
             'tanggal' => $this->faker->dateTime(),
@@ -55,6 +56,10 @@ class KeteranganLahirFactory extends Factory
             'fasilitas_kesehatan' => $this->faker->company(),
             'ttd' => $this->faker->imageUrl(),
             'stempel' => $this->faker->imageUrl(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'tanggal_keterangan_lahir' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

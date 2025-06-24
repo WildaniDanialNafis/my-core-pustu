@@ -21,9 +21,12 @@ class AmanatPenolongPersalinanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_menyambut_persalinan' => $this->getForeignKeyId(MenyambutPersalinan::class),
             'penolong_persalinan' => $this->faker->randomElement(['Dokter', 'Bidan']),
             'nama' => $this->faker->name(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

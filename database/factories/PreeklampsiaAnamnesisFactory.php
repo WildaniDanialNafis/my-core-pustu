@@ -21,9 +21,12 @@ class PreeklampsiaAnamnesisFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_skrining_preeklampsia' => $this->getForeignKeyId(SkriningPreeklampsia::class),
             'id_kriteria_anamnesis' => $this->faker->numberBetween(1, 14),
             'risiko' => $this->faker->randomElement(['', 'Risiko sedang', 'Risiko tinggi']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

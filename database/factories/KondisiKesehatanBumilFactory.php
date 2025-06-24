@@ -21,6 +21,7 @@ class KondisiKesehatanBumilFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'tanggal_periksa' => $this->faker->date(),
             'tb' => $this->faker->randomFloat(2, 140, 180),
@@ -28,6 +29,9 @@ class KondisiKesehatanBumilFactory extends Factory
             'lila' => $this->faker->randomFloat(2, 20, 35),
             'imt' => $this->faker->randomFloat(2, 15, 30),
             'status' => $this->faker->randomElement(['Kurus', 'Normal', 'Gemuk', 'Obesitas']),
+            'tanggal_periksa' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

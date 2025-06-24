@@ -21,12 +21,15 @@ class RiwayatPenyakitKeluargaFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'riwayat_penyakit' => $this->faker->randomElement([
                 'Hipertensi', 'Diabetes', 'Sesak Nafas', 'Jantung', 'TB',
                 'Alergi', 'Jiwa', 'Kelainan Darah', 'Hepatitis B',
             ]),
             'penjelasan' => $this->faker->optional()->sentence(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

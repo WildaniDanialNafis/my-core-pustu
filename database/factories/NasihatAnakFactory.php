@@ -21,10 +21,14 @@ class NasihatAnakFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'id_umur_nasihat_anak' => $this->faker->numberBetween(1, 7),
             'nasihat' => $this->faker->sentence(8),
             'tanggal' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

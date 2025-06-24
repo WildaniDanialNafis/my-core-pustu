@@ -21,6 +21,7 @@ class RingkasanPelayananDokterFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'tanggal' => $this->faker->dateTime(),
             'pemeriksa' => $this->faker->name(),
@@ -30,6 +31,10 @@ class RingkasanPelayananDokterFactory extends Factory
             'pemeriksaan' => $this->faker->paragraph(),
             'tindakan' => $this->faker->paragraph(),
             'tanggal_kembali' => $this->faker->dateTime(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'tanggal_kembali' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

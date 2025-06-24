@@ -21,6 +21,7 @@ class KesehatanNifasFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'tanggal_periksa' => $this->faker->date(),
             'tempat' => $this->faker->randomElement(['Rumah', 'Puskesmas', 'Klinik']),
@@ -31,6 +32,9 @@ class KesehatanNifasFactory extends Factory
             'kb_pasca_persalinan' => $this->faker->randomElement(['Pil', 'IUD', 'Suntik', 'Implan', 'Tidak']),
             'konseling' => $this->faker->randomElement(['Ya', 'Tidak']),
             'test_laksana_kasus' => $this->faker->paragraph(),
+            'tanggal_periksa' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

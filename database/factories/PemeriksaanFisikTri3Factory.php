@@ -23,6 +23,7 @@ class PemeriksaanFisikTri3Factory extends Factory
         $normalOptions = ['Normal', 'Tidak Normal'];
 
         return [
+
             'id_pemeriksaan_trimester3' => $this->getForeignKeyId(PemeriksaanTrimester3::class),
             'keadaan_umum' => $this->faker->randomElement(['Baik', 'Sedang', 'Buruk']),
             'konjuctiva' => $this->faker->randomElement($normalOptions),
@@ -34,6 +35,8 @@ class PemeriksaanFisikTri3Factory extends Factory
             'paru' => $this->faker->randomElement($normalOptions),
             'perut' => $this->faker->randomElement($normalOptions),
             'tungkai' => $this->faker->randomElement($normalOptions),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

@@ -21,6 +21,7 @@ class PemeriksaanTrimester3Factory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'rencana_konsultasi_lanjut' => $this->faker->optional()->randomElement(['Gizi', 'Kebidanan', 'Anak', 'Penyakit Dalam', 'Neurologi', 'THT', 'Psikiatri']),
             'rencana_tempat_bersalin' => $this->faker->optional()->randomElement(['FKTP', 'FKRTL']),
@@ -28,6 +29,8 @@ class PemeriksaanTrimester3Factory extends Factory
             'konseling' => $this->faker->optional()->randomElement(['Ya', 'Tidak']),
             'jelaskan' => $this->faker->optional()->sentence(),
             'kesimpulan' => $this->faker->optional()->paragraph(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

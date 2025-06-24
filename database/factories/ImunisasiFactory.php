@@ -21,10 +21,14 @@ class ImunisasiFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'id_vaksin' => $this->faker->numberBetween(1, 17),
             'tanggal' => $this->faker->dateTimeThisYear(),
             'paraf' => $this->faker->name(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

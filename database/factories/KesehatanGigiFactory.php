@@ -21,9 +21,12 @@ class KesehatanGigiFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'nama' => $this->faker->name(),
             'umur' => $this->faker->numberBetween(1, 18),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

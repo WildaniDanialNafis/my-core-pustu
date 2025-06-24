@@ -21,6 +21,7 @@ class RingkasanKesimpulanNifasFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'keadaan_ibu' => $this->faker->randomElement(['Sehat', 'Sakit', 'Meninggal']),
             'keadaan_bayi' => $this->faker->randomElement(['Sehat', 'Sakit', 'Kelainan Bawaan', 'Meninggal']),
@@ -28,6 +29,8 @@ class RingkasanKesimpulanNifasFactory extends Factory
             'komplikasi_nifas' => $this->faker->randomElement(['Pendarahan', 'Infeksi', 'Hipertensi', 'Lain-lain']),
             'keterangan_komplikasi_nifas' => $this->faker->sentence(),
             'kesimpulan' => $this->faker->paragraph(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

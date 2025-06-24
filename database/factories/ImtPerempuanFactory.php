@@ -21,10 +21,13 @@ class ImtPerempuanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'imt' => $this->faker->randomFloat(2, 10, 30), // Nilai IMT dalam rentang umum anak
             'bulan' => $this->faker->numberBetween(0, 11),
             'tahun' => $this->faker->numberBetween(0, 5),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

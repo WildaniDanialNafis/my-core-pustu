@@ -21,11 +21,14 @@ class KesehatanBersalinFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'taksiran_persalinan' => $this->faker->word(),
             'fasyankes' => $this->faker->company(),
             'rujukan' => $this->faker->word(),
             'inisiasi_menyusui_dini' => $this->faker->paragraph(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

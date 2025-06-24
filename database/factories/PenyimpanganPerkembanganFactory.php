@@ -21,10 +21,13 @@ class PenyimpanganPerkembanganFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_pelayanan_sdidtk' => $this->getForeignKeyId(PelayananSdidtk::class),
             'kpsp' => $this->faker->randomElement(['Ds', 'Dm', 'Dp']),
             'tdd' => $this->faker->randomElement(['N', 'R']),
             'tdl' => $this->faker->randomElement(['N', 'R']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

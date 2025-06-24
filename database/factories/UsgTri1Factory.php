@@ -21,6 +21,7 @@ class UsgTri1Factory extends Factory
     public function definition(): array
     {
         return [
+
             'id_pemeriksaan_trimester1' => $this->getForeignKeyId(PemeriksaanTrimester1::class),
             'hpht' => $this->faker->dateTimeBetween('-1 years', 'now'),
             'usia_kehamilan' => $this->faker->numberBetween(4, 13),
@@ -31,6 +32,8 @@ class UsgTri1Factory extends Factory
             'letak_janin' => $this->faker->randomElement(['intrauterin', 'ekstrauterin']),
             'taksiran_persalinan' => $this->faker->date('Y-m-d'),
             'hasil_usg' => $this->faker->sentence(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

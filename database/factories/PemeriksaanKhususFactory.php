@@ -21,6 +21,7 @@ class PemeriksaanKhususFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'inspekulo' => $this->faker->optional()->word(),
             'vulva' => $this->faker->randomElement(['Normal', 'Tidak Normal']),
@@ -29,6 +30,8 @@ class PemeriksaanKhususFactory extends Factory
             'fluksus' => $this->faker->randomElement(['+', '--']),
             'fluor' => $this->faker->randomElement(['+', '--']),
             'porsio' => $this->faker->randomElement(['Normal', 'Tidak Normal']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

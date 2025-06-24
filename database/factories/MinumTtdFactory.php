@@ -21,6 +21,7 @@ class MinumTtdFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_kontrol_ttd' => $this->getForeignKeyId(KontrolTtd::class),
             'bulan_ke' => $this->faker->randomElement(['1', '2', '3', '4', '5', '6', '7', '8', '9']),
             'keterangan' => $this->faker->sentence(),
@@ -28,6 +29,8 @@ class MinumTtdFactory extends Factory
                 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
                 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
             ]),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

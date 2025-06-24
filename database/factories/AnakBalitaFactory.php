@@ -18,6 +18,7 @@ class AnakBalitaFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_anak' => $this->getForeignKeyId(Anak::class),
             'tipe' => $this->faker->randomElement(['0-1', '1-2', '2-3', '3-4', '4-5']),
             'tanggal' => $this->faker->dateTime(),
@@ -33,6 +34,9 @@ class AnakBalitaFactory extends Factory
             'ppia1' => $this->faker->word(),
             'ppia2' => $this->faker->word(),
             'ppia3' => $this->faker->word(),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

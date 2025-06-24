@@ -21,6 +21,7 @@ class EvaluasiKehamilanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_ibu' => $this->getForeignKeyId(Ibu::class),
             'pemeriksa' => $this->faker->name,
             'tanggal' => $this->faker->dateTimeBetween('-9 months', 'now'),
@@ -34,6 +35,9 @@ class EvaluasiKehamilanFactory extends Factory
             'hemoglobin' => $this->faker->numberBetween(8, 15),
             'kalsium' => $this->faker->numberBetween(0, 1),
             'aspirin' => $this->faker->numberBetween(0, 1),
+            'tanggal' => fake()->dateTimeBetween('-60 days', 'now'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

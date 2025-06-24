@@ -21,6 +21,7 @@ class RiwayatPerilakuBerisikoFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_evaluasi_kesehatan_bumil' => $this->getForeignKeyId(EvaluasiKesehatanBumil::class),
             'perilaku' => $this->faker->randomElement([
                 'Merokok',
@@ -32,6 +33,8 @@ class RiwayatPerilakuBerisikoFactory extends Factory
                 'Lain-lain',
             ]),
             'penjelasan' => $this->faker->optional()->paragraph,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

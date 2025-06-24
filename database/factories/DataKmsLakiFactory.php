@@ -21,6 +21,7 @@ class DataKmsLakiFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_kms_laki' => $this->getForeignKeyId(KmsLaki::class),
             'umur' => $this->faker->numberBetween(0, 60),
             'bulan_penimbangan' => $this->faker->dateTimeBetween('-5 years', 'now'),
@@ -28,6 +29,8 @@ class DataKmsLakiFactory extends Factory
             'kbm' => $this->faker->randomFloat(2, 10, 25),
             'n_t' => $this->faker->randomElement(['N', 'T']),
             'asi_eksklusif' => $this->faker->randomElement(['Ya', 'Tidak']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

@@ -21,11 +21,14 @@ class PenyimpanganPertumbuhanFactory extends Factory
     public function definition(): array
     {
         return [
+
             'id_pelayanan_sdidtk' => $this->getForeignKeyId(PelayananSdidtk::class),
             'bb_u' => $this->faker->randomElement(['SK', 'K', 'N', 'RBBL']),
             'bb_tb' => $this->faker->randomElement(['Gb', 'Gk', 'Gn', 'Gl', 'O']),
             'tb_u' => $this->faker->randomElement(['SP', 'P', 'Tn', 'Ti']),
             'lk_u' => $this->faker->randomElement(['Mi', 'N', 'Ma']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
