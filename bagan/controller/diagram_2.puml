@@ -1,0 +1,55 @@
+@startuml
+
+class GrafikImtLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RiwayatPenyakitKeluargaController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ImtLakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PenyimpanganPertumbuhanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class LingkarKepalaPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+@enduml

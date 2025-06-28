@@ -1,0 +1,53 @@
+@startuml
+
+class UmurNasihatAnakController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class IdentitasAnakController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class PemeriksaanTrimester1Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class MenyambutPersalinanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class EvaluasiKehamilanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+@enduml

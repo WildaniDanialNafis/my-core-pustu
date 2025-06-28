@@ -1,0 +1,53 @@
+@startuml
+
+class KN0Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class AmanatPenolongPersalinanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class PenyimpanganPerkembanganController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KriteriaPemeriksaanFisikController extends Controller {
+  +index()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class IbuController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+@enduml

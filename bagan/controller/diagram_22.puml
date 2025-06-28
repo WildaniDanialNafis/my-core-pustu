@@ -1,0 +1,39 @@
+@startuml
+
+class PasswordController extends Controller {
+  +update()
+}
+
+class PasswordResetLinkController extends Controller {
+  +create()
+  +store()
+}
+
+class ConfirmablePasswordController extends Controller {
+  +show()
+  +store()
+}
+
+class BbULakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class GrafikBbTbLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+@enduml

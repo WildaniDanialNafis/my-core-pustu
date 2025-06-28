@@ -1,0 +1,49 @@
+@startuml
+
+class PemeriksaanKhususController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RingkasanPelayananDokterController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class RiwayatKehamilanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ProfileController extends Controller {
+  +edit()
+  +update()
+  +destroy()
+}
+
+class Kesehatan2Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+@enduml

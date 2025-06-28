@@ -1,0 +1,56 @@
+@startuml
+
+class GrafikTinggiBadanUmurLakiController extends Controller {
+  +index()
+  +dataGrafik()
+  +grafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class RingkasanKesehatanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class KN2Controller extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class DataKmsLakiController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class DashboardController extends Controller {
+  +index()
+  +dataGrafik()
+  +create()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+@enduml

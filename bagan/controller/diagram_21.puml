@@ -1,0 +1,26 @@
+@startuml
+
+class EmailVerificationPromptController extends Controller {
+  +__invoke()
+}
+
+class EmailVerificationNotificationController extends Controller {
+  +store()
+}
+
+class AuthenticatedSessionController extends Controller {
+  +create()
+  +store()
+  +destroy()
+}
+
+class VerifyEmailController extends Controller {
+  +__invoke()
+}
+
+class NewPasswordController extends Controller {
+  +create()
+  +store()
+}
+
+@enduml

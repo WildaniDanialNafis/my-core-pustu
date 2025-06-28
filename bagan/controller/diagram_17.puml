@@ -1,0 +1,54 @@
+@startuml
+
+class TablesController extends Controller {
+  +index()
+  +create()
+  +getUsers()
+  +store()
+  +show()
+  +edit()
+  +update()
+  +destroy()
+}
+
+class AmanatDarahController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class BbUPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class SkriningPreeklampsiaController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+class ImtPerempuanController extends BaseCrudController {
+  +index()
+  +create()
+  +store()
+  +update()
+  +edit()
+  +destroy()
+  +ajax()
+}
+
+@enduml
