@@ -1,0 +1,239 @@
+digraph G {
+	graph [bb="0,0,1847,925.5",
+		bgcolor="#F7F7F7",
+		concentrate=1,
+		esep=1,
+		fontname="Helvetica Neue",
+		fontsize=12,
+		labelloc=t,
+		nodesep=1,
+		overlap=false,
+		pad=0.5,
+		rankdir=LR,
+		ranksep=2,
+		splines=true,
+		style=filled
+	];
+	node [label="\N"];
+	appmodelsanak	[fontname="Helvetica Neue",
+		height=11.819,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Anak</font></td></tr>
+<tr width="100%"><td port="id_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_anak (int8)</font></td></tr>
+<tr width="100%"><td port="id_wali" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_wali (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="anak_ke" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >anak_ke (int2)</font></td></tr>
+<tr width="100%"><td port="no_akte_kelahiran" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_akte_kelahiran (varchar)</font></td></tr>
+<tr width="100%"><td port="nik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nik (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="jenis_pelayanan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >jenis_pelayanan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_asuransi (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_berlaku_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_berlaku_asuransi (date)</font></td></tr>
+<tr width="100%"><td port="fasilitas_pelayanan_kesehatan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >fasilitas_pelayanan_kesehatan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_bayi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_bayi (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_balita" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_balita (varchar)</font></td></tr>
+<tr width="100%"><td port="no_catatan_medik_rs" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_catatan_medik_rs (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="150,500",
+		shape=rectangle,
+		width=4.1667];
+	appmodelswali	[fontname="Helvetica Neue",
+		height=12.333,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Wali</font></td></tr>
+<tr width="100%"><td port="id_wali" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_wali (int8)</font></td></tr>
+<tr width="100%"><td port="id_user" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_user (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="nik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nik (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="jenis_pelayanan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >jenis_pelayanan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_asuransi (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_berlaku_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_berlaku_asuransi (date)</font></td></tr>
+<tr width="100%"><td port="fasilitas_pelayanan_kesehatan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >fasilitas_pelayanan_kesehatan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_bayi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_bayi (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_balita" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_balita (varchar)</font></td></tr>
+<tr width="100%"><td port="no_catatan_medik_rs" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_catatan_medik_rs (varchar)</font></td></tr>
+<tr width="100%"><td port="pendidikan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pendidikan (varchar)</font></td></tr>
+<tr width="100%"><td port="pekerjaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pekerjaan (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="email" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >email (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="599,444",
+		shape=rectangle,
+		width=4.1667];
+	appmodelsanak:id_wali -> appmodelswali:id_wali	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="374.5,840.5",
+		penwidth=1.8,
+		pos="s,300,833 e,449,833 310.24,833 339.43,833 422.34,833 443.85,833",
+		xlabel="BelongsTo
+wali",
+		xlp="412.05,818"];
+	appmodelswali:id_wali -> appmodelsanak:id_wali	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="374.5,807.5",
+		penwidth=1.8,
+		pos="e,300,833 449,833 449,833 377,800 377,800 377,800 372,800 372,800 372,800 328.49,819.94 309.12,828.82",
+		xlabel="HasMany
+anak",
+		xlp="411.29,786.05"];
+	appmodelsuser	[fontname="Helvetica Neue",
+		height=5.1389,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">User</font></td></tr>
+<tr width="100%"><td port="id_user" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_user (int8)</font></td></tr>
+<tr width="100%"><td port="name" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >name (varchar)</font></td></tr>
+<tr width="100%"><td port="email" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >email (varchar)</font></td></tr>
+<tr width="100%"><td port="email_verified_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >email_verified_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="password" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >password (varchar)</font></td></tr>
+<tr width="100%"><td port="remember_token" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >remember_token (varchar)</font></td></tr>
+<tr width="100%"><td port="id_role" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_role (int8)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="1012.5,666",
+		shape=rectangle,
+		width=3.1806];
+	appmodelswali:id_user -> appmodelsuser:id_user	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="823.5,803.5",
+		penwidth=1.8,
+		pos="s,749,796 e,898,796 759.24,796 788.43,796 871.34,796 892.85,796",
+		xlabel="BelongsTo
+user",
+		xlp="791.05,781"];
+	appmodelsibu	[fontname="Helvetica Neue",
+		height=10.792,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Ibu</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="id_user" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_user (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="pembiayaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pembiayaan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_jkn" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_jkn (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_tk_1" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_tk_1 (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_rujukan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_rujukan (varchar)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="pendidikan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pendidikan (varchar)</font></td></tr>
+<tr width="100%"><td port="pekerjaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pekerjaan (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="puskesmas_domisili" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >puskesmas_domisili (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_ibu (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="1390,500",
+		shape=rectangle,
+		width=3.1667];
+	appmodelsibu:id_user -> appmodelsuser:id_user	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="1201.5,752.5",
+		penwidth=1.8,
+		pos="s,1276,796 e,1127,796 1267.7,790.15 1248.8,776.75 1204,745 1204,745 1204,745 1199,745 1199,745 1199,745 1146.8,781.98 1131.3,792.96",
+		xlabel="BelongsTo
+user",
+		xlp="1164.1,730"];
+	appmodelskeluarga	[fontname="Helvetica Neue",
+		height=9.7639,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Keluarga</font></td></tr>
+<tr width="100%"><td port="id_keluarga" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_keluarga (int8)</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="pembiayaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pembiayaan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_jkn" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_jkn (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_tk_1" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_tk_1 (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_rujukan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_rujukan (varchar)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="pendidikan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pendidikan (varchar)</font></td></tr>
+<tr width="100%"><td port="pekerjaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pekerjaan (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="1750,574",
+		shape=rectangle,
+		width=2.6944];
+	appmodelsibu:id_ibu -> appmodelskeluarga:id_ibu	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="1578.5,840.5",
+		penwidth=1.8,
+		pos="e,1653,833 1504,833 1504,833 1609.1,833 1642.8,833",
+		xlabel="HasMany
+keluarga",
+		xlp="1541.4,818"];
+	appmodelsuser:id_user -> appmodelsibu:id_user	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="1201.5,803.5",
+		penwidth=1.8,
+		pos="e,1276,796 1127,796 1127,796 1232.1,796 1265.8,796",
+		xlabel="HasMany
+ibu",
+		xlp="1164.4,781"];
+	appmodelskeluarga:id_ibu -> appmodelsibu:id_ibu	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="1578.5,807.5",
+		penwidth=1.8,
+		pos="s,1653,833 e,1504,833 1643.9,828.82 1624.5,819.94 1581,800 1581,800 1581,800 1576,800 1576,800 1576,800 1524.7,823.49 1508.7,830.83",
+		xlabel="BelongsTo
+ibu",
+		xlp="1541.1,785"];
+}

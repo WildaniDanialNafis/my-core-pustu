@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\PatchFactoryDatesOnly' => $baseDir . '/app/Console/Commands/PatchFactoryDatesOnly.php',
     'App\\Http\\Controllers\\AmanatDarahController' => $baseDir . '/app/Http/Controllers/AmanatDarahController.php',
     'App\\Http\\Controllers\\AmanatKendaraanController' => $baseDir . '/app/Http/Controllers/AmanatKendaraanController.php',
     'App\\Http\\Controllers\\AmanatPenolongPersalinanController' => $baseDir . '/app/Http/Controllers/AmanatPenolongPersalinanController.php',
