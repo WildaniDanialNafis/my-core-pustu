@@ -1,0 +1,133 @@
+digraph G {
+	graph [bb="0,0,1011,925",
+		bgcolor="#F7F7F7",
+		concentrate=1,
+		esep=1,
+		fontname="Helvetica Neue",
+		fontsize=12,
+		labelloc=t,
+		nodesep=1,
+		overlap="",
+		pad=0.5,
+		rankdir=LR,
+		ranksep=2,
+		splines=true,
+		style=filled
+	];
+	node [label="\N"];
+	appmodelsanak	[fontname="Helvetica Neue",
+		height=11.819,
+		label=<<table width="100%" height="100%" border="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Anak</font></td></tr>
+<tr width="100%"><td port="id_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_anak (int8)</font></td></tr>
+<tr width="100%"><td port="id_wali" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_wali (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="anak_ke" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >anak_ke (int2)</font></td></tr>
+<tr width="100%"><td port="no_akte_kelahiran" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_akte_kelahiran (varchar)</font></td></tr>
+<tr width="100%"><td port="nik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nik (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="jenis_pelayanan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >jenis_pelayanan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_asuransi (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_berlaku_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_berlaku_asuransi (date)</font></td></tr>
+<tr width="100%"><td port="fasilitas_pelayanan_kesehatan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >fasilitas_pelayanan_kesehatan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_bayi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_bayi (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_balita" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_balita (varchar)</font></td></tr>
+<tr width="100%"><td port="no_catatan_medik_rs" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_catatan_medik_rs (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="141.5,425.5",
+		shape=rectangle,
+		width=3.9306];
+	appmodelskmsperempuan	[fontname="Helvetica Neue",
+		height=3.5972,
+		label=<<table width="100%" height="100%" border="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">KmsPerempuan</font></td></tr>
+<tr width="100%"><td port="id_kms_perempuan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_kms_perempuan (int8)</font></td></tr>
+<tr width="100%"><td port="id_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_anak (int8)</font></td></tr>
+<tr width="100%"><td port="nama_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_anak (varchar)</font></td></tr>
+<tr width="100%"><td port="nama_posyandu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_posyandu (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="526.5,758.5",
+		shape=rectangle,
+		width=2.6528];
+	appmodelsanak:id_anak -> appmodelskmsperempuan:id_anak	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="357,803",
+		penwidth=1.8,
+		pos="e,431,795.5 283,795.5 283,795.5 387.39,795.5 420.83,795.5",
+		xlabel="HasMany
+kmsPerempuan",
+		xlp="299.91,780.5"];
+	appmodelskmsperempuan:id_anak -> appmodelsanak:id_anak	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="357,770",
+		penwidth=1.8,
+		pos="s,431,795.5 e,283,795.5 421.88,791.32 402.51,782.44 359,762.5 359,762.5 359,762.5 355,762.5 355,762.5 355,762.5 303.74,785.99 287.72,\
+793.33",
+		xlabel="BelongsTo
+anak",
+		xlp="320.12,747.67"];
+	appmodelsdatakmsperempuan	[fontname="Helvetica Neue",
+		height=5.6528,
+		label=<<table width="100%" height="100%" border="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">DataKmsPerempuan</font></td></tr>
+<tr width="100%"><td port="id_data_kms_perempuan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_data_kms_perempuan (int8)</font></td></tr>
+<tr width="100%"><td port="id_kms_perempuan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_kms_perempuan (int8)</font></td></tr>
+<tr width="100%"><td port="umur" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >umur (int4)</font></td></tr>
+<tr width="100%"><td port="bulan_penimbangan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >bulan_penimbangan (timestamp)</font></td></tr>
+<tr width="100%"><td port="bb" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >bb (float8)</font></td></tr>
+<tr width="100%"><td port="kbm" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kbm (float8)</font></td></tr>
+<tr width="100%"><td port="n_t" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >n_t (varchar)</font></td></tr>
+<tr width="100%"><td port="asi_eksklusif" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >asi_eksklusif (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="890.5,721.5",
+		shape=rectangle,
+		width=3.3472];
+	appmodelskmsperempuan:id_kms_perempuan -> appmodelsdatakmsperempuan:id_kms_perempuan	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="696,840",
+		penwidth=1.8,
+		pos="e,770,832.5 622,832.5 622,832.5 726.39,832.5 759.83,832.5",
+		xlabel="HasMany
+dataKmsPerempuan",
+		xlp="757.91,817.5"];
+	appmodelsdatakmsperempuan:id_kms_perempuan -> appmodelskmsperempuan:id_kms_perempuan	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="696,789",
+		penwidth=1.8,
+		pos="s,770,832.5 e,622,832.5 761.74,826.65 742.83,813.25 698,781.5 698,781.5 698,781.5 694,781.5 694,781.5 694,781.5 641.79,818.48 626.29,\
+829.46",
+		xlabel="BelongsTo
+kmsPerempuan",
+		xlp="641.65,766.75"];
+}

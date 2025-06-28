@@ -1,0 +1,270 @@
+digraph G {
+	graph [bb="0,0,997,2289.5",
+		bgcolor="#F7F7F7",
+		concentrate=1,
+		esep=1,
+		fontname="Helvetica Neue",
+		fontsize=12,
+		labelloc=t,
+		nodesep=1,
+		overlap="",
+		pad=0.5,
+		rankdir=LR,
+		ranksep=2,
+		splines=polyline,
+		style=filled
+	];
+	node [label="\N"];
+	appmodelsberatbadanbumil	[fontname="Helvetica Neue",
+		height=3.5972,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">BeratBadanBumil</font></td></tr>
+<tr width="100%"><td port="id_berat_badan_bumil" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_berat_badan_bumil (int8)</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="minggu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >minggu (int4)</font></td></tr>
+<tr width="100%"><td port="berat_badan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >berat_badan (float8)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="108.5,1021",
+		shape=rectangle,
+		width=3.0139];
+	appmodelsibu	[fontname="Helvetica Neue",
+		height=10.792,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Ibu</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="id_user" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_user (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="pembiayaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pembiayaan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_jkn" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_jkn (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_tk_1" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_tk_1 (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_rujukan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_rujukan (varchar)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="pendidikan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pendidikan (varchar)</font></td></tr>
+<tr width="100%"><td port="pekerjaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pekerjaan (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="puskesmas_domisili" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >puskesmas_domisili (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_ibu (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="480,725",
+		shape=rectangle,
+		width=3.1667];
+	appmodelsberatbadanbumil:id_ibu -> appmodelsibu:id_ibu	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="291.5,1065.5",
+		penwidth=1.8,
+		pos="s,217,1058 e,366,1058 227.24,1058 256.43,1058 339.34,1058 360.85,1058",
+		xlabel="BelongsTo
+ibu",
+		xlp="329.05,1043"];
+	appmodelsibu:id_ibu -> appmodelsberatbadanbumil:id_ibu	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="291.5,1032.5",
+		penwidth=1.8,
+		pos="e,217,1058 366,1058 366,1058 294,1025 294,1025 294,1025 289,1025 289,1025 289,1025 245.49,1044.9 226.12,1053.8",
+		xlabel="HasMany
+beratBadanBumil",
+		xlp="356.79,1011"];
+	appmodelsevaluasikehamilan	[fontname="Helvetica Neue",
+		height=8.7361,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">EvaluasiKehamilan</font></td></tr>
+<tr width="100%"><td port="id_evaluasi_kehamilan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_evaluasi_kehamilan (int8)</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="pemeriksa" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pemeriksa (varchar)</font></td></tr>
+<tr width="100%"><td port="tanggal" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tanggal (timestamp)</font></td></tr>
+<tr width="100%"><td port="usia_gestasi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >usia_gestasi (int4)</font></td></tr>
+<tr width="100%"><td port="denyut_jantung_janin" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >denyut_jantung_janin (int4)</font></td></tr>
+<tr width="100%"><td port="sistolik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >sistolik (int4)</font></td></tr>
+<tr width="100%"><td port="diastolik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >diastolik (int4)</font></td></tr>
+<tr width="100%"><td port="gerakan_bayi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gerakan_bayi (int4)</font></td></tr>
+<tr width="100%"><td port="urin_protein" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >urin_protein (int4)</font></td></tr>
+<tr width="100%"><td port="urin_reduksi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >urin_reduksi (int4)</font></td></tr>
+<tr width="100%"><td port="hemoglobin" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >hemoglobin (int4)</font></td></tr>
+<tr width="100%"><td port="kalsium" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kalsium (int4)</font></td></tr>
+<tr width="100%"><td port="aspirin" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >aspirin (int4)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="870,1975",
+		shape=rectangle,
+		width=3.0417];
+	appmodelsibu:id_ibu -> appmodelsevaluasikehamilan:id_ibu	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,1623.5",
+		penwidth=1.8,
+		pos="e,760,2197 594,1058 594,1058 666,1592 666,1592 666,1592 746.23,2108.3 758.45,2187",
+		xlabel="HasMany
+evaluasiKehamilan",
+		xlp="735.86,1608.3"];
+	appmodelsmenyambutpersalinan	[fontname="Helvetica Neue",
+		height=12.333,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">MenyambutPersalinan</font></td></tr>
+<tr width="100%"><td port="id_menyambut_persalinan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_menyambut_persalinan (int8)</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="nama_pembuat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_pembuat (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="perkiraan_bulan_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >perkiraan_bulan_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="perkiraan_tahun_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >perkiraan_tahun_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="dana_persalinan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >dana_persalinan (varchar)</font></td></tr>
+<tr width="100%"><td port="dibantu_oleh" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >dibantu_oleh (varchar)</font></td></tr>
+<tr width="100%"><td port="metode_kontrasepsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >metode_kontrasepsi (varchar)</font></td></tr>
+<tr width="100%"><td port="golongan_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >golongan_darah (varchar)</font></td></tr>
+<tr width="100%"><td port="rhesus" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >rhesus (varchar)</font></td></tr>
+<tr width="100%"><td port="bersedia_dirujuk" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >bersedia_dirujuk (varchar)</font></td></tr>
+<tr width="100%"><td port="tanggal" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tanggal (timestamp)</font></td></tr>
+<tr width="100%"><td port="persetujuan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >persetujuan (varchar)</font></td></tr>
+<tr width="100%"><td port="paraf_persetujuan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >paraf_persetujuan (varchar)</font></td></tr>
+<tr width="100%"><td port="nama_persetujuan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_persetujuan (varchar)</font></td></tr>
+<tr width="100%"><td port="paraf_bumil" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >paraf_bumil (varchar)</font></td></tr>
+<tr width="100%"><td port="nama_bumil" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_bumil (varchar)</font></td></tr>
+<tr width="100%"><td port="nakes" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nakes (varchar)</font></td></tr>
+<tr width="100%"><td port="paraf_nakes" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >paraf_nakes (varchar)</font></td></tr>
+<tr width="100%"><td port="nama_nakes" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_nakes (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="870,1144",
+		shape=rectangle,
+		width=3.4444];
+	appmodelsibu:id_ibu -> appmodelsmenyambutpersalinan:id_ibu	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,1325.5",
+		penwidth=1.8,
+		pos="e,745,1496 594,1058 594,1058 666,1308 666,1308 666,1308 725.14,1448.7 741.08,1486.7",
+		xlabel="HasMany
+menyambutPersalinan",
+		xlp="578.32,1261.1"];
+	appmodelspemeriksaantrimester1	[fontname="Helvetica Neue",
+		height=3.5972,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">PemeriksaanTrimester1</font></td></tr>
+<tr width="100%"><td port="id_pemeriksaan_trimester1" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_pemeriksaan_trimester1 (int8)</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="kesimpulan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kesimpulan (text)</font></td></tr>
+<tr width="100%"><td port="rekomendasi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >rekomendasi (text)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="870,498",
+		shape=rectangle,
+		width=3.5278];
+	appmodelsibu:id_ibu -> appmodelspemeriksaantrimester1:id_ibu	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,804.5",
+		penwidth=1.8,
+		pos="e,743,535 594,1058 594,1058 719.56,617.29 740.16,544.98",
+		xlabel="HasMany
+pemeriksaanTrimester1",
+		xlp="749.58,816.49"];
+	appmodelsskriningpreeklampsia	[fontname="Helvetica Neue",
+		height=4.1111,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">SkriningPreeklampsia</font></td></tr>
+<tr width="100%"><td port="id_skrining_preeklampsia" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_skrining_preeklampsia (int8)</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="kesimpulan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kesimpulan (text)</font></td></tr>
+<tr width="100%"><td port="paraf_dokter" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >paraf_dokter (varchar)</font></td></tr>
+<tr width="100%"><td port="nama_dokter" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_dokter (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="870,148",
+		shape=rectangle,
+		width=3.3333];
+	appmodelsibu:id_ibu -> appmodelsskriningpreeklampsia:id_ibu	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,664.5",
+		penwidth=1.8,
+		pos="e,749,204 594,1058 594,1058 729.95,308.98 747.21,213.89",
+		xlabel="HasMany
+skriningPreeklampsia",
+		xlp="745.1,650.94"];
+	appmodelsevaluasikehamilan:id_ibu -> appmodelsibu:id_ibu	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,1566.5",
+		penwidth=1.8,
+		pos="s,760,2197 e,594,1058 758.53,2186.9 742.81,2079 606.03,1140.5 594.74,1063.1",
+		xlabel="BelongsTo
+ibu",
+		xlp="711.63,1640"];
+	appmodelsmenyambutpersalinan:id_ibu -> appmodelsibu:id_ibu	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,1282.5",
+		penwidth=1.8,
+		pos="s,745,1496 e,594,1058 741.82,1486.5 727.66,1444.2 671,1275 671,1275 671,1275 607.21,1095.2 595.75,1062.9",
+		xlabel="BelongsTo
+ibu",
+		xlp="705.67,1259.1"];
+	appmodelspemeriksaantrimester1:id_ibu -> appmodelsibu:id_ibu	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,771.5",
+		penwidth=1.8,
+		pos="s,743,535 e,594,1058 739.79,544.55 725.22,587.89 666,764 666,764 666,764 604.81,1013.9 595.25,1052.9",
+		xlabel="BelongsTo
+ibu",
+		xlp="693.16,781.01"];
+	appmodelsskriningpreeklampsia:id_ibu -> appmodelsibu:id_ibu	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="668.5,631.5",
+		penwidth=1.8,
+		pos="s,749,204 e,594,1058 747.03,213.97 734.46,277.57 666,624 666,624 666,624 602.98,1003.9 594.86,1052.8",
+		xlabel="BelongsTo
+ibu",
+		xlp="629.63,617.25"];
+}

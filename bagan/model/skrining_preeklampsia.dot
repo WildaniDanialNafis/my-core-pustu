@@ -1,0 +1,166 @@
+digraph G {
+	graph [bb="0,0,989,1000",
+		bgcolor="#F7F7F7",
+		concentrate=1,
+		esep=1,
+		fontname="Helvetica Neue",
+		fontsize=12,
+		labelloc=t,
+		nodesep=1,
+		overlap="",
+		pad=0.5,
+		rankdir=LR,
+		ranksep=2,
+		splines=true,
+		style=filled
+	];
+	node [label="\N"];
+	appmodelsibu	[fontname="Helvetica Neue",
+		height=10.792,
+		label=<<table width="100%" height="100%" border="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Ibu</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="id_user" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_user (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="pembiayaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pembiayaan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_jkn" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_jkn (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_tk_1" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_tk_1 (varchar)</font></td></tr>
+<tr width="100%"><td port="faskes_rujukan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >faskes_rujukan (varchar)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="pendidikan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pendidikan (varchar)</font></td></tr>
+<tr width="100%"><td port="pekerjaan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >pekerjaan (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="puskesmas_domisili" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >puskesmas_domisili (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_ibu (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="107.5,388.5",
+		shape=rectangle,
+		width=2.9861];
+	appmodelsskriningpreeklampsia	[fontname="Helvetica Neue",
+		height=4.1111,
+		label=<<table width="100%" height="100%" border="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">SkriningPreeklampsia</font></td></tr>
+<tr width="100%"><td port="id_skrining_preeklampsia" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_skrining_preeklampsia (int8)</font></td></tr>
+<tr width="100%"><td port="id_ibu" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_ibu (int8)</font></td></tr>
+<tr width="100%"><td port="kesimpulan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kesimpulan (text)</font></td></tr>
+<tr width="100%"><td port="paraf_dokter" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >paraf_dokter (varchar)</font></td></tr>
+<tr width="100%"><td port="nama_dokter" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama_dokter (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="476.5,665.5",
+		shape=rectangle,
+		width=3.1528];
+	appmodelsibu:id_ibu -> appmodelsskriningpreeklampsia:id_ibu	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="289,729",
+		penwidth=1.8,
+		pos="e,363,721.5 215,721.5 215,721.5 319.39,721.5 352.83,721.5",
+		xlabel="HasMany
+skriningPreeklampsia",
+		xlp="354.91,706.5"];
+	appmodelsskriningpreeklampsia:id_ibu -> appmodelsibu:id_ibu	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="289,696",
+		penwidth=1.8,
+		pos="s,363,721.5 e,215,721.5 353.88,717.32 334.51,708.44 291,688.5 291,688.5 291,688.5 287,688.5 287,688.5 287,688.5 235.74,711.99 219.72,\
+719.33",
+		xlabel="BelongsTo
+ibu",
+		xlp="252.12,673.67"];
+	appmodelspreeklampsiaanamnesis	[fontname="Helvetica Neue",
+		height=3.5972,
+		label=<<table width="100%" height="100%" border="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">PreeklampsiaAnamnesis</font></td></tr>
+<tr width="100%"><td port="id_preeklampsia_anamnesis" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_preeklampsia_anamnesis (int8)</font></td></tr>
+<tr width="100%"><td port="id_skrining_preeklampsia" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_skrining_preeklampsia (int8)</font></td></tr>
+<tr width="100%"><td port="id_kriteria_anamnesis" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_kriteria_anamnesis (int8)</font></td></tr>
+<tr width="100%"><td port="risiko" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >risiko (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="863.5,870.5",
+		shape=rectangle,
+		width=3.4028];
+	appmodelsskriningpreeklampsia:id_skrining_preeklampsia -> appmodelspreeklampsiaanamnesis:id_skrining_preeklampsia	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="664,840",
+		penwidth=1.8,
+		pos="e,740.5,907.5 590,758.5 590,758.5 703.18,870.55 733.24,900.31",
+		xlabel="HasMany
+preeklampsiaAnamnesis",
+		xlp="581.12,844.41"];
+	appmodelspreeklampsiafisik	[fontname="Helvetica Neue",
+		height=3.5972,
+		label=<<table width="100%" height="100%" border="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">PreeklampsiaFisik</font></td></tr>
+<tr width="100%"><td port="id_preeklampsia_fisik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_preeklampsia_fisik (int8)</font></td></tr>
+<tr width="100%"><td port="id_skrining_preeklampsia" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_skrining_preeklampsia (int8)</font></td></tr>
+<tr width="100%"><td port="id_kriteria_pemeriksaan_fisik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_kriteria_pemeriksaan_fisik (int8)</font></td></tr>
+<tr width="100%"><td port="risiko" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >risiko (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="863.5,539.5",
+		shape=rectangle,
+		width=3.4861];
+	appmodelsskriningpreeklampsia:id_skrining_preeklampsia -> appmodelspreeklampsiafisik:id_skrining_preeklampsia	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="664,675",
+		penwidth=1.8,
+		pos="e,738,576.5 590,758.5 590,758.5 703.31,619.16 731.64,584.32",
+		xlabel="HasMany
+preeklampsiaFisik",
+		xlp="719.82,686.41"];
+	appmodelspreeklampsiaanamnesis:id_skrining_preeklampsia -> appmodelsskriningpreeklampsia:id_skrining_preeklampsia	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="664,811",
+		penwidth=1.8,
+		pos="s,740.5,907.5 e,590,758.5 734.65,899.34 717.09,874.82 666,803.5 666,803.5 666,803.5 610.89,770.87 594.53,761.18",
+		xlabel="BelongsTo
+skriningPreeklampsia",
+		xlp="747.14,802.66"];
+	appmodelspreeklampsiafisik:id_skrining_preeklampsia -> appmodelsskriningpreeklampsia:id_skrining_preeklampsia	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="664,612",
+		penwidth=1.8,
+		pos="s,738,576.5 e,590,758.5 728.37,580.05 707.92,587.58 662,604.5 662,604.5 662,604.5 604.39,727.73 592.23,753.72",
+		xlabel="BelongsTo
+skriningPreeklampsia",
+		xlp="713.1,647.07"];
+}

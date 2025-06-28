@@ -1,0 +1,127 @@
+digraph G {
+	graph [bb="0,0,997,887.5",
+		bgcolor="#F7F7F7",
+		concentrate=1,
+		esep=1,
+		fontname="Helvetica Neue",
+		fontsize=12,
+		labelloc=t,
+		nodesep=1,
+		overlap="",
+		pad=0.5,
+		rankdir=LR,
+		ranksep=2,
+		splines=true,
+		style=filled
+	];
+	node [label="\N"];
+	appmodelsanak	[fontname="Helvetica Neue",
+		height=11.819,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Anak</font></td></tr>
+<tr width="100%"><td port="id_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_anak (int8)</font></td></tr>
+<tr width="100%"><td port="id_wali" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_wali (int8)</font></td></tr>
+<tr width="100%"><td port="nama" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nama (varchar)</font></td></tr>
+<tr width="100%"><td port="anak_ke" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >anak_ke (int2)</font></td></tr>
+<tr width="100%"><td port="no_akte_kelahiran" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_akte_kelahiran (varchar)</font></td></tr>
+<tr width="100%"><td port="nik" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nik (bpchar)</font></td></tr>
+<tr width="100%"><td port="tmpt_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tmpt_lahir (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_lahir" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_lahir (date)</font></td></tr>
+<tr width="100%"><td port="gol_darah" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >gol_darah (bpchar)</font></td></tr>
+<tr width="100%"><td port="jenis_pelayanan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >jenis_pelayanan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_asuransi (varchar)</font></td></tr>
+<tr width="100%"><td port="tgl_berlaku_asuransi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tgl_berlaku_asuransi (date)</font></td></tr>
+<tr width="100%"><td port="fasilitas_pelayanan_kesehatan" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >fasilitas_pelayanan_kesehatan (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_bayi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_bayi (varchar)</font></td></tr>
+<tr width="100%"><td port="no_reg_kohort_balita" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_reg_kohort_balita (varchar)</font></td></tr>
+<tr width="100%"><td port="no_catatan_medik_rs" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >no_catatan_medik_rs (varchar)</font></td></tr>
+<tr width="100%"><td port="provinsi" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >provinsi (varchar)</font></td></tr>
+<tr width="100%"><td port="kabupaten" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >kabupaten (varchar)</font></td></tr>
+<tr width="100%"><td port="alamat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >alamat (text)</font></td></tr>
+<tr width="100%"><td port="telepon" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >telepon (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="141.5,425.5",
+		shape=rectangle,
+		width=3.9306];
+	appmodelsnasihatanak	[fontname="Helvetica Neue",
+		height=4.1111,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">NasihatAnak</font></td></tr>
+<tr width="100%"><td port="id_nasihat_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_nasihat_anak (int8)</font></td></tr>
+<tr width="100%"><td port="id_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_anak (int8)</font></td></tr>
+<tr width="100%"><td port="id_umur_nasihat_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_umur_nasihat_anak (int8)</font></td></tr>
+<tr width="100%"><td port="nasihat" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >nasihat (text)</font></td></tr>
+<tr width="100%"><td port="tanggal" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >tanggal (timestamp)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="535.5,739.5",
+		shape=rectangle,
+		width=2.9028];
+	appmodelsanak:id_anak -> appmodelsnasihatanak:id_anak	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="357,803",
+		penwidth=1.8,
+		pos="e,431,795.5 283,795.5 283,795.5 387.39,795.5 420.83,795.5",
+		xlabel="HasMany
+nasihatAnak",
+		xlp="392.91,780.5"];
+	appmodelsnasihatanak:id_anak -> appmodelsanak:id_anak	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="357,770",
+		penwidth=1.8,
+		pos="s,431,795.5 e,283,795.5 421.88,791.32 402.51,782.44 359,762.5 359,762.5 359,762.5 355,762.5 355,762.5 355,762.5 303.74,785.99 287.72,\
+793.33",
+		xlabel="BelongsTo
+anak",
+		xlp="320.12,747.67"];
+	appmodelsumurnasihatanak	[fontname="Helvetica Neue",
+		height=2.5694,
+		label=<<table width="100%" height="100%" border="0"  cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">UmurNasihatAnak</font></td></tr>
+<tr width="100%"><td port="id_umur_nasihat_anak" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >id_umur_nasihat_anak (int8)</font></td></tr>
+<tr width="100%"><td port="umur" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >umur (varchar)</font></td></tr>
+<tr width="100%"><td port="created_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >created_at (timestamp)</font></td></tr>
+<tr width="100%"><td port="updated_at" align="left" width="100%"  bgcolor="#ffffff"><font color="#333333" >updated_at (timestamp)</font></td></tr>
+</table>>,
+		margin=0,
+		pos="892.5,740.5",
+		shape=rectangle,
+		width=2.9028];
+	appmodelsnasihatanak:id_anak -> appmodelsumurnasihatanak:id_umur_nasihat_anak	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="714,794",
+		penwidth=1.8,
+		pos="s,640,795.5 e,788,777.5 650.17,794.26 679.17,790.74 761.52,780.72 782.89,778.12",
+		xlabel="BelongsTo
+umurNasihatAnak",
+		xlp="777.03,771.19"];
+	appmodelsumurnasihatanak:id_umur_nasihat_anak -> appmodelsnasihatanak:id_umur_nasihat_anak	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="714,761",
+		penwidth=1.8,
+		pos="e,640,758.5 788,777.5 788,777.5 716,753.5 716,753.5 716,753.5 712,753.5 712,753.5 712,753.5 669.79,756.43 650.01,757.8",
+		xlabel="HasMany
+nasihatAnak",
+		xlp="679.63,740.04"];
+}
