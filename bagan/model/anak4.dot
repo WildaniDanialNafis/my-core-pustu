@@ -11,7 +11,7 @@ digraph G {
 		pad=0.5,
 		rankdir=LR,
 		ranksep=2,
-		splines=true,
+		splines=polyline,
 		style=filled
 	];
 	node [label="\N"];
