@@ -13,7 +13,7 @@ class GrafikBbTbPrController extends Controller
     public function index(Request $request)
     {
          if ($request->ajax()) {
-            return view('admin.layouts-grafik.main');
+            return view('admin.layouts-grafik.main', ['title' => 'Grafik Rata-rata Berat Badan Per Tinggi Badan Anak Perempuan']);
         }
 
         return view('admin.layouts2.template-table');

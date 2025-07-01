@@ -771,8 +771,8 @@ namespace App\Models{
  * @property-read int|null $ringkasan_nifas_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Rujukan> $rujukan
  * @property-read int|null $rujukan_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SkriningPreeklampsia> $skringingPreeklampsia
- * @property-read int|null $skringing_preeklampsia_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SkriningPreeklampsia> $skriningPreeklampsia
+ * @property-read int|null $skrining_preeklampsia_count
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\IbuFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ibu newModelQuery()
@@ -1221,7 +1221,7 @@ namespace App\Models{
  * @property string|null $hpht
  * @property int|null $bb
  * @property int|null $tb
- * @property int|null $imt
+ * @property string|null $imt
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Ibu $ibu

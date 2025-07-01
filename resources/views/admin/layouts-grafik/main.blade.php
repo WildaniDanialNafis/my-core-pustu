@@ -1,20 +1,20 @@
 <div class="page-header">
     <div class="page-title">
-        <h1 class="animate__animated animate__fadeIn">Dashboard Overview</h1>
+        <h1 class="animate__animated animate__fadeIn" id="my-title1">{{ $title ?? '' }}</h1>
         <ul class="breadcrumb animate__animated animate__fadeIn animate__delay-1s">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item"><a href="#" id="my-title1">{{ $title ?? '' }}</a></li>
+            <li class="breadcrumb-item active" id="my-title1">Data {{ $title ?? '' }}</li>
         </ul>
     </div>
 
-    <div class="page-actions">
+    {{-- <div class="page-actions">
         <button class="btn btn-outline-primary animate__animated animate__fadeIn animate__delay-2s">
             <i class="fas fa-download"></i> Export
         </button>
         <button class="btn btn-primary animate__animated animate__fadeIn animate__delay-2s">
             <i class="fas fa-plus"></i> Add New
         </button>
-    </div>
+    </div> --}}
 </div>
 
 <!-- Charts Row -->
@@ -26,7 +26,7 @@
                 <div class="dropdown">
                     <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="chartDropdown"
                         data-bs-toggle="dropdown">
-                        This Month
+                        Semuanya
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Today</a></li>
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    {{-- <div class="col-md-4">
         <div class="card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
             <div class="card-header">
                 <h5 class="card-title">Traffic Sources</h5>
@@ -78,5 +78,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>

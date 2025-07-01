@@ -5,16 +5,16 @@
         <span>Pustu Lada Pamekasan</span>
     </a>
 
-    <div class="search-bar">
+    {{-- <div class="search-bar">
         <i class="fas fa-search"></i>
         <input type="text" placeholder="Search dashboard..." id="searchInput">
-    </div>
+    </div> --}}
 
     <div class="header-actions">
-        <div class="notification-btn" id="notificationBtn">
+        {{-- <div class="notification-btn" id="notificationBtn">
             <i class="fas fa-bell"></i>
             <span class="notification-badge">3</span>
-        </div>
+        </div> --}}
 
         <div class="user-btn" id="userBtn">
             <img src="{{ Auth::user()->profile_photo_url ?? 'https://randomuser.me/api/portraits/women/44.jpg' }}" alt="User" class="user-avatar">

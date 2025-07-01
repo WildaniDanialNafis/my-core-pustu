@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 abstract class BaseCrudController extends Controller
 {
@@ -166,5 +169,172 @@ abstract class BaseCrudController extends Controller
             'columnDiambil' => $this->foreignColumns,
             'title' => $this->title
         ];
+    }
+
+    public function exportExcel(): BinaryFileResponse
+    {
+        $columns = Schema::getColumnListing($this->tableName);
+        $query = $this->model::query();
+
+        if ($this->foreignRelation) {
+            $query->with($this->foreignRelation);
+        }
+
+        $data = $query->get();
+
+        $exportData = $data->map(function ($item) use ($columns) {
+            $row = [];
+            foreach ($columns as $column) {
+                $row[$column] = $item->$column;
+            }
+
+            // Ambil foreign data jika ada
+            if ($this->foreignRelation && is_array($this->foreignColumns)) {
+                $relationData = $item->{$this->foreignRelation};
+                foreach ($this->foreignColumns as $foreignCol) {
+                    $row[$this->foreignRelation . '.' . $foreignCol] = $relationData->{$foreignCol} ?? null;
+                }
+            }
+
+            return $row;
+        });
+
+        $filename = $this->tableName . '_' . now()->format('Ymd_His') . '.xlsx';
+
+        return Excel::download(new class($exportData) implements \Maatwebsite\Excel\Concerns\FromCollection, \Maatwebsite\Excel\Concerns\WithHeadings {
+            private $data;
+
+            public function __construct($data)
+            {
+                $this->data = $data;
+            }
+
+            public function collection(): Collection
+            {
+                return collect($this->data);
+            }
+
+            public function headings(): array
+            {
+                return array_keys($this->data->first() ?? []);
+            }
+        }, $filename);
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            $file = $request->file('file');
+            
+            $import = new class($this->model, $this->tableName, $this->foreignRelation, $this->foreignColumns) 
+                implements \Maatwebsite\Excel\Concerns\ToModel, 
+                        \Maatwebsite\Excel\Concerns\WithHeadingRow,
+                        \Maatwebsite\Excel\Concerns\WithValidation {
+                
+                private $model;
+                private $tableName;
+                private $columns;
+                private $foreignRelation;
+                private $foreignColumns;
+                private $validationRules;
+
+                public function __construct($model, $tableName, $foreignRelation = null, $foreignColumns = [])
+                {
+                    $this->model = $model;
+                    $this->tableName = $tableName;
+                    $this->columns = Schema::getColumnListing($tableName);
+                    $this->foreignRelation = $foreignRelation;
+                    $this->foreignColumns = $foreignColumns;
+                    
+                    // Jika ada validasi rules di controller, gunakan itu
+                    if (method_exists($model, 'getValidationRules')) {
+                        $this->validationRules = (new $model)->getValidationRules();
+                    }
+                }
+
+                public function model(array $row)
+                {
+                    $data = [];
+                    
+                    // Filter hanya kolom yang ada di tabel
+                    foreach ($row as $key => $value) {
+                        $normalizedKey = Str::snake($key); // Normalisasi nama kolom (camelCase to snake_case)
+                        if (in_array($normalizedKey, $this->columns)) {
+                            $data[$normalizedKey] = $value;
+                        }
+                    }
+
+                    // Handle foreign key jika ada
+                    if ($this->foreignRelation && !empty($this->foreignColumns)) {
+                        $relationModel = (new $this->model)->{$this->foreignRelation}()->getRelated();
+                        $foreignData = [];
+                        
+                        foreach ($this->foreignColumns as $col) {
+                            if (isset($row[$col])) {
+                                $foreignData[$col] = $row[$col];
+                            }
+                        }
+                        
+                        if (!empty($foreignData)) {
+                            $relation = $relationModel::firstOrCreate($foreignData);
+                            $foreignKey = (new $this->model)->{$this->foreignRelation}()->getForeignKeyName();
+                            $data[$foreignKey] = $relation->id;
+                        }
+                    }
+
+                    return new $this->model($data);
+                }
+
+                public function rules(): array
+                {
+                    if (!empty($this->validationRules)) {
+                        return $this->validationRules;
+                    }
+                    
+                    // Fallback rules sederhana
+                    $rules = [];
+                    foreach ($this->columns as $column) {
+                        $rules[$column] = ['nullable'];
+                    }
+                    return $rules;
+                }
+
+                public function prepareForValidation(array $row): array
+                {
+                    // Normalisasi nama kolom
+                    $normalized = [];
+                    foreach ($row as $key => $value) {
+                        $normalized[Str::snake($key)] = $value;
+                    }
+                    return $normalized;
+                }
+            };
+
+            Excel::import($import, $file);
+
+            return redirect()->back()->with('success', 'Data berhasil diimpor!');
+
+        } catch (\Exception $e) {
+            Log::error('Error importing data:', [
+                'error' => $e->getMessage(),
+                'table' => $this->tableName,
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            $errorMessage = 'Terjadi kesalahan saat mengimpor data.';
+            if ($e instanceof \Maatwebsite\Excel\Validators\ValidationException) {
+                $errorMessage .= ' Error validasi: ' . implode(', ', $e->errors());
+            } else {
+                $errorMessage .= ' ' . $e->getMessage();
+            }
+            
+            return redirect()->back()
+                ->with('error', $errorMessage)
+                ->withInput();
+        }
     }
 }

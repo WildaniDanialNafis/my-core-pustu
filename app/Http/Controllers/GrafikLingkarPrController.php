@@ -13,7 +13,7 @@ class GrafikLingkarPrController extends Controller
     public function index(Request $request)
     {
          if ($request->ajax()) {
-            return view('admin.layouts-grafik.main');
+            return view('admin.layouts-grafik.main', ['title' => 'Grafik Rata-rata Lingkar Kepala Per Umur Anak Laki-laki']);
         }
 
         return view('admin.layouts2.template-table');

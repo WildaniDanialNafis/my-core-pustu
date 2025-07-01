@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor' => array($vendorDir . '/phpdocumentor/graphviz/src', $vendorDir . '/phpdocumentor/graphviz/tests/unit'),
+    'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'Barryvdh' => array($vendorDir . '/barryvdh/reflection-docblock/src'),
 );
