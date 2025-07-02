@@ -19,7 +19,7 @@
                 <div class="dropdown">
                     <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="chartDropdown"
                         data-bs-toggle="dropdown">
-                        This Month
+                        Semuanya
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Today</a></li>

@@ -40,7 +40,7 @@ class PemeriksaanTrimester3 extends Model
         return $this->hasMany(UsgTri3::class,'id_pemeriksaan_trimester3');
     }
 
-    public function pemeriksaanTrimester3()
+    public function pemeriksaanLaboratoriumTri3()
     {
         return $this->hasMany(PemeriksaanLaboratoriumTri3::class, 'id_pemeriksaan_trimester3');
     }

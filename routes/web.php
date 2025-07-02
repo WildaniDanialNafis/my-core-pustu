@@ -14,6 +14,7 @@ use App\Http\Controllers\BbTbPerempuanController;
 use App\Http\Controllers\BbULakiController;
 use App\Http\Controllers\BbUPerempuanController;
 use App\Http\Controllers\BeratBadanBumilController;
+use App\Http\Controllers\CetakFormController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardLalaController;
 use App\Http\Controllers\DataKesehatanGigiController;
@@ -89,6 +90,7 @@ use App\Http\Controllers\RiwayatPenyakitKeluargaController;
 use App\Http\Controllers\RiwayatPerilakuBerisikoController;
 use App\Http\Controllers\RujukanAnakController;
 use App\Http\Controllers\RujukanController;
+use App\Http\Controllers\RujukanKiaController;
 use App\Http\Controllers\SkriningPreeklampsiaController;
 use App\Http\Controllers\TablesController;
 use App\Http\Controllers\TbULakiController;
@@ -98,6 +100,73 @@ use App\Http\Controllers\UsgTri3Controller;
 use App\Http\Controllers\WaliController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::prefix('kia/rujukan')->group(function () {
+    // Rujukan Ibu Hamil
+    Route::get('ibu-hamil/{id_ibu}', [RujukanKiaController::class, 'rujukanIbuHamil'])
+        ->name('kia.rujukan.ibu-hamil');
+
+    // Form Persalinan
+    Route::get('persalinan/{id_ibu}', [RujukanKiaController::class, 'formPersalinan'])
+        ->name('kia.rujukan.persalinan');
+
+    // Form Bayi Baru Lahir
+    Route::get('bayi-baru-lahir/{id_bayi}', [RujukanKiaController::class, 'formBayiBaruLahir'])
+        ->name('kia.rujukan.bayi-baru-lahir');
+
+    // Kunjungan Neonatal 0-7 hari
+    Route::get('neonatal-07/{id_bayi}', [RujukanKiaController::class, 'kunjunganNeonatal07'])
+        ->name('kia.rujukan.neonatal-07');
+
+    // Kunjungan Neonatal 8-28 hari
+    Route::get('neonatal-828/{id_bayi}', [RujukanKiaController::class, 'kunjunganNeonatal828'])
+        ->name('kia.rujukan.neonatal-828');
+
+    // Form Nifas 6 jam pertama
+    Route::get('nifas-6jam/{id_ibu}', [RujukanKiaController::class, 'formNifas6Jam'])
+        ->name('kia.rujukan.nifas-6jam');
+
+    // Form Nifas Hari ke 1-7
+    Route::get('nifas-1-7/{id_ibu}', [RujukanKiaController::class, 'formNifas1_7'])
+        ->name('kia.rujukan.nifas-1-7');
+
+    // Form Nifas Minggu ke 2-6
+    Route::get('nifas-2-6/{id_ibu}', [RujukanKiaController::class, 'formNifas2_6'])
+        ->name('kia.rujukan.nifas-2-6');
+
+    // Form Skrining Preeklampsia
+    Route::get('skrining-preeklampsia/{id_ibu}', [RujukanKiaController::class, 'skriningPreeklampsia'])
+        ->name('kia.rujukan.skrining-preeklampsia');
+
+    // Pemantauan ANC Trimester 1
+    Route::get('anc-trimester1/{id_ibu}', [RujukanKiaController::class, 'pemantauanAncTrimester1'])
+        ->name('kia.rujukan.anc-trimester1');
+
+    // Pemantauan ANC Trimester 2
+    Route::get('anc-trimester2/{id_ibu}', [RujukanKiaController::class, 'pemantauanAncTrimester2'])
+        ->name('kia.rujukan.anc-trimester2');
+
+    // Pemantauan ANC Trimester 3
+    Route::get('anc-trimester3/{id_ibu}', [RujukanKiaController::class, 'pemantauanAncTrimester3'])
+        ->name('kia.rujukan.anc-trimester3');
+
+    // Pelayanan KB Pasca Persalinan
+    Route::get('kb-pasca-persalinan/{id_ibu}', [RujukanKiaController::class, 'pelayananKbPascaPersalinan'])
+        ->name('kia.rujukan.kb-pasca-persalinan');
+
+    // Pencatatan Imunisasi Bayi
+    Route::get('imunisasi-anak/{id_bayi}', [RujukanKiaController::class, 'pencatatanImunisasiAnak'])
+        ->name('kia.rujukan.imunisasi-anak');
+
+    // Rujukan Bayi
+    Route::get('rujukan-bayi/{id_bayi}', [RujukanKiaController::class, 'rujukanBayi'])
+        ->name('kia.rujukan.rujukan-bayi');
+
+    Route::get('/rujukan-kia/{id_ibu}', [RujukanKiaController::class, 'generate'])->name('kia.rujukan.rujukan-kia');
+
+    Route::get('/cetak-form', [CetakFormController::class, 'index']);
+});
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -109,7 +178,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/form', function() {
+Route::get('/form', function () {
     return view('admin.layouts2.isi-form');
 });
 

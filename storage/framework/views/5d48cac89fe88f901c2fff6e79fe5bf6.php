@@ -1225,6 +1225,51 @@
             letter-spacing: 0.5px;
         }
     </style>
+
+<!-- Simplified JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formIframe = document.getElementById('form-iframe');
+    const emptyMessage = document.getElementById('empty-message');
+    
+    // Show empty state initially
+    formIframe.style.display = 'none';
+    emptyMessage.style.display = 'flex';
+    
+    // When iframe loads
+    formIframe.onload = function() {
+        emptyMessage.style.display = 'none';
+        formIframe.style.display = 'block';
+    };
+    
+    // Handle errors
+    formIframe.onerror = function() {
+        emptyMessage.innerHTML = '<i class="fas fa-exclamation-triangle fa-3x mb-3 text-danger"></i>' +
+                                '<p class="text-danger">Gagal memuat form. Silakan coba lagi.</p>';
+    };
+});
+</script>
+
+<style>
+    .form-link {
+        cursor: pointer;
+    }
+    #form-container {
+        position: relative;
+    }
+    #empty-message {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: none; /* Initially hidden */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f9fa;
+    }
+</style>
 </body>
 
 </html>

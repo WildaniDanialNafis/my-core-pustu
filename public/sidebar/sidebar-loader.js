@@ -80,6 +80,12 @@ async function loadPageContent(href) {
 async function initializePageSpecificComponents(href) {
     const path = normalizePath(href).replace(/^\//, '');
 
+    // Jika path diawali 'kia', langsung keluar (tidak melakukan apa pun)
+    if (path.startsWith('kia/')) {
+        console.info('Halaman KIA terdeteksi. Tidak melakukan inisialisasi khusus.');
+        return;
+    }
+
     if (path.startsWith('grafik/')) {
         const fnName = convertGrafikUrlToFunctionName(path);
         const grafikFn = window[fnName];
@@ -89,12 +95,6 @@ async function initializePageSpecificComponents(href) {
         } else {
             console.warn(`Fungsi ${fnName} tidak ditemukan untuk grafik.`);
         }
-
-        // if (typeof grafikFn === 'function') {
-        //     await grafikFn(path);
-        // } else {
-        //     console.warn(`Fungsi ${fnName} tidak ditemukan untuk grafik.`);
-        // }
 
         return;
     }

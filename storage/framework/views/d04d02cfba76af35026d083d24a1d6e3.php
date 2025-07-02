@@ -49,6 +49,14 @@
             <a href="/dashboard" class="active">
                 <span class="menu-icon"><i class="fas fa-home"></i></span>
                 <span class="menu-text">Dashboard</span>
+                
+            </a>
+        </li>
+
+        <li class="menu-item" style="--delay: 2">
+            <a href="/kia/rujukan/cetak-form" class="active">
+                <span class="menu-icon"><i class="fas fa-print"></i></span>
+                <span class="menu-text">Cetak Form</span>
                 <span class="menu-badge">New</span>
             </a>
         </li>
