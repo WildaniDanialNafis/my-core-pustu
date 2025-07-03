@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,9 +19,11 @@
         @page {
             size: A4;
             margin: 1.5cm;
+
             @top-center {
                 content: element(page-header);
             }
+
             @bottom-center {
                 content: element(page-footer);
             }
@@ -42,7 +45,8 @@
                 margin: 0 !important;
             }
 
-            .no-print, .btn {
+            .no-print,
+            .btn {
                 display: none !important;
             }
 
@@ -62,7 +66,7 @@
                 margin: 20px auto;
                 padding: 1.5cm;
                 background: white;
-                box-shadow: 0 0 15px rgba(0,0,0,0.1);
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
                 border: 1px solid #ddd;
             }
         }
@@ -148,7 +152,8 @@
             margin: 0.8rem 0;
         }
 
-        .form-table th, .form-table td {
+        .form-table th,
+        .form-table td {
             border: 1px solid #000;
             padding: 0.5rem;
             vertical-align: top;
@@ -199,11 +204,25 @@
             text-align: center;
         }
 
-        .mt-1 { margin-top: 0.25rem; }
-        .mt-2 { margin-top: 0.5rem; }
-        .mt-3 { margin-top: 1rem; }
-        .mt-4 { margin-top: 1.5rem; }
-        .mt-5 { margin-top: 3rem; }
+        .mt-1 {
+            margin-top: 0.25rem;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+
+        .mt-4 {
+            margin-top: 1.5rem;
+        }
+
+        .mt-5 {
+            margin-top: 3rem;
+        }
 
         /* Watermark (optional) */
         .watermark {
@@ -220,6 +239,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Watermark (optional) -->
     <div class="watermark no-print">{{ config('app.name', 'PUSKESMAS') }}</div>
@@ -227,24 +247,35 @@
     <div class="container">
         <!-- Document Header -->
         <header class="kop">
-            <table width="100%" class="mb-2">
+            <table width="100%" class="mb-2 align-middle">
                 <tr>
-                    <td width="20%" class="text-start">
-                        <img src="{{ asset('img/logo-kabupaten.png') }}" alt="Logo Kabupaten">
+                    <!-- Logo Kiri -->
+                    <td width="20%" class="text-start align-top">
+                        {{-- <img src="{{ asset('pustu.png') }}" alt="Logo Kabupaten"
+                            style="max-height: 90px; height: auto; max-width: 100%;"> --}}
                     </td>
+
+                    <!-- Teks Tengah -->
                     <td class="text-center">
-                        <h1 class="text-uppercase">PEMERINTAH KABUPATEN {{ $kabupaten ?? 'CONTOH' }}</h1>
-                        <h2 class="text-uppercase">DINAS KESEHATAN</h2>
-                        <h2 class="text-uppercase">{{ $nama_puskesmas ?? 'PUSKESMAS CONTOH' }}</h2>
-                        <p class="mb-0"><small>{{ $alamat_puskesmas ?? 'Jl. Contoh No. 123, Kec. Contoh' }}</small></p>
-                        <p class="mb-0"><small>Telp: {{ $telepon_puskesmas ?? '(021) 12345678' }} | Email: {{ $email_puskesmas ?? 'puskesmas@example.com' }}</small></p>
+                        <h1 class="text-uppercase" style="margin-bottom: 4px;">PEMERINTAH KABUPATEN
+                            {{ $kabupaten ?? 'CONTOH' }}</h1>
+                        <h2 class="text-uppercase" style="margin-bottom: 4px;">DINAS KESEHATAN</h2>
+                        <h2 class="text-uppercase" style="margin-bottom: 4px;">
+                            {{ $nama_puskesmas ?? 'PUSKESMAS CONTOH' }}</h2>
+                        <p class="mb-0"><small>{{ $alamat_puskesmas ?? 'Jl. Contoh No. 123, Kec. Contoh' }}</small>
+                        </p>
+                        <p class="mb-0"><small>Telp: {{ $telepon_puskesmas ?? '(021) 12345678' }} | Email:
+                                {{ $email_puskesmas ?? 'puskesmas@example.com' }}</small></p>
                     </td>
-                    <td width="20%" class="text-end">
-                        <img src="{{ asset('img/logo-puskesmas.png') }}" alt="Logo Puskesmas">
+
+                    <!-- Logo Kanan -->
+                    <td width="20%" class="text-end align-top">
+                        {{-- <img src="{{ asset('pustu-1.png') }}" alt="Logo Puskesmas"
+                            style="max-height: 90px; height: auto; max-width: 100%;"> --}}
                     </td>
                 </tr>
             </table>
-            <div class="header-line"></div>
+            <div class="header-line" style="border-top: 3px solid black; margin-top: 10px;"></div>
         </header>
 
         <!-- Document Content -->
@@ -289,4 +320,5 @@
         });
     </script> --}}
 </body>
+
 </html>

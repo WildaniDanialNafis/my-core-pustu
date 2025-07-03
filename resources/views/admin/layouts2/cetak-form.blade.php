@@ -22,10 +22,10 @@
                         class="list-group-item list-group-item-action form-link" target="form-iframe">
                         <i class="fas fa-pills me-2"></i> Pemantauan ANC Trimester 1
                     </a>
-                    <a href="{{ route('kia.rujukan.anc-trimester2', ['id_ibu' => 1, 'iframe' => true]) }}"
+                    {{-- <a href="{{ route('kia.rujukan.anc-trimester2', ['id_ibu' => 1, 'iframe' => true]) }}"
                         class="list-group-item list-group-item-action form-link" target="form-iframe">
                         <i class="fas fa-pills me-2"></i> Pemantauan ANC Trimester 2
-                    </a>
+                    </a> --}}
                     <a href="{{ route('kia.rujukan.anc-trimester3', ['id_ibu' => 1, 'iframe' => true]) }}"
                         class="list-group-item list-group-item-action form-link" target="form-iframe">
                         <i class="fas fa-pills me-2"></i> Pemantauan ANC Trimester 3
